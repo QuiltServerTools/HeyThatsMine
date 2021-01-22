@@ -1,0 +1,181 @@
+[11:03:57] [main/INFO] (FabricLoader) Loading for game Minecraft 1.16.4
+[11:03:58] [main/INFO] (Fabric|Loader) [FabricLoader] Loading 42 mods: minecraft@1.16.4, fabric-screen-handler-api-v1@1.1.0+872498413a, fabric-renderer-api-v1@0.3.3+a4467d2a3a, fabric-networking-blockentity-v0@0.2.5+b50ffc7b3a, fabric-keybindings-v0@0.2.0+3fa9f7c53a, fabric-command-api-v1@1.0.9+a4467d2a3a, fabricloader@0.10.8, fabric-tool-attribute-api-v1@1.2.4+2b4623793a, fabric-renderer-indigo@0.4.3+a4467d2a3a, fabric-structure-api-v1@1.1.0+f8ac1db23a, fabric-containers-v0@0.1.8+045df74f3a, fabric-object-builder-api-v1@1.9.2+a89534ab3a, fabric-item-api-v1@1.2.0+f8ac1db23a, fabric-events-interaction-v0@0.4.1+f8ac1db23a, fabric-crash-report-info-v1@0.1.2+b7f9825d3a, fabric-game-rule-api-v1@1.0.3+a4467d2a3a, fabric-api-base@0.2.0+9f0fb4b83a, fabric-rendering-v0@1.1.1+f8ac1db23a, fabric-key-binding-api-v1@1.0.1+730711c63a, fabric-rendering-v1@1.3.1+f8ac1db23a, htm@1.0-SNAPSHOT, fabric-rendering-data-attachment-v1@0.1.4+f8ac1db23a, fabric-resource-loader-v0@0.3.1+facf3bbf3a, fabric-textures-v0@1.0.5+a4467d2a3a, fabric-content-registries-v0@0.1.9+059ea8663a, fabric-tag-extensions-v0@1.0.3+ac8e8c593a, fabric-rendering-fluids-v1@0.1.12+f8ac1db23a, fabric-biome-api-v1@3.0.0+8367596d3a, fabric-commands-v0@0.2.0+52d308363a, fabric-registry-sync-v0@0.6.1+a4467d2a3a, fabric-blockrenderlayer-v1@1.1.4+c6a8ea893a, fabric-lifecycle-events-v1@1.2.0+74cc3b203a, fabric-mining-levels-v0@0.1.2+b764ce993a, fabric-renderer-registries-v1@2.2.0+f8ac1db23a, fabric-loot-tables-v1@1.0.1+432ea1883a, fabric-events-lifecycle-v0@0.2.0+16acbe5b3a, fabric@0.25.1+build.416-1.16, fabric-models-v0@0.1.1+f8ac1db23a, fabric-item-groups-v0@0.2.1+a4467d2a3a, fabric-particles-v1@0.2.2+fb0d9b0e3a, fabric-object-builders-v0@0.7.1+a4467d2a3a, fabric-networking-v0@0.1.10+e00ecb5f3a
+[11:03:58] [main/INFO] (mixin) SpongePowered MIXIN Subsystem Version=0.8.2 Source=file:/C:/Users/potat/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.8.2+build.24/e5a741445d0f425bf3cce946c6cf8c7fb8376b2/sponge-mixin-0.8.2+build.24.jar Service=Knot/Fabric Env=CLIENT
+[11:03:58] [main/INFO] (Fabric|MixinBootstrap) Loaded Fabric development mappings for mixin remapper!
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-networking-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-networking-blockentity-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-screen-handler-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-lifecycle-events-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-indigo-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-rendering-data-attachment-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-structure-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-item-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-events-interaction-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-loot-tables-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-object-builder-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-registries-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-textures-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-registry-sync-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-models-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-blockrenderlayer-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-rendering-fluids-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-biome-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-resource-loader-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-game-rule-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-particles-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-object-builders-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-tag-extensions-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-tool-attribute-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-rendering-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-item-groups-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-content-registries-v0-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-command-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-crash-report-info-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-key-binding-api-v1-refmap.json using remapper chain
+[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker is public in fabric-networking-v0.mixins.json:MixinEntityTracker and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/block/BlockModelRenderer$AmbientOcclusionCalculator is public in fabric-renderer-indigo.mixins.json:MixinAmbientOcclusionCalculator and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask is public in fabric-renderer-indigo.mixins.json:MixinChunkRebuildTask and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/village/TradeOffers$TypeAwareBuyForOneEmeraldFactory is public in fabric-object-builder-v1.mixins.json:TypeAwareTradeMixin and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/server/command/GameRuleCommand$1 is public in fabric-game-rule-api-v1.mixins.json:GameRuleCommandVisitorMixin and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/gui/screen/world/EditGameRulesScreen$RuleListWidget$1 is public in fabric-game-rule-api-v1.mixins.json:client.RuleListWidgetVisitorMixin and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider is public in fabric-particles-v1.mixins.json:ParticleManagerAccessor$SimpleSpriteProviderAccessor and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/tag/Tag$1 is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
+[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/tag/RequiredTagList$TagWrapper is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
+[11:04:06] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[11:04:08] [main/ERROR] (Minecraft) Failed to verify authentication
+com.mojang.authlib.exceptions.AuthenticationException: Unauthorized
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:119) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.checkPrivileges(YggdrasilSocialInteractionsService.java:94) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.<init>(YggdrasilSocialInteractionsService.java:40) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.createSocialInteractionsService(YggdrasilAuthenticationService.java:152) ~[authlib-2.1.28.jar:?]
+	at net.minecraft.client.MinecraftClient.method_31382(MinecraftClient.java:563) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.client.MinecraftClient.<init>(MinecraftClient.java:398) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.client.main.Main.main(Main.java:149) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at net.fabricmc.loader.game.MinecraftGameProvider.launch(MinecraftGameProvider.java:224) [fabric-loader-0.10.8.jar:?]
+	at net.fabricmc.loader.launch.knot.Knot.init(Knot.java:141) [fabric-loader-0.10.8.jar:?]
+	at net.fabricmc.loader.launch.knot.KnotClient.main(KnotClient.java:27) [fabric-loader-0.10.8.jar:?]
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
+[11:04:08] [main/INFO] (Minecraft) Setting user: Player997
+[11:04:09] [main/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[11:04:10] [main/INFO] (Minecraft) Backend library: LWJGL version 3.2.2 build 10
+[11:04:17] [main/INFO] (Minecraft) Narrator library for x64 successfully loaded
+[11:04:18] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Screen Handler API (v1), Fabric Renderer API (v1), Fabric Networking Block Entity (v0), Fabric Key Bindings (v0), Fabric Command API (v1), Fabric Loader, Fabric Tool Attribute API (v1), Fabric Renderer - Indigo, Fabric Containers (v0), Fabric Object Builder API (v1), Fabric Item API (v1), Fabric Events Interaction (v0), Fabric Crash Report Info (v1), Fabric Game Rule API (v1), Fabric API Base, Fabric Rendering (v0), Fabric Key Binding API (v1), Fabric Rendering (v1), Fabric Rendering Data Attachment (v1), Fabric Resource Loader (v0), Fabric Textures (v0), Fabric Content Registries (v0), Fabric Tag Extensions (v0), Fabric Rendering Fluids (v1), Fabric Biome API (v1), Fabric Registry Sync (v0), Fabric BlockRenderLayer Registration (v1), Fabric Lifecycle Events (v1), Fabric Mining Levels (v0), Fabric Renderer Registries (v1), Fabric Loot Tables (v1), Fabric Events Lifecycle (v0), Fabric API, Fabric Models (v0), Fabric Item Groups (v0), Fabric Object Builders (v0), Fabric Networking (v0)
+[11:04:18] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
+[11:04:28] [main/INFO] (Minecraft) OpenAL initialized.
+[11:04:28] [main/INFO] (Minecraft) Sound engine started
+[11:04:29] [main/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/blocks.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 256x128x4 minecraft:textures/atlas/signs.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[11:04:29] [main/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[11:07:14] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1)
+[11:07:15] [main/INFO] (Minecraft) Loaded 7 recipes
+[11:07:15] [main/INFO] (Minecraft) Loaded 927 advancements
+[11:07:15] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 79 new biomes in 2.374 ms
+[11:07:16] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[11:07:16] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.16.4
+[11:07:16] [Server thread/INFO] (Minecraft) Generating keypair
+[11:07:17] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[11:07:17] [main/INFO] (Minecraft) Preparing spawn area: 0%
+[11:07:17] [main/INFO] (Minecraft) Preparing spawn area: 0%
+[11:07:18] [main/INFO] (Minecraft) Preparing spawn area: 69%
+[11:07:18] [main/INFO] (Minecraft) Time elapsed: 1161 ms
+[11:07:18] [Server thread/INFO] (Minecraft) Changing view distance to 11, from 10
+[11:07:19] [Server thread/INFO] (Minecraft) Player997[local:E:b95e0e66] logged in with entity id 234 at (221.04312675577265, 74.0, -199.7589217990825)
+[11:07:19] [Server thread/INFO] (Minecraft) Player997 joined the game
+[11:07:19] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[11:07:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[11:07:19] [main/INFO] (Minecraft) Loaded 2 advancements
+[11:07:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[11:07:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[11:08:20] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[11:08:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[11:08:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[11:08:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[11:08:21] [main/INFO] (Minecraft) Using default channel type
+[11:08:21] [main/INFO] (Minecraft) Started serving on 55115
+[11:08:21] [main/INFO] (Minecraft) [CHAT] Local game hosted on port 55115
+[11:08:43] [User Authenticator #1/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
+[11:08:43] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:55139] logged in with entity id 627 at (208.67734032048656, 76.0, -198.74669409097953)
+[11:08:43] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
+[11:08:43] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
+[11:09:30] [Server thread/INFO] (Minecraft) [Player997: Set Potatoboy9999's game mode to Creative Mode]
+[11:09:30] [main/INFO] (Minecraft) [CHAT] Set Potatoboy9999's game mode to Creative Mode
+[11:09:50] [Server thread/FATAL] (Minecraft) Error executing task on Server
+java.lang.NullPointerException: null
+	at HTMListeners.lambda$init$0(HTMListeners.java:12) ~[main/:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zbl000$breakBlock(ServerPlayerInteractionManager.java:592) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.tryBreakBlock(ServerPlayerInteractionManager.java:238) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.finishMining(ServerPlayerInteractionManager.java:217) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java:147) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerAction(ServerPlayNetworkHandler.java:939) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:40) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:18) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.NetworkThreadUtils.method_11072(NetworkThreadUtils.java:20) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.ServerTask.run(ServerTask.java:17) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.executeTask(ThreadExecutor.java:136) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ReentrantThreadExecutor.executeTask(ReentrantThreadExecutor.java:22) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:752) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:1776) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTask(ThreadExecutor.java:109) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_20415(MinecraftServer.java:732) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runTask(MinecraftServer.java:726) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:97) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:711) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:666) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:227) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+[11:10:24] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:10:24.782 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[11:10:24] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:10:24.803 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[11:10:27] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:10:27.254 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'us/potatoboy/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
+[11:10:34] [Server thread/FATAL] (Minecraft) Error executing task on Server
+java.lang.NullPointerException: null
+	at HTMListeners.lambda$init$0(HTMListeners.java:17) ~[main/:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zbl000$breakBlock(ServerPlayerInteractionManager.java:592) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.tryBreakBlock(ServerPlayerInteractionManager.java:238) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.finishMining(ServerPlayerInteractionManager.java:217) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java:147) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerAction(ServerPlayNetworkHandler.java:939) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:40) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:18) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.NetworkThreadUtils.method_11072(NetworkThreadUtils.java:20) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.ServerTask.run(ServerTask.java:17) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.executeTask(ThreadExecutor.java:136) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ReentrantThreadExecutor.executeTask(ReentrantThreadExecutor.java:22) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:752) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:1776) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTask(ThreadExecutor.java:109) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_20415(MinecraftServer.java:732) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runTask(MinecraftServer.java:726) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:97) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:711) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:666) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:227) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+[11:11:10] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:11:10.454 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[11:11:10] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:11:10.530 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[11:11:13] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:11:13.265 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'us/potatoboy/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
+[11:23:47] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 3104ms or 62 ticks behind
+[11:24:04] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2436ms or 48 ticks behind
+[11:27:17] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Disconnected
+[11:27:17] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
+[11:27:17] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
+[11:27:19] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 179306ms or 3586 ticks behind

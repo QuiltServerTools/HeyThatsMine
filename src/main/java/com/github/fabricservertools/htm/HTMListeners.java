@@ -1,4 +1,4 @@
-package us.potatoboy.htm;
+package com.github.fabricservertools.htm;
 
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.ChestBlock;

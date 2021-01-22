@@ -1,4 +1,4 @@
-package us.potatoboy.htm;
+package com.github.fabricservertools.htm;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

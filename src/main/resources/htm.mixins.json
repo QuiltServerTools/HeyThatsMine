@@ -4,7 +4,7 @@
   "package": "us.potatoboy.htm.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LockableContainerMixin"
+    "com.github.fabricservertools.htm.mixin.LockableContainerMixin"
   ],
   "client": [
   ],

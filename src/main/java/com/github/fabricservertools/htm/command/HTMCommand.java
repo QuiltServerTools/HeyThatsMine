@@ -1,5 +1,6 @@
-package us.potatoboy.htm.command;
+package com.github.fabricservertools.htm.command;
 
+import com.github.fabricservertools.htm.HTMContainerLock;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -15,9 +16,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
-import us.potatoboy.htm.HTMContainerLock;
-import us.potatoboy.htm.LockType;
-import us.potatoboy.htm.LockableObject;
+import com.github.fabricservertools.htm.LockType;
+import com.github.fabricservertools.htm.LockableObject;
 
 import static net.minecraft.server.command.CommandManager.*;
 

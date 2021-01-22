@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "us.potatoboy.htm.Htm"
+      "com.github.fabricservertools.htm.Htm"
     ]
   },
   "mixins": [

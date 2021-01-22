@@ -1,4 +1,4 @@
-package us.potatoboy.htm;
+package com.github.fabricservertools.htm;
 
 public interface LockableObject {
     HTMContainerLock getLock();

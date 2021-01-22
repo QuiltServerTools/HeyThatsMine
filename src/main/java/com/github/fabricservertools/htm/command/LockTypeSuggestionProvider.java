@@ -1,4 +1,4 @@
-package us.potatoboy.htm.command;
+package com.github.fabricservertools.htm.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -6,7 +6,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.server.command.ServerCommandSource;
-import us.potatoboy.htm.LockType;
+import com.github.fabricservertools.htm.LockType;
 
 import java.util.concurrent.CompletableFuture;
 

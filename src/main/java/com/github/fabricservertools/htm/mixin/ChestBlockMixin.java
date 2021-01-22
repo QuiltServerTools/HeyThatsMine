@@ -1,13 +1,13 @@
-package us.potatoboy.htm.mixin;
+package com.github.fabricservertools.htm.mixin;
 
+import com.github.fabricservertools.htm.HTMContainerLock;
 import net.minecraft.block.AbstractChestBlock;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.ChestBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import us.potatoboy.htm.HTMContainerLock;
-import us.potatoboy.htm.LockableObject;
+import com.github.fabricservertools.htm.LockableObject;
 
 import java.util.Optional;
 import java.util.function.Supplier;
