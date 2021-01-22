@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "htm",
+  "version": "${version}",
+  "name": "Hey That's Mine",
+  "description": "Serverside chest locking mod for fabric",
+  "authors": [
+    "Potatoboy9999"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/htm/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "us.potatoboy.htm.Htm"
+    ]
+  },
+  "mixins": [
+    "htm.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.8",
+    "fabric": "*",
+    "minecraft": "1.16.4"
+  }
+}
