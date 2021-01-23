@@ -1,55 +1,58 @@
-[11:03:57] [main/INFO] (FabricLoader) Loading for game Minecraft 1.16.4
-[11:03:58] [main/INFO] (Fabric|Loader) [FabricLoader] Loading 42 mods: minecraft@1.16.4, fabric-screen-handler-api-v1@1.1.0+872498413a, fabric-renderer-api-v1@0.3.3+a4467d2a3a, fabric-networking-blockentity-v0@0.2.5+b50ffc7b3a, fabric-keybindings-v0@0.2.0+3fa9f7c53a, fabric-command-api-v1@1.0.9+a4467d2a3a, fabricloader@0.10.8, fabric-tool-attribute-api-v1@1.2.4+2b4623793a, fabric-renderer-indigo@0.4.3+a4467d2a3a, fabric-structure-api-v1@1.1.0+f8ac1db23a, fabric-containers-v0@0.1.8+045df74f3a, fabric-object-builder-api-v1@1.9.2+a89534ab3a, fabric-item-api-v1@1.2.0+f8ac1db23a, fabric-events-interaction-v0@0.4.1+f8ac1db23a, fabric-crash-report-info-v1@0.1.2+b7f9825d3a, fabric-game-rule-api-v1@1.0.3+a4467d2a3a, fabric-api-base@0.2.0+9f0fb4b83a, fabric-rendering-v0@1.1.1+f8ac1db23a, fabric-key-binding-api-v1@1.0.1+730711c63a, fabric-rendering-v1@1.3.1+f8ac1db23a, htm@1.0-SNAPSHOT, fabric-rendering-data-attachment-v1@0.1.4+f8ac1db23a, fabric-resource-loader-v0@0.3.1+facf3bbf3a, fabric-textures-v0@1.0.5+a4467d2a3a, fabric-content-registries-v0@0.1.9+059ea8663a, fabric-tag-extensions-v0@1.0.3+ac8e8c593a, fabric-rendering-fluids-v1@0.1.12+f8ac1db23a, fabric-biome-api-v1@3.0.0+8367596d3a, fabric-commands-v0@0.2.0+52d308363a, fabric-registry-sync-v0@0.6.1+a4467d2a3a, fabric-blockrenderlayer-v1@1.1.4+c6a8ea893a, fabric-lifecycle-events-v1@1.2.0+74cc3b203a, fabric-mining-levels-v0@0.1.2+b764ce993a, fabric-renderer-registries-v1@2.2.0+f8ac1db23a, fabric-loot-tables-v1@1.0.1+432ea1883a, fabric-events-lifecycle-v0@0.2.0+16acbe5b3a, fabric@0.25.1+build.416-1.16, fabric-models-v0@0.1.1+f8ac1db23a, fabric-item-groups-v0@0.2.1+a4467d2a3a, fabric-particles-v1@0.2.2+fb0d9b0e3a, fabric-object-builders-v0@0.7.1+a4467d2a3a, fabric-networking-v0@0.1.10+e00ecb5f3a
-[11:03:58] [main/INFO] (mixin) SpongePowered MIXIN Subsystem Version=0.8.2 Source=file:/C:/Users/potat/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.8.2+build.24/e5a741445d0f425bf3cce946c6cf8c7fb8376b2/sponge-mixin-0.8.2+build.24.jar Service=Knot/Fabric Env=CLIENT
-[11:03:58] [main/INFO] (Fabric|MixinBootstrap) Loaded Fabric development mappings for mixin remapper!
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-networking-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-networking-blockentity-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-screen-handler-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-lifecycle-events-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-indigo-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-rendering-data-attachment-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-structure-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-item-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-events-interaction-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-loot-tables-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-object-builder-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-registries-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-textures-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-registry-sync-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-models-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-blockrenderlayer-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-rendering-fluids-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-biome-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-resource-loader-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-game-rule-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-particles-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-object-builders-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-tag-extensions-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-tool-attribute-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-rendering-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-item-groups-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-content-registries-v0-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-command-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-crash-report-info-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-key-binding-api-v1-refmap.json using remapper chain
-[11:03:59] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker is public in fabric-networking-v0.mixins.json:MixinEntityTracker and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/block/BlockModelRenderer$AmbientOcclusionCalculator is public in fabric-renderer-indigo.mixins.json:MixinAmbientOcclusionCalculator and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask is public in fabric-renderer-indigo.mixins.json:MixinChunkRebuildTask and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/village/TradeOffers$TypeAwareBuyForOneEmeraldFactory is public in fabric-object-builder-v1.mixins.json:TypeAwareTradeMixin and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/server/command/GameRuleCommand$1 is public in fabric-game-rule-api-v1.mixins.json:GameRuleCommandVisitorMixin and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/gui/screen/world/EditGameRulesScreen$RuleListWidget$1 is public in fabric-game-rule-api-v1.mixins.json:client.RuleListWidgetVisitorMixin and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider is public in fabric-particles-v1.mixins.json:ParticleManagerAccessor$SimpleSpriteProviderAccessor and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/tag/Tag$1 is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
-[11:03:59] [main/WARN] (mixin) @Mixin target net/minecraft/tag/RequiredTagList$TagWrapper is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
-[11:04:06] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[11:04:08] [main/ERROR] (Minecraft) Failed to verify authentication
-com.mojang.authlib.exceptions.AuthenticationException: Unauthorized
-	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:119) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.checkPrivileges(YggdrasilSocialInteractionsService.java:94) ~[authlib-2.1.28.jar:?]
+[19:00:01] [main/INFO] (FabricLoader) Loading for game Minecraft 1.16.4
+[19:00:02] [main/INFO] (Fabric|Loader) [FabricLoader] Loading 44 mods: minecraft@1.16.4, fabric-screen-handler-api-v1@1.1.0+6a2618f53a, fabric-networking-blockentity-v0@0.2.5+6a2618f53a, fabric-renderer-api-v1@0.3.3+6a2618f53a, packet_tweaker@0.1.1, fabric-keybindings-v0@0.2.0+6a2618f53a, fabric-command-api-v1@1.0.9+6a2618f53a, fabricloader@0.10.8, fabric-tool-attribute-api-v1@1.2.5+6a2618f53a, fabric-renderer-indigo@0.4.3+6a2618f53a, fabric-structure-api-v1@1.1.0+f8ac1db23a, fabric-containers-v0@0.1.8+6a2618f53a, fabric-object-builder-api-v1@1.9.2+6a2618f53a, fabric-item-api-v1@1.2.0+6a2618f53a, fabric-crash-report-info-v1@0.1.2+b7f9825d3a, fabric-events-interaction-v0@0.4.1+6a2618f53a, fabric-game-rule-api-v1@1.0.3+a4467d2a3a, server_translations_api@1.4.0, fabric-api-base@0.2.0+ba858fb83a, fabric-rendering-v0@1.1.1+6a2618f53a, fabric-key-binding-api-v1@1.0.1+730711c63a, fabric-rendering-v1@1.4.0+6a2618f53a, htm@1.0-SNAPSHOT, fabric-rendering-data-attachment-v1@0.1.4+6a2618f53a, fabric-resource-loader-v0@0.3.2+1944f3e03a, fabric-textures-v0@1.0.5+6a2618f53a, fabric-content-registries-v0@0.1.9+6a2618f53a, fabric-tag-extensions-v0@1.1.0+e77439c73a, fabric-rendering-fluids-v1@0.1.12+6a2618f53a, fabric-biome-api-v1@3.1.0+2e23b97c3a, fabric-registry-sync-v0@0.6.1+6a2618f53a, fabric-commands-v0@0.2.0+6a2618f53a, fabric-blockrenderlayer-v1@1.1.4+6a2618f53a, fabric-lifecycle-events-v1@1.2.0+6a2618f53a, fabric-mining-levels-v0@0.1.2+6a2618f53a, fabric-renderer-registries-v1@2.2.0+6a2618f53a, fabric-loot-tables-v1@1.0.1+6a2618f53a, fabric-events-lifecycle-v0@0.2.0+6a2618f53a, fabric@0.26.0+1.16, fabric-particles-v1@0.2.2+6a2618f53a, fabric-models-v0@0.1.1+6a2618f53a, fabric-item-groups-v0@0.2.1+6a2618f53a, fabric-object-builders-v0@0.7.1+6a2618f53a, fabric-networking-v0@0.1.10+6a2618f53a
+[19:00:02] [main/INFO] (mixin) SpongePowered MIXIN Subsystem Version=0.8.2 Source=file:/C:/Users/potat/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.8.2+build.24/e5a741445d0f425bf3cce946c6cf8c7fb8376b2/sponge-mixin-0.8.2+build.24.jar Service=Knot/Fabric Env=CLIENT
+[19:00:02] [main/INFO] (Fabric|MixinBootstrap) Loaded Fabric development mappings for mixin remapper!
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-networking-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-networking-blockentity-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap server-translations-api-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-screen-handler-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-lifecycle-events-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-renderer-indigo-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-rendering-data-attachment-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-structure-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-item-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-events-interaction-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-loot-tables-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-object-builder-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-renderer-registries-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-textures-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-registry-sync-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-models-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-blockrenderlayer-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-rendering-fluids-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-biome-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-resource-loader-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-game-rule-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-particles-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-object-builders-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-tag-extensions-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-tool-attribute-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-rendering-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-item-groups-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap packet-tweaker-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-content-registries-v0-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-command-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-crash-report-info-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-key-binding-api-v1-refmap.json using remapper chain
+[19:00:02] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
+[19:00:02] [main/WARN] (mixin) @Mixin target net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker is public in fabric-networking-v0.mixins.json:MixinEntityTracker and should be specified in value
+[19:00:02] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/block/BlockModelRenderer$AmbientOcclusionCalculator is public in fabric-renderer-indigo.mixins.json:MixinAmbientOcclusionCalculator and should be specified in value
+[19:00:02] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask is public in fabric-renderer-indigo.mixins.json:MixinChunkRebuildTask and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/village/TradeOffers$TypeAwareBuyForOneEmeraldFactory is public in fabric-object-builder-v1.mixins.json:TypeAwareTradeMixin and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/client/font/FontManager$1 is public in fabric-resource-loader-v0.mixins.json:client.FontManagerResourceReloadListenerMixin and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/server/command/GameRuleCommand$1 is public in fabric-game-rule-api-v1.mixins.json:GameRuleCommandVisitorMixin and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/client/gui/screen/world/EditGameRulesScreen$RuleListWidget$1 is public in fabric-game-rule-api-v1.mixins.json:client.RuleListWidgetVisitorMixin and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider is public in fabric-particles-v1.mixins.json:ParticleManagerAccessor$SimpleSpriteProviderAccessor and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/tag/Tag$1 is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/tag/RequiredTagList$TagWrapper is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
+[19:00:03] [main/WARN] (mixin) @Mixin target net/minecraft/server/ServerNetworkIo$1 is public in packettweaker.mixins.json:ServerNetworkIoAcceptorMixin and should be specified in value
+[19:00:10] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[19:00:12] [main/ERROR] (Minecraft) Failed to verify authentication
+com.mojang.authlib.exceptions.AuthenticationUnavailableException: null
+	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.checkPrivileges(YggdrasilSocialInteractionsService.java:97) ~[authlib-2.1.28.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.<init>(YggdrasilSocialInteractionsService.java:40) ~[authlib-2.1.28.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.createSocialInteractionsService(YggdrasilAuthenticationService.java:152) ~[authlib-2.1.28.jar:?]
 	at net.minecraft.client.MinecraftClient.method_31382(MinecraftClient.java:563) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
@@ -63,69 +66,162 @@ com.mojang.authlib.exceptions.AuthenticationException: Unauthorized
 	at net.fabricmc.loader.launch.knot.Knot.init(Knot.java:141) [fabric-loader-0.10.8.jar:?]
 	at net.fabricmc.loader.launch.knot.KnotClient.main(KnotClient.java:27) [fabric-loader-0.10.8.jar:?]
 	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
-[11:04:08] [main/INFO] (Minecraft) Setting user: Player997
-[11:04:09] [main/INFO] (Indigo) [Indigo] Registering Indigo renderer!
-[11:04:10] [main/INFO] (Minecraft) Backend library: LWJGL version 3.2.2 build 10
-[11:04:17] [main/INFO] (Minecraft) Narrator library for x64 successfully loaded
-[11:04:18] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Screen Handler API (v1), Fabric Renderer API (v1), Fabric Networking Block Entity (v0), Fabric Key Bindings (v0), Fabric Command API (v1), Fabric Loader, Fabric Tool Attribute API (v1), Fabric Renderer - Indigo, Fabric Containers (v0), Fabric Object Builder API (v1), Fabric Item API (v1), Fabric Events Interaction (v0), Fabric Crash Report Info (v1), Fabric Game Rule API (v1), Fabric API Base, Fabric Rendering (v0), Fabric Key Binding API (v1), Fabric Rendering (v1), Fabric Rendering Data Attachment (v1), Fabric Resource Loader (v0), Fabric Textures (v0), Fabric Content Registries (v0), Fabric Tag Extensions (v0), Fabric Rendering Fluids (v1), Fabric Biome API (v1), Fabric Registry Sync (v0), Fabric BlockRenderLayer Registration (v1), Fabric Lifecycle Events (v1), Fabric Mining Levels (v0), Fabric Renderer Registries (v1), Fabric Loot Tables (v1), Fabric Events Lifecycle (v0), Fabric API, Fabric Models (v0), Fabric Item Groups (v0), Fabric Object Builders (v0), Fabric Networking (v0)
-[11:04:18] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
-[11:04:28] [main/INFO] (Minecraft) OpenAL initialized.
-[11:04:28] [main/INFO] (Minecraft) Sound engine started
-[11:04:29] [main/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/blocks.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 256x128x4 minecraft:textures/atlas/signs.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
-[11:04:29] [main/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
-[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[11:07:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[11:07:14] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1)
-[11:07:15] [main/INFO] (Minecraft) Loaded 7 recipes
-[11:07:15] [main/INFO] (Minecraft) Loaded 927 advancements
-[11:07:15] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 79 new biomes in 2.374 ms
-[11:07:16] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[11:07:16] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.16.4
-[11:07:16] [Server thread/INFO] (Minecraft) Generating keypair
-[11:07:17] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[11:07:17] [main/INFO] (Minecraft) Preparing spawn area: 0%
-[11:07:17] [main/INFO] (Minecraft) Preparing spawn area: 0%
-[11:07:18] [main/INFO] (Minecraft) Preparing spawn area: 69%
-[11:07:18] [main/INFO] (Minecraft) Time elapsed: 1161 ms
-[11:07:18] [Server thread/INFO] (Minecraft) Changing view distance to 11, from 10
-[11:07:19] [Server thread/INFO] (Minecraft) Player997[local:E:b95e0e66] logged in with entity id 234 at (221.04312675577265, 74.0, -199.7589217990825)
-[11:07:19] [Server thread/INFO] (Minecraft) Player997 joined the game
-[11:07:19] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[11:07:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
-[11:07:19] [main/INFO] (Minecraft) Loaded 2 advancements
-[11:07:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
-[11:07:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
-[11:08:20] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[11:08:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
-[11:08:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
-[11:08:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
-[11:08:21] [main/INFO] (Minecraft) Using default channel type
-[11:08:21] [main/INFO] (Minecraft) Started serving on 55115
-[11:08:21] [main/INFO] (Minecraft) [CHAT] Local game hosted on port 55115
-[11:08:43] [User Authenticator #1/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[11:08:43] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:55139] logged in with entity id 627 at (208.67734032048656, 76.0, -198.74669409097953)
-[11:08:43] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[11:08:43] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[11:09:30] [Server thread/INFO] (Minecraft) [Player997: Set Potatoboy9999's game mode to Creative Mode]
-[11:09:30] [main/INFO] (Minecraft) [CHAT] Set Potatoboy9999's game mode to Creative Mode
-[11:09:50] [Server thread/FATAL] (Minecraft) Error executing task on Server
+[19:00:12] [main/INFO] (Minecraft) Setting user: Player268
+[19:00:13] [main/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[19:00:14] [main/INFO] (Minecraft) Backend library: LWJGL version 3.2.2 build 10
+[19:00:23] [main/INFO] (Minecraft) Narrator library for x64 successfully loaded
+[19:00:23] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Screen Handler API (v1), Fabric Networking Block Entity (v0), Fabric Renderer API (v1), Fabric Key Bindings (v0), Fabric Command API (v1), Fabric Loader, Fabric Tool Attribute API (v1), Fabric Renderer - Indigo, Fabric Containers (v0), Fabric Object Builder API (v1), Fabric Item API (v1), Fabric Events Interaction (v0), Fabric Crash Report Info (v1), Fabric Game Rule API (v1), Fabric API Base, Fabric Rendering (v0), Fabric Key Binding API (v1), Fabric Rendering (v1), Fabric Rendering Data Attachment (v1), Fabric Resource Loader (v0), Fabric Textures (v0), Fabric Content Registries (v0), Fabric Tag Extensions (v0), Fabric Rendering Fluids (v1), Fabric Biome API (v1), Fabric Registry Sync (v0), Fabric BlockRenderLayer Registration (v1), Fabric Lifecycle Events (v1), Fabric Mining Levels (v0), Fabric Renderer Registries (v1), Fabric Loot Tables (v1), Fabric Events Lifecycle (v0), Fabric API, Fabric Item Groups (v0), Fabric Models (v0), Fabric Object Builders (v0), Fabric Networking (v0)
+[19:00:24] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
+[19:00:33] [main/INFO] (Minecraft) OpenAL initialized.
+[19:00:33] [main/INFO] (Minecraft) Sound engine started
+[19:00:33] [main/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/blocks.png-atlas
+[19:00:33] [main/INFO] (Minecraft) Created: 256x128x4 minecraft:textures/atlas/signs.png-atlas
+[19:00:33] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[19:00:33] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[19:00:33] [main/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[19:00:33] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[19:00:33] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[19:00:34] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[19:00:34] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[19:00:34] [main/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[19:00:45] [main/INFO] (Minecraft) Found new data pack fabric/server_translations_api, loading it automatically
+[19:00:46] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:00:46] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:00:46] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:00:46] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:00:46] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:00:46] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:00:47] [main/INFO] (Minecraft) Loaded 7 recipes
+[19:00:47] [main/INFO] (Minecraft) Loaded 927 advancements
+[19:00:47] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4814 translation keys
+[19:00:47] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 79 new biomes in 2.778 ms
+[19:00:48] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[19:00:48] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.16.4
+[19:00:48] [Server thread/INFO] (Minecraft) Generating keypair
+[19:00:48] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[19:00:49] [main/INFO] (Minecraft) Preparing spawn area: 0%
+[19:00:49] [main/INFO] (Minecraft) Preparing spawn area: 0%
+[19:00:49] [main/INFO] (Minecraft) Time elapsed: 917 ms
+[19:00:50] [Server thread/INFO] (Minecraft) Changing view distance to 11, from 10
+[19:00:51] [Server thread/INFO] (Minecraft) Player268[local:E:f834cb45] logged in with entity id 135 at (-28.654907534970814, 69.0, 210.68342987031917)
+[19:00:51] [Server thread/INFO] (Minecraft) Player268 joined the game
+[19:00:51] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[19:00:51] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[19:00:52] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:00:52] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[19:00:52] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[19:00:57] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:00:58] [main/INFO] (Minecraft) [CHAT] Block not lockable
+[19:01:22] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:01:22.149 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:01:22] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:01:22.171 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:01:29] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:01:30] [main/INFO] (Minecraft) [CHAT] Block not lockable
+[19:01:32] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:01:32] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:01:32] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:01:32] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:01:32] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:01:32] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:01:32] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:01:32] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:01:33] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:01:33] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:01:33] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4814 translation keys
+[19:01:34] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:01:36] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:01:37] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:05:56] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 6620ms or 132 ticks behind
+[19:10:06] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:10:06.919 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:10:06] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:10:06.962 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:10:08] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:10:08.897 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:10:15] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:10:15] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:10:15] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:10:15] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:10:15] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:10:15] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:10:15] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:10:15] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:10:16] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:10:16] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:10:16] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4818 translation keys
+[19:10:18] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 3215ms or 64 ticks behind
+[19:10:18] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:10:21] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:10:22] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:10:22] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
+[19:10:22] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer909
+[19:10:22] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:16:54] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:16:54.331 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:16:54] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:16:54.363 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:16:56] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:16:56.496 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:16:59] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2767ms or 55 ticks behind
+[19:17:04] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:17:04] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:17:04] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:17:04] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:17:04] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:17:04] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:17:04] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:17:04] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:17:06] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:17:06] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:17:06] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4821 translation keys
+[19:17:08] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:17:13] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:17:14] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:17:18] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[19:17:18] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[19:17:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[19:17:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[19:17:21] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:17:22] [main/INFO] (Minecraft) [CHAT] §cBlock not locked
+[19:17:26] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:17:27] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that block
+[19:17:36] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:17:37] [main/INFO] (Minecraft) [CHAT] Object locked
+[19:17:39] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:17:40] [main/INFO] (Minecraft) [CHAT] §bTrusted §aPlayer268
+[19:17:42] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:17:43] [main/INFO] (Minecraft) [CHAT] §bTrusted §aPlayer268
+[19:18:20] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:18:21] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:18:21] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
+[19:18:21] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer268
+[19:18:21] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:22:22] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:22:22.375 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:22:22] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:22:22.401 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:22:24] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:22:24.636 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:22:31] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:22:31] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:22:31] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:22:31] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:22:31] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:22:31] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:22:31] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:22:31] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:22:33] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:22:33] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:22:33] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4822 translation keys
+[19:22:35] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 4070ms or 81 ticks behind
+[19:22:35] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:22:45] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:22:46] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
+[19:22:51] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:22:52] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:22:53] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:22:54] [main/INFO] (Minecraft) [CHAT] §bUnlocked container
+[19:23:09] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:23:10] [Server thread/FATAL] (Minecraft) Error executing task on Server
 java.lang.NullPointerException: null
-	at HTMListeners.lambda$init$0(HTMListeners.java:12) ~[main/:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zbl000$breakBlock(ServerPlayerInteractionManager.java:592) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.tryBreakBlock(ServerPlayerInteractionManager.java:238) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.finishMining(ServerPlayerInteractionManager.java:217) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java:147) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at java.util.concurrent.ConcurrentHashMap.get(ConcurrentHashMap.java:936) ~[?:?]
+	at net.minecraft.util.UserCache.getByUuid(UserCache.java:150) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at com.github.fabricservertools.htm.InteractionManager.info(InteractionManager.java:46) ~[main/:?]
+	at com.github.fabricservertools.htm.InteractionManager.execute(InteractionManager.java:35) ~[main/:?]
+	at com.github.fabricservertools.htm.HTMListeners.lambda$init$1(HTMListeners.java:37) ~[main/:?]
+	at net.fabricmc.fabric.api.event.player.AttackBlockCallback.lambda$static$0(AttackBlockCallback.java:44) ~[fabric-events-interaction-v0-0.4.1+6a2618f53a.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zcb000$startBlockBreak(ServerPlayerInteractionManager.java:559) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerAction(ServerPlayNetworkHandler.java:939) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:40) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:18) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
@@ -138,21 +234,24 @@ java.lang.NullPointerException: null
 	at net.minecraft.util.thread.ThreadExecutor.runTask(ThreadExecutor.java:109) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.method_20415(MinecraftServer.java:732) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.runTask(MinecraftServer.java:726) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:97) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:711) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:119) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:712) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:666) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:227) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at java.lang.Thread.run(Thread.java:834) [?:?]
-[11:10:24] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:10:24.782 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
-[11:10:24] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:10:24.803 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
-[11:10:27] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:10:27.254 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'us/potatoboy/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
-[11:10:34] [Server thread/FATAL] (Minecraft) Error executing task on Server
+[19:23:21] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:23:22] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:23:23] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:23:24] [Server thread/FATAL] (Minecraft) Error executing task on Server
 java.lang.NullPointerException: null
-	at HTMListeners.lambda$init$0(HTMListeners.java:17) ~[main/:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zbl000$breakBlock(ServerPlayerInteractionManager.java:592) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.tryBreakBlock(ServerPlayerInteractionManager.java:238) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.finishMining(ServerPlayerInteractionManager.java:217) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java:147) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at java.util.concurrent.ConcurrentHashMap.get(ConcurrentHashMap.java:936) ~[?:?]
+	at net.minecraft.util.UserCache.getByUuid(UserCache.java:150) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at com.github.fabricservertools.htm.InteractionManager.info(InteractionManager.java:46) ~[main/:?]
+	at com.github.fabricservertools.htm.InteractionManager.execute(InteractionManager.java:35) ~[main/:?]
+	at com.github.fabricservertools.htm.HTMListeners.lambda$init$1(HTMListeners.java:37) ~[main/:?]
+	at net.fabricmc.fabric.api.event.player.AttackBlockCallback.lambda$static$0(AttackBlockCallback.java:44) ~[fabric-events-interaction-v0-0.4.1+6a2618f53a.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zcb000$startBlockBreak(ServerPlayerInteractionManager.java:559) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerAction(ServerPlayNetworkHandler.java:939) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:40) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:18) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
@@ -165,17 +264,191 @@ java.lang.NullPointerException: null
 	at net.minecraft.util.thread.ThreadExecutor.runTask(ThreadExecutor.java:109) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.method_20415(MinecraftServer.java:732) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.runTask(MinecraftServer.java:726) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:97) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:711) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:119) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:712) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:666) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:227) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
 	at java.lang.Thread.run(Thread.java:834) [?:?]
-[11:11:10] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:11:10.454 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
-[11:11:10] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:11:10.530 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/dynmap/heythatsmine/.gradle/loom-cache/log4j.xml'.
-[11:11:13] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 11:11:13.265 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'us/potatoboy/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
-[11:23:47] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 3104ms or 62 ticks behind
-[11:24:04] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2436ms or 48 ticks behind
-[11:27:17] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Disconnected
-[11:27:17] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[11:27:17] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[11:27:19] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 179306ms or 3586 ticks behind
+[19:23:26] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:23:36] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:23:37] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:23:37] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
+[19:23:37] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer909
+[19:23:37] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:24:22] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:24:23] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
+[19:24:27] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:24:28] [Server thread/FATAL] (Minecraft) Error executing task on Server
+java.lang.NullPointerException: null
+	at java.util.concurrent.ConcurrentHashMap.get(ConcurrentHashMap.java:936) ~[?:?]
+	at net.minecraft.util.UserCache.getByUuid(UserCache.java:150) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at com.github.fabricservertools.htm.InteractionManager.info(InteractionManager.java:46) ~[main/:?]
+	at com.github.fabricservertools.htm.InteractionManager.execute(InteractionManager.java:35) ~[main/:?]
+	at com.github.fabricservertools.htm.HTMListeners.lambda$init$1(HTMListeners.java:37) ~[main/:?]
+	at net.fabricmc.fabric.api.event.player.AttackBlockCallback.lambda$static$0(AttackBlockCallback.java:44) ~[fabric-events-interaction-v0-0.4.1+6a2618f53a.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.handler$zcb000$startBlockBreak(ServerPlayerInteractionManager.java:559) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayerInteractionManager.processBlockBreakingAction(ServerPlayerInteractionManager.java) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerAction(ServerPlayNetworkHandler.java:939) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:40) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.apply(PlayerActionC2SPacket.java:18) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.network.NetworkThreadUtils.method_11072(NetworkThreadUtils.java:20) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.ServerTask.run(ServerTask.java:17) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.executeTask(ThreadExecutor.java:136) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ReentrantThreadExecutor.executeTask(ReentrantThreadExecutor.java:22) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:752) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:1776) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTask(ThreadExecutor.java:109) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_20415(MinecraftServer.java:732) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runTask(MinecraftServer.java:726) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:119) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_16208(MinecraftServer.java:712) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:666) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:227) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:834) [?:?]
+[19:25:11] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:25:11.354 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:25:11] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:25:11.381 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:25:13] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:25:13.411 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:25:15] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2088ms or 41 ticks behind
+[19:25:16] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[19:25:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[19:25:18] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[19:25:18] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[19:25:18] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:25:29] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:25:30] [main/INFO] (Minecraft) [CHAT] §Container not locked
+[19:25:43] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:25:43.678 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:25:43] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:25:43.718 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:25:49] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:25:49] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:25:49] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:25:49] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:25:49] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:25:49] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:25:49] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:25:49] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:25:50] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:25:51] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:25:51] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4822 translation keys
+[19:25:51] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2255ms or 45 ticks behind
+[19:25:51] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:25:52] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:25:53] [main/INFO] (Minecraft) [CHAT] §cContainer not locked
+[19:26:24] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:26:24] [main/INFO] (Minecraft) [CHAT] Object locked
+[19:26:31] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:26:31] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:26:33] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:26:34] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
+[19:26:35] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:26:36] [main/INFO] (Minecraft) [CHAT] §bUnlocked container
+[19:26:38] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:26:39] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
+[19:26:53] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:26:53.859 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:26:53] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:26:53.956 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:26:55] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:26:55.846 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:26:59] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:27:00] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
+[19:27:03] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:27:03] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
+[19:27:26] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:27:26.830 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:27:26] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:27:26.873 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:27:29] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:27:29.154 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:27:32] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:27:33] [main/INFO] (Minecraft) [CHAT] §cContainer not locked
+[19:30:06] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:30:06.825 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:30:06] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:30:06.853 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:30:08] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:30:08.913 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:31:05] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:31:05] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:31:05] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:31:05] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:31:05] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:31:05] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:31:05] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:31:05] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:31:07] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:31:07] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:31:07] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4824 translation keys
+[19:31:07] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2517ms or 50 ticks behind
+[19:31:08] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:31:13] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:31:13] [main/INFO] (Minecraft) [CHAT] §bContainer set to: §r§aPRIVATE
+[19:31:19] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:31:19] [main/INFO] (Minecraft) [CHAT] §cContainer already locked
+[19:31:22] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:31:22] [main/INFO] (Minecraft) [CHAT] §bContainer set to: §r§aPUBLIC
+[19:31:27] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:31:27] [main/INFO] (Minecraft) [CHAT] §cContainer not locked
+[19:31:31] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:31:33] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:31:33] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPUBLIC
+[19:31:33] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer268
+[19:31:33] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:31:47] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:31:48] [main/INFO] (Minecraft) [CHAT] §cContainer not locked
+[19:31:59] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:32:00] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:32:00] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
+[19:32:00] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer268
+[19:32:00] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:32:12] [main/INFO] (Minecraft) [CHAT] Left click a block to select
+[19:32:13] [main/INFO] (Minecraft) [CHAT] §cContainer already locked
+[19:32:58] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:32:58.990 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:32:59] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:32:59.005 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:33:00] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:33:00.883 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:33:03] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2202ms or 44 ticks behind
+[19:33:20] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:33:20.265 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:33:20] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:33:20.293 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:33:22] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:33:22.394 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:33:27] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:33:27] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:33:27] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:33:27] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:33:27] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:33:27] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:33:27] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:33:27] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:33:29] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:33:29] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:33:29] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4825 translation keys
+[19:33:32] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 4169ms or 83 ticks behind
+[19:33:32] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:33:32] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
+[19:33:33] [main/INFO] (Minecraft) [CHAT] §bContainer set to: §r§aPUBLIC
+[19:33:45] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
+[19:33:46] [main/INFO] (Minecraft) [CHAT] §cContainer already locked
+[19:33:47] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
+[19:33:48] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:33:48] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPUBLIC
+[19:33:48] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer268
+[19:33:48] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:33:52] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
+[19:33:53] [main/INFO] (Minecraft) [CHAT] §cBlock not lockable
+[19:33:58] [main/INFO] (Minecraft) [CHAT] Invalid lock type
+[19:35:25] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:35:25.078 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:35:25] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:35:25.100 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[19:35:27] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 19:35:27.132 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[19:35:38] [Server thread/INFO] (Minecraft) [Player268: Reloading!]
+[19:35:38] [main/INFO] (Minecraft) [CHAT] Reloading!
+[19:35:39] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:35:39] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:35:39] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:35:39] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[19:35:39] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[19:35:39] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
+[19:35:40] [Server thread/INFO] (Minecraft) Loaded 7 recipes
+[19:35:41] [Server thread/INFO] (Minecraft) Loaded 927 advancements
+[19:35:41] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4826 translation keys
+[19:35:43] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 4836ms or 96 ticks behind
+[19:35:43] [main/INFO] (Minecraft) Loaded 0 advancements
+[19:35:48] [main/INFO] (Minecraft) [CHAT] §cInvalid lock type
+[19:35:55] [main/INFO] (Minecraft) [CHAT] Unknown command or insufficient permissions
+[19:35:58] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
+[19:36:00] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:36:00] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
+[19:36:00] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer909
+[19:36:00] [main/INFO] (Minecraft) [CHAT] §b-------------------------
+[19:36:18] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[19:36:18] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[19:36:18] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[19:36:18] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end

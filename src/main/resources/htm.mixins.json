@@ -1,12 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "us.potatoboy.htm.mixin",
+  "package": "com.github.fabricservertools.htm.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "com.github.fabricservertools.htm.mixin.LockableContainerMixin"
-  ],
-  "client": [
+    "LockableContainerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

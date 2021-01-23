@@ -12,6 +12,7 @@ import com.github.fabricservertools.htm.LockableObject;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+/*
 @SuppressWarnings("MixinInnerClass")
 @Mixin(ChestBlock.class)
 public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntity> {
@@ -49,3 +50,4 @@ public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntit
                 }
             };
 }
+ */

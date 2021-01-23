@@ -7,6 +7,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class HTMContainerLock {
                 if (trusted.contains(player.getUuid())) return true;
         }
 
-        player.sendMessage(new LiteralText("Locked"), true);
+        player.sendMessage(new TranslatableText("text.htm.locked"), true);
         player.playSound(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
         return false;
     }

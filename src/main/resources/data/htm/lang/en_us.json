@@ -1,0 +1,16 @@
+{
+  "text.htm.error.unlockable": "§cBlock not lockable",
+  "text.htm.error.no_lock": "§cContainer not locked",
+  "text.htm.error.not_owner": "§cNot allowed to modify that container",
+  "text.htm.error.already_locked": "§cContainer already locked",
+  "text.htm.error.lock_type": "§cInvalid lock type",
+
+  "text.htm.select": "§bLeft click a block to select",
+  "text.htm.locked": "§cLocked",
+  "text.htm.divider": "§b-------------------------",
+  "text.htm.type": "§b§lType: §r§a%s",
+  "text.htm.owner": "§b§lOwner: §r§a%s",
+  "text.htm.trusted": "§bTrusted §a%s",
+  "text.htm.unlocked": "§bUnlocked container",
+  "text.htm.set": "§bContainer set to: §r§a%s"
+}

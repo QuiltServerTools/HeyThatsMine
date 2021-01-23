@@ -1,9 +1,14 @@
 package com.github.fabricservertools.htm;
 
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
+
+import java.util.HashMap;
 
 public class HTMListeners {
     public static void init() {
@@ -24,5 +29,16 @@ public class HTMListeners {
 
             return true;
         });
+
+        AttackBlockCallback.EVENT.register(((player, world, hand, pos, direction) -> {
+            if (world.isClient) return ActionResult.PASS;
+
+            if (InteractionManager.pendingActions.containsKey(player)) {
+                InteractionManager.execute((ServerPlayerEntity) player, world, pos);
+                return ActionResult.SUCCESS;
+            }
+
+            return ActionResult.PASS;
+        }));
     }
 }

@@ -4,10 +4,7 @@ plugins {
 }
 
 repositories {
-    maven {
-        name = "Ladysnake Libs"
-        url = 'https://dl.bintray.com/ladysnake/libs'
-    }
+    maven { url = "https://maven.nucleoid.xyz/" }
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -28,6 +25,9 @@ dependencies {
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
+
+    modImplementation 'fr.catcore:server-translations-api:1.4.0'
+    include 'fr.catcore:server-translations-api:1.4.0'
 }
 
 processResources {
