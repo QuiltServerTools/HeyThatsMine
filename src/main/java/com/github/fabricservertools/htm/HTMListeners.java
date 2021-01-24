@@ -6,9 +6,8 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
-
-import java.util.HashMap;
 
 public class HTMListeners {
     public static void init() {
@@ -20,11 +19,16 @@ public class HTMListeners {
 
                 HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
-                if (lock.getOwner() == null || lock.getOwner().equals(player.getUuid())) {
+                if (lock.getOwner() == null) {
                     return true;
                 }
 
-                return false;
+                if (lock.getOwner() != player.getUuid()) {
+                    player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
+                    return false;
+                }
+
+                return true;
             }
 
             return true;

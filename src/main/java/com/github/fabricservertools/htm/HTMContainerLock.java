@@ -6,7 +6,6 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 import java.util.HashSet;
@@ -78,6 +77,10 @@ public class HTMContainerLock {
         return owner;
     }
 
+    public HashSet<UUID> getTrusted() {
+        return trusted;
+    }
+
     public void setType(LockType type, ServerPlayerEntity owner) {
         this.type = type;
         this.owner = owner.getUuid();
@@ -89,7 +92,7 @@ public class HTMContainerLock {
         trusted = new HashSet<>();
     }
 
-    public void addTrust(UUID id) {
-        trusted.add(id);
+    public boolean addTrust(UUID id) {
+        return trusted.add(id);
     }
 }

@@ -1,20 +1,16 @@
 package com.github.fabricservertools.htm;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class InteractionManager {
     public static HashMap<ServerPlayerEntity, HTMInteractAction> pendingActions = new HashMap<>();
@@ -53,6 +49,14 @@ public class InteractionManager {
         player.sendMessage(new TranslatableText("text.htm.divider"), false);
         player.sendMessage(new TranslatableText("text.htm.type", lock.getType().name()), false);
         player.sendMessage(new TranslatableText("text.htm.owner", owner.getName()), false);
+        if (owner.getId().equals(player.getUuid())) {
+            String trustedList = lock.getTrusted()
+                    .stream()
+                    .map(a -> world.getServer().getUserCache().getByUuid(a).getName())
+                    .collect(Collectors.joining(", "));
+
+            player.sendMessage(new TranslatableText("text.htm.trusted", trustedList), false);
+        }
         player.sendMessage(new TranslatableText("text.htm.divider"), false);
     }
 
@@ -70,8 +74,16 @@ public class InteractionManager {
             return;
         }
 
-        lock.addTrust(action.getTrustPlayer().getId());
-        player.sendMessage(new TranslatableText("text.htm.trusted", action.getTrustPlayer().getName()), false);
+        if (lock.getOwner() == action.getTrustPlayer().getId()) {
+            player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+            return;
+        }
+
+        if (lock.addTrust(action.getTrustPlayer().getId())){
+            player.sendMessage(new TranslatableText("text.htm.trust", action.getTrustPlayer().getName()), false);
+        } else {
+            player.sendMessage(new TranslatableText("text.htm.error.already_trusted", action.getTrustPlayer().getName()), false);
+        }
     }
 
     public static void remove(HTMInteractAction action, ServerPlayerEntity player, World world, BlockPos pos) {
