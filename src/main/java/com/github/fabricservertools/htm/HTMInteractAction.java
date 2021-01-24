@@ -1,17 +1,16 @@
 package com.github.fabricservertools.htm;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 public class HTMInteractAction {
     private final ActionType type;
     private final LockType setType;
-    private final GameProfile trustPlayer;
+    private final GameProfile targetPlayer;
 
     private HTMInteractAction(ActionType type, LockType createType, GameProfile trustPlayer) {
         this.type = type;
         this.setType = createType;
-        this.trustPlayer = trustPlayer;
+        this.targetPlayer = trustPlayer;
     }
 
     public static HTMInteractAction set(LockType createType) {
@@ -20,6 +19,10 @@ public class HTMInteractAction {
 
     public static HTMInteractAction trust(GameProfile playerEntity) {
         return new HTMInteractAction(ActionType.TRUST, null, playerEntity);
+    }
+
+    public static HTMInteractAction transfer(GameProfile playerEntity) {
+        return new HTMInteractAction(ActionType.TRANSFER, null, playerEntity);
     }
 
     public static HTMInteractAction remove() {
@@ -38,14 +41,15 @@ public class HTMInteractAction {
         return setType;
     }
 
-    public GameProfile getTrustPlayer() {
-        return trustPlayer;
+    public GameProfile getTargetPlayer() {
+        return targetPlayer;
     }
 
     enum ActionType {
         SET,
         TRUST,
         REMOVE,
-        INFO
+        INFO,
+        TRANSFER
     }
 }

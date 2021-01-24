@@ -14,6 +14,8 @@
   "text.htm.owner": "§b§lOwner: §r§a%s",
   "text.htm.trusted": "§b§lTrusted: §r§a%s",
   "text.htm.trust": "§bTrusted §a%s",
+  "text.htm.transfer": "§bTransferred container to §a%s",
   "text.htm.unlocked": "§bUnlocked container",
-  "text.htm.set": "§bContainer set to: §r§a%s"
+  "text.htm.set": "§bContainer set to: §r§a%s",
+  "text.htm.override": "§bContainer owned by: §r§a%s §cOverriding"
 }

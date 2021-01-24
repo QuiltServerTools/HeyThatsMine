@@ -1,302 +1,142 @@
-[21:38:53] [main/INFO] (FabricLoader) Loading for game Minecraft 1.16.4
-[21:38:53] [main/INFO] (Fabric|Loader) [FabricLoader] Loading 44 mods: minecraft@1.16.4, fabric-screen-handler-api-v1@1.1.0+6a2618f53a, fabric-networking-blockentity-v0@0.2.5+6a2618f53a, fabric-renderer-api-v1@0.3.3+6a2618f53a, packet_tweaker@0.1.1, fabric-keybindings-v0@0.2.0+6a2618f53a, fabric-command-api-v1@1.0.9+6a2618f53a, fabricloader@0.10.8, fabric-tool-attribute-api-v1@1.2.5+6a2618f53a, fabric-renderer-indigo@0.4.3+6a2618f53a, fabric-structure-api-v1@1.1.0+f8ac1db23a, fabric-containers-v0@0.1.8+6a2618f53a, fabric-object-builder-api-v1@1.9.2+6a2618f53a, fabric-item-api-v1@1.2.0+6a2618f53a, fabric-crash-report-info-v1@0.1.2+b7f9825d3a, fabric-events-interaction-v0@0.4.1+6a2618f53a, fabric-game-rule-api-v1@1.0.3+a4467d2a3a, server_translations_api@1.4.0, fabric-api-base@0.2.0+ba858fb83a, fabric-rendering-v0@1.1.1+6a2618f53a, fabric-key-binding-api-v1@1.0.1+730711c63a, fabric-rendering-v1@1.4.0+6a2618f53a, htm@1.0-SNAPSHOT, fabric-rendering-data-attachment-v1@0.1.4+6a2618f53a, fabric-resource-loader-v0@0.3.2+1944f3e03a, fabric-textures-v0@1.0.5+6a2618f53a, fabric-content-registries-v0@0.1.9+6a2618f53a, fabric-tag-extensions-v0@1.1.0+e77439c73a, fabric-rendering-fluids-v1@0.1.12+6a2618f53a, fabric-biome-api-v1@3.1.0+2e23b97c3a, fabric-registry-sync-v0@0.6.1+6a2618f53a, fabric-commands-v0@0.2.0+6a2618f53a, fabric-blockrenderlayer-v1@1.1.4+6a2618f53a, fabric-lifecycle-events-v1@1.2.0+6a2618f53a, fabric-mining-levels-v0@0.1.2+6a2618f53a, fabric-renderer-registries-v1@2.2.0+6a2618f53a, fabric-loot-tables-v1@1.0.1+6a2618f53a, fabric-events-lifecycle-v0@0.2.0+6a2618f53a, fabric@0.26.0+1.16, fabric-particles-v1@0.2.2+6a2618f53a, fabric-models-v0@0.1.1+6a2618f53a, fabric-item-groups-v0@0.2.1+6a2618f53a, fabric-object-builders-v0@0.7.1+6a2618f53a, fabric-networking-v0@0.1.10+6a2618f53a
-[21:38:54] [main/INFO] (mixin) SpongePowered MIXIN Subsystem Version=0.8.2 Source=file:/C:/Users/potat/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.8.2+build.24/e5a741445d0f425bf3cce946c6cf8c7fb8376b2/sponge-mixin-0.8.2+build.24.jar Service=Knot/Fabric Env=CLIENT
-[21:38:54] [main/INFO] (Fabric|MixinBootstrap) Loaded Fabric development mappings for mixin remapper!
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-networking-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-networking-blockentity-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap server-translations-api-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-screen-handler-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-lifecycle-events-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-renderer-indigo-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-rendering-data-attachment-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-structure-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-item-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-events-interaction-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-loot-tables-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-object-builder-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-renderer-registries-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-textures-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-registry-sync-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-models-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-blockrenderlayer-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-rendering-fluids-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-biome-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-resource-loader-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-game-rule-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-particles-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-object-builders-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-tag-extensions-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-tool-attribute-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-rendering-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-item-groups-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap packet-tweaker-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-content-registries-v0-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-command-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-crash-report-info-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-key-binding-api-v1-refmap.json using remapper chain
-[21:38:54] [main/INFO] (mixin) Remapping refMap fabric-renderer-api-v1-refmap.json using remapper chain
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker is public in fabric-networking-v0.mixins.json:MixinEntityTracker and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/block/BlockModelRenderer$AmbientOcclusionCalculator is public in fabric-renderer-indigo.mixins.json:MixinAmbientOcclusionCalculator and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask is public in fabric-renderer-indigo.mixins.json:MixinChunkRebuildTask and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/village/TradeOffers$TypeAwareBuyForOneEmeraldFactory is public in fabric-object-builder-v1.mixins.json:TypeAwareTradeMixin and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/client/font/FontManager$1 is public in fabric-resource-loader-v0.mixins.json:client.FontManagerResourceReloadListenerMixin and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/server/command/GameRuleCommand$1 is public in fabric-game-rule-api-v1.mixins.json:GameRuleCommandVisitorMixin and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/client/gui/screen/world/EditGameRulesScreen$RuleListWidget$1 is public in fabric-game-rule-api-v1.mixins.json:client.RuleListWidgetVisitorMixin and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/client/particle/ParticleManager$SimpleSpriteProvider is public in fabric-particles-v1.mixins.json:ParticleManagerAccessor$SimpleSpriteProviderAccessor and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/tag/Tag$1 is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/tag/RequiredTagList$TagWrapper is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
-[21:38:54] [main/WARN] (mixin) @Mixin target net/minecraft/server/ServerNetworkIo$1 is public in packettweaker.mixins.json:ServerNetworkIoAcceptorMixin and should be specified in value
-[21:39:01] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[21:39:03] [main/ERROR] (Minecraft) Failed to verify authentication
-com.mojang.authlib.exceptions.AuthenticationUnavailableException: null
-	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.checkPrivileges(YggdrasilSocialInteractionsService.java:97) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.<init>(YggdrasilSocialInteractionsService.java:40) ~[authlib-2.1.28.jar:?]
-	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.createSocialInteractionsService(YggdrasilAuthenticationService.java:152) ~[authlib-2.1.28.jar:?]
-	at net.minecraft.client.MinecraftClient.method_31382(MinecraftClient.java:563) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.client.MinecraftClient.<init>(MinecraftClient.java:398) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:149) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
-	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
-	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
-	at net.fabricmc.loader.game.MinecraftGameProvider.launch(MinecraftGameProvider.java:224) [fabric-loader-0.10.8.jar:?]
-	at net.fabricmc.loader.launch.knot.Knot.init(Knot.java:141) [fabric-loader-0.10.8.jar:?]
-	at net.fabricmc.loader.launch.knot.KnotClient.main(KnotClient.java:27) [fabric-loader-0.10.8.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
-[21:39:03] [main/INFO] (Minecraft) Setting user: Player36
-[21:39:04] [main/INFO] (Indigo) [Indigo] Registering Indigo renderer!
-[21:39:05] [main/INFO] (Minecraft) Backend library: LWJGL version 3.2.2 build 10
-[21:39:12] [main/INFO] (Minecraft) Narrator library for x64 successfully loaded
-[21:39:12] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Screen Handler API (v1), Fabric Networking Block Entity (v0), Fabric Renderer API (v1), Fabric Key Bindings (v0), Fabric Command API (v1), Fabric Loader, Fabric Tool Attribute API (v1), Fabric Renderer - Indigo, Fabric Containers (v0), Fabric Object Builder API (v1), Fabric Item API (v1), Fabric Events Interaction (v0), Fabric Crash Report Info (v1), Fabric Game Rule API (v1), Fabric API Base, Fabric Rendering (v0), Fabric Key Binding API (v1), Fabric Rendering (v1), Fabric Rendering Data Attachment (v1), Fabric Resource Loader (v0), Fabric Textures (v0), Fabric Content Registries (v0), Fabric Tag Extensions (v0), Fabric Rendering Fluids (v1), Fabric Biome API (v1), Fabric Registry Sync (v0), Fabric BlockRenderLayer Registration (v1), Fabric Lifecycle Events (v1), Fabric Mining Levels (v0), Fabric Renderer Registries (v1), Fabric Loot Tables (v1), Fabric Events Lifecycle (v0), Fabric API, Fabric Item Groups (v0), Fabric Models (v0), Fabric Object Builders (v0), Fabric Networking (v0)
-[21:39:14] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
-[21:39:22] [main/INFO] (Minecraft) OpenAL initialized.
-[21:39:22] [main/INFO] (Minecraft) Sound engine started
-[21:39:22] [main/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/blocks.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 256x128x4 minecraft:textures/atlas/signs.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
-[21:39:22] [main/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[21:39:36] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[21:39:36] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21:39:36] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21:39:36] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[21:39:36] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21:39:36] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
-[21:39:37] [main/INFO] (Minecraft) Loaded 7 recipes
-[21:39:37] [main/INFO] (Minecraft) Loaded 927 advancements
-[21:39:37] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4828 translation keys
-[21:39:37] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 79 new biomes in 1.604 ms
-[21:39:39] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[21:39:39] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.16.4
-[21:39:39] [Server thread/INFO] (Minecraft) Generating keypair
-[21:39:40] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[21:39:41] [main/INFO] (Minecraft) Preparing spawn area: 0%
-[21:39:41] [main/INFO] (Minecraft) Preparing spawn area: 0%
-[21:39:41] [main/INFO] (Minecraft) Preparing spawn area: 0%
-[21:39:41] [main/INFO] (Minecraft) Preparing spawn area: 0%
-[21:39:42] [main/INFO] (Minecraft) Preparing spawn area: 40%
-[21:39:42] [main/INFO] (Minecraft) Time elapsed: 2292 ms
-[21:39:42] [Server thread/INFO] (Minecraft) Changing view distance to 11, from 10
-[21:39:43] [Server thread/INFO] (Minecraft) Player36[local:E:6c0d8cb5] logged in with entity id 142 at (-40.72418274245818, 67.0, 229.20067039146628)
-[21:39:43] [Server thread/INFO] (Minecraft) Player36 joined the game
-[21:39:44] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[21:39:44] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
-[21:39:44] [main/INFO] (Minecraft) Loaded 0 advancements
-[21:39:44] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
-[21:39:44] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
-[21:39:45] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[21:39:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
-[21:39:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
-[21:39:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
-[21:39:47] [main/INFO] (Minecraft) Using default channel type
-[21:39:47] [main/INFO] (Minecraft) Started serving on 51914
-[21:39:47] [main/INFO] (Minecraft) [CHAT] Local game hosted on port 51914
-[21:39:49] [User Authenticator #1/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[21:39:50] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:51918] logged in with entity id 243 at (-43.69999998807907, 66.0, 232.47132347579387)
-[21:39:50] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[21:39:50] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[21:39:51] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2023ms or 40 ticks behind
-[21:39:55] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:39:56] [main/INFO] (Minecraft) [CHAT] §cNot allowed to modify that container
-[21:40:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-45, y=66, z=234}
-[21:40:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-45, y=66, z=234}
-[21:40:14] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=66, z=232}
-[21:40:17] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=66, z=232}
-[21:40:21] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:40:22] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:40:22] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
-[21:40:22] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPotatoboy9999
-[21:40:22] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:41:12] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Disconnected
-[21:41:12] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[21:41:12] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[21:41:23] [User Authenticator #2/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[21:41:23] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:51948] logged in with entity id 325 at (-40.06646329419061, 66.0, 231.95615001395865)
-[21:41:23] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[21:41:23] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[21:42:20] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 46346ms or 926 ticks behind
-[21:42:20] [Netty Server IO #4/ERROR] (Minecraft) java.util.ConcurrentModificationException
-[21:42:21] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Internal Exception: io.netty.handler.codec.EncoderException: java.util.ConcurrentModificationException
-[21:42:21] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[21:42:21] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[21:44:40] [User Authenticator #3/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[21:44:40] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:52072] logged in with entity id 407 at (-40.06646329419061, 66.0, 231.95615001395865)
-[21:44:40] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[21:44:40] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[21:44:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=66, z=232}
-[21:44:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=66, z=232}
-[21:45:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=67, z=231}
-[21:45:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=67, z=231}
-[21:45:35] [Netty Server IO #5/ERROR] (Minecraft) java.util.ConcurrentModificationException
-[21:45:35] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Internal Exception: io.netty.handler.codec.EncoderException: java.util.ConcurrentModificationException
-[21:45:35] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[21:45:35] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[21:45:35] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2786ms or 55 ticks behind
-[21:45:39] [User Authenticator #4/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[21:45:39] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:52093] logged in with entity id 427 at (-39.42895215374363, 66.0, 231.52733950688418)
-[21:45:39] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[21:45:39] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[21:45:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=67, z=231}
-[21:45:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-39, y=67, z=231}
-[21:45:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-41, y=67, z=230}
-[21:46:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-41, y=67, z=230}
-[21:46:08] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-41, y=67, z=230}
-[21:46:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-41, y=67, z=230}
-[21:47:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-41, y=67, z=230}
-[21:47:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-41, y=67, z=230}
-[21:47:14] [Netty Server IO #6/ERROR] (Minecraft) java.util.ConcurrentModificationException
-[21:47:14] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Internal Exception: io.netty.handler.codec.EncoderException: java.util.ConcurrentModificationException
-[21:47:14] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[21:47:14] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[21:50:53] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 21:50:53.053 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
-[21:50:53] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 21:50:53.068 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
-[21:50:55] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 21:50:55.268 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
-[21:50:55] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 21:50:55.274 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
-[21:50:55] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 21:50:55.291 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'net/minecraft/block/entity/BrewingStandBlockEntity' has been enhanced with anonymous classes for hotswap.
-[21:50:55] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 21:50:55.296 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'net/minecraft/block/entity/AbstractFurnaceBlockEntity' has been enhanced with anonymous classes for hotswap.
-[21:50:58] [User Authenticator #5/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[21:50:58] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:52156] logged in with entity id 569 at (-39.7135952083986, 66.0, 232.81680389696888)
-[21:50:58] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[21:50:58] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[21:51:18] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:51:47] [Server thread/INFO] (Minecraft) [Player36: Reloading!]
-[21:51:47] [main/INFO] (Minecraft) [CHAT] Reloading!
-[21:51:47] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[21:51:47] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21:51:47] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21:51:47] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[21:51:47] [Server thread/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21:51:47] [Server thread/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Tool Attribute API (v1), Hey That's Mine, Server Translations API
-[21:51:48] [Server thread/INFO] (Minecraft) Loaded 7 recipes
-[21:51:48] [Server thread/INFO] (Minecraft) Loaded 927 advancements
-[21:51:48] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4829 translation keys
-[21:51:49] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2345ms or 46 ticks behind
-[21:51:49] [main/INFO] (Minecraft) Loaded 0 advancements
-[21:51:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-47, y=67, z=231}
-[21:52:52] [Netty Server IO #7/ERROR] (Minecraft) java.util.ConcurrentModificationException
-[21:52:52] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Internal Exception: io.netty.handler.codec.EncoderException: java.util.ConcurrentModificationException
-[21:52:52] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[21:52:52] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[21:53:02] [User Authenticator #6/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
-[21:53:03] [Server thread/INFO] (Minecraft) Potatoboy9999[/10.0.0.144:52196] logged in with entity id 651 at (-45.32366311583962, 67.0, 232.12454420840152)
-[21:53:03] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
-[21:53:03] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 joined the game
-[21:53:34] [Netty Server IO #8/ERROR] (Minecraft) java.util.ConcurrentModificationException
-[21:53:34] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Internal Exception: io.netty.handler.codec.EncoderException: java.util.ConcurrentModificationException
-[21:53:34] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
-[21:53:34] [main/INFO] (Minecraft) [CHAT] Potatoboy9999 left the game
-[21:53:47] [main/INFO] (Minecraft) Loaded 2 advancements
-[21:53:59] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:54:00] [main/INFO] (Minecraft) [CHAT] §cContainer not locked
-[21:54:05] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:54:06] [main/INFO] (Minecraft) [CHAT] §bContainer set to: §r§aPRIVATE
-[21:55:03] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:03] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:55:03] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
-[21:55:03] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer36
-[21:55:03] [main/INFO] (Minecraft) [CHAT] §b§lTrusted: §r§a
-[21:55:03] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:55:11] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:11] [main/INFO] (Minecraft) [CHAT] §cCan't trust self
-[21:55:14] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:15] [main/INFO] (Minecraft) [CHAT] §bTrusted §aBob
-[21:55:17] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:18] [main/INFO] (Minecraft) [CHAT] §cAlready trusted §r§aBob
-[21:55:22] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:22] [main/INFO] (Minecraft) [CHAT] §bTrusted §abobb
-[21:55:25] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:25] [main/INFO] (Minecraft) [CHAT] §bTrusted §aBobbb
-[21:55:27] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:27] [main/INFO] (Minecraft) [CHAT] §bTrusted §aBobbbb
-[21:55:30] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:31] [main/INFO] (Minecraft) [CHAT] §bTrusted §aYeeter
-[21:55:36] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:37] [main/INFO] (Minecraft) [CHAT] §cAlready trusted §r§aYeeter
-[21:55:39] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:55:40] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:55:40] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
-[21:55:40] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer36
-[21:55:40] [main/INFO] (Minecraft) [CHAT] §b§lTrusted: §r§abobb, Yeeter, Bobbbb, Bobbb, Bob
-[21:55:40] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:56:47] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:56:48] [main/INFO] (Minecraft) [CHAT] §bTrusted §aDAVE
-[21:56:52] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:56:53] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:56:53] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
-[21:56:53] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer36
-[21:56:53] [main/INFO] (Minecraft) [CHAT] §b§lTrusted: §r§abobb, DAVE, Yeeter, Bobbbb, Bobbb, Bob
-[21:56:53] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:57:20] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:57:20] [main/INFO] (Minecraft) [CHAT] §bTrusted §aDavee
-[21:57:23] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:57:23] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:57:23] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
-[21:57:23] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer36
-[21:57:23] [main/INFO] (Minecraft) [CHAT] §b§lTrusted: §r§abobb, DAVE, Yeeter, Bobbbb, Bobbb, Davee, Bob
-[21:57:23] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:57:36] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:57:36] [main/INFO] (Minecraft) [CHAT] §bTrusted §aSteve
-[21:57:40] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:57:40] [main/INFO] (Minecraft) [CHAT] §bTrusted §ajlkfs
-[21:57:42] [main/INFO] (Minecraft) [CHAT] §bLeft click a block to select
-[21:57:43] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:57:43] [main/INFO] (Minecraft) [CHAT] §b§lType: §r§aPRIVATE
-[21:57:43] [main/INFO] (Minecraft) [CHAT] §b§lOwner: §r§aPlayer36
-[21:57:43] [main/INFO] (Minecraft) [CHAT] §b§lTrusted: §r§abobb, DAVE, Yeeter, Bobbbb, Bobbb, Steve, Davee, Bob, jlkfs
-[21:57:43] [main/INFO] (Minecraft) [CHAT] §b-------------------------
-[21:58:55] [Server thread/INFO] (Minecraft) Player36 lost connection: Disconnected
-[21:58:55] [Server thread/INFO] (Minecraft) Player36 left the game
-[21:58:55] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
-[21:58:55] [Server thread/INFO] (Minecraft) Stopping server
-[21:58:55] [Server thread/INFO] (Minecraft) Saving players
-[21:58:55] [Server thread/INFO] (Minecraft) Saving worlds
-[21:58:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
-[21:59:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (New World): All chunks are saved
-[21:59:00] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
-[21:59:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[21:59:00] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
-[21:59:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[21:59:01] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (New World): All chunks are saved
-[21:59:01] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[21:59:01] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[21:59:01] [MCO Compatability Checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
-[21:59:01] [MCO Compatability Checker #1/ERROR] (Minecraft) Couldn't connect to realms
-net.minecraft.client.realms.exception.RealmsServiceException: Invalid session id
-	at net.minecraft.client.realms.RealmsClient.execute(RealmsClient.java:342) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.client.realms.RealmsClient.clientCompatible(RealmsClient.java:130) ~[minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-	at net.minecraft.client.realms.gui.screen.RealmsMainScreen$1.run(RealmsMainScreen.java:483) [minecraft-1.16.4-mapped-net.fabricmc.yarn-1.16.4+build.7-v2.jar:?]
-[21:59:03] [main/INFO] (Minecraft) Stopping!
+[15:31:56] [main/INFO] (FabricLoader) Loading for game Minecraft 1.16.4
+[15:31:56] [main/INFO] (Fabric|Loader) [FabricLoader] Loading 50 mods: fabric-renderer-api-v1@0.4.1+ca58154a7d, fabric-keybindings-v0@0.2.1+ca58154a7d, fabricloader@0.11.1, fabric-structure-api-v1@1.1.4+ca58154a7d, fabric-containers-v0@0.1.10+ca58154a7d, fabric-object-builder-api-v1@1.9.3+ca58154a7d, fabric-dimensions-v1@2.0.2+ca58154a7d, fabric-permissions-api-v0@0.1-SNAPSHOT, java@11, fabric-game-rule-api-v1@1.0.6+ca58154a7d, server_translations_api@1.4.0, fabric-api-base@0.2.0+daa38b3d7d, fabric-rendering-data-attachment-v1@0.1.5+ca58154a7d, fabric-textures-v0@1.0.6+ca58154a7d, fabric-rendering-fluids-v1@0.1.13+ca58154a7d, fabric-blockrenderlayer-v1@1.1.5+ca58154a7d, fabric-lifecycle-events-v1@1.2.1+ca58154a7d, fabric-renderer-registries-v1@2.2.1+ca58154a7d, luckperms@5.2.92, fabric-loot-tables-v1@1.0.2+ca58154a7d, fabric@0.29.4+1.16, fabric-particles-v1@0.2.4+ca58154a7d, fabric-networking-v0@0.3.2+ca58154a7d, minecraft@1.16.4, fabric-networking-blockentity-v0@0.2.8+ca58154a7d, fabric-screen-handler-api-v1@1.1.1+ca58154a7d, packet_tweaker@0.1.1, fabric-command-api-v1@1.0.10+ca58154a7d, fabric-tool-attribute-api-v1@1.2.6+ca58154a7d, fabric-renderer-indigo@0.4.4+ca58154a7d, fabric-crash-report-info-v1@0.1.3+ca58154a7d, fabric-item-api-v1@1.2.1+ca58154a7d, fabric-events-interaction-v0@0.4.2+ca58154a7d, fabric-entity-events-v1@1.0.3+ca58154a7d, fabric-rendering-v0@1.1.2+ca58154a7d, fabric-key-binding-api-v1@1.0.2+ca58154a7d, fabric-rendering-v1@1.5.1+ca58154a7d, htm@1.0-SNAPSHOT, fabric-resource-loader-v0@0.4.2+ca58154a7d, fabric-content-registries-v0@0.2.1+ca58154a7d, fabric-tag-extensions-v0@1.1.1+ca58154a7d, fabric-biome-api-v1@3.1.1+ca58154a7d, fabric-registry-sync-v0@0.7.4+ca58154a7d, fabric-commands-v0@0.2.2+ca58154a7d, fabric-mining-levels-v0@0.1.3+ca58154a7d, fabric-networking-api-v1@1.0.1+ca58154a7d, fabric-events-lifecycle-v0@0.2.1+ca58154a7d, fabric-models-v0@0.2.1+ca58154a7d, fabric-item-groups-v0@0.2.3+ca58154a7d, fabric-object-builders-v0@0.7.2+ca58154a7d
+[15:32:00] [main/INFO] (mixin) SpongePowered MIXIN Subsystem Version=0.8.2 Source=file:/C:/Users/potat/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.8.2+build.24/e5a741445d0f425bf3cce946c6cf8c7fb8376b2/sponge-mixin-0.8.2+build.24.jar Service=Knot/Fabric Env=SERVER
+[15:32:00] [main/INFO] (Fabric|MixinBootstrap) Loaded Fabric development mappings for mixin remapper!
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-networking-blockentity-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap server-translations-api-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-screen-handler-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-lifecycle-events-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-rendering-data-attachment-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-structure-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-item-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-events-interaction-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-loot-tables-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-object-builder-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-dimensions-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-registry-sync-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-containers-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-biome-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-resource-loader-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-game-rule-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-networking-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-particles-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-object-builders-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-tag-extensions-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-tool-attribute-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-item-groups-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap packet-tweaker-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-content-registries-v0-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-command-api-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-crash-report-info-v1-refmap.json using remapper chain
+[15:32:00] [main/INFO] (mixin) Remapping refMap fabric-entity-events-v1-refmap.json using remapper chain
+[15:32:00] [main/WARN] (mixin) @Mixin target net/minecraft/village/TradeOffers$TypeAwareBuyForOneEmeraldFactory is public in fabric-object-builder-v1.mixins.json:TypeAwareTradeMixin and should be specified in value
+[15:32:01] [main/WARN] (mixin) @Mixin target net/minecraft/server/command/GameRuleCommand$1 is public in fabric-game-rule-api-v1.mixins.json:GameRuleCommandVisitorMixin and should be specified in value
+[15:32:01] [main/WARN] (mixin) @Mixin target net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker is public in fabric-networking-api-v1.mixins.json:accessor.EntityTrackerAccessor and should be specified in value
+[15:32:01] [main/WARN] (mixin) @Mixin target net/minecraft/tag/Tag$1 is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
+[15:32:01] [main/WARN] (mixin) @Mixin target net/minecraft/tag/RequiredTagList$TagWrapper is public in fabric-tag-extensions-v0.mixins.json:MixinTagImpl and should be specified in value
+[15:32:01] [main/WARN] (mixin) @Mixin target net/minecraft/server/ServerNetworkIo$1 is public in packettweaker.mixins.json:ServerNetworkIoAcceptorMixin and should be specified in value
+[15:32:12] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[15:32:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[15:32:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[15:32:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[15:32:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[15:32:14] [main/WARN] (Minecraft) Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[15:32:14] [main/INFO] (Minecraft) Reloading ResourceManager: Default, Fabric Mods (Server Translations API, Fabric Tool Attribute API (v1), Hey That's Mine)
+[15:32:18] [Worker-Main-11/INFO] (Minecraft) Loaded 7 recipes
+[15:32:19] [Worker-Main-11/INFO] (Minecraft) Loaded 927 advancements
+[15:32:19] [ForkJoinPool.commonPool-worker-19/INFO] (ServerTranslations) Loaded 4831 translation keys
+[15:32:22] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 79 new biomes in 3.875 ms
+[15:32:22] [Server thread/INFO] (Minecraft)         __    
+[15:32:22] [Server thread/INFO] (Minecraft)   |    |__)   LuckPerms v5.2.92
+[15:32:22] [Server thread/INFO] (Minecraft)   |___ |      Running on Fabric - fabric@0.29.4+1.16
+[15:32:22] [Server thread/INFO] (Minecraft) 
+[15:32:22] [Server thread/INFO] (luckperms) Loading configuration...
+[15:32:25] [Server thread/INFO] (luckperms) Loading storage provider... [H2]
+[15:32:27] [Server thread/INFO] (luckperms) Loading internal permission managers...
+[15:32:28] [Server thread/INFO] (luckperms) Performing initial data load...
+[15:32:28] [Server thread/INFO] (luckperms) Successfully enabled. (took 5778ms)
+[15:32:28] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.16.4
+[15:32:28] [Server thread/INFO] (Minecraft) Loading properties
+[15:32:28] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[15:32:28] [Server thread/INFO] (Minecraft) Generating keypair
+[15:32:28] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
+[15:32:29] [Server thread/INFO] (Minecraft) Using default channel type
+[15:32:30] [Server thread/INFO] (Minecraft) Preparing level "world"
+[15:32:30] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[15:32:31] [Server thread/INFO] (Minecraft) Preparing spawn area: 0%
+[15:32:31] [Server thread/INFO] (Minecraft) Preparing spawn area: 0%
+[15:32:31] [Server thread/INFO] (Minecraft) Preparing spawn area: 0%
+[15:32:31] [Server thread/INFO] (Minecraft) Preparing spawn area: 7%
+[15:32:34] [Worker-Main-14/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:34] [Worker-Main-8/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:34] [Worker-Main-10/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:34] [Worker-Main-10/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:34] [Worker-Main-8/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:34] [Worker-Main-8/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:35] [Worker-Main-10/INFO] (Minecraft) Preparing spawn area: 83%
+[15:32:35] [Worker-Main-9/INFO] (Minecraft) Preparing spawn area: 91%
+[15:32:36] [Worker-Main-11/INFO] (Minecraft) Preparing spawn area: 91%
+[15:32:36] [Worker-Main-13/INFO] (Minecraft) Preparing spawn area: 91%
+[15:32:37] [Worker-Main-8/INFO] (Minecraft) Preparing spawn area: 96%
+[15:32:37] [Server thread/INFO] (Minecraft) Time elapsed: 7177 ms
+[15:32:37] [Server thread/INFO] (Minecraft) Done (7.294s)! For help, type "help"
+[15:32:42] [User Authenticator #1/INFO] (Minecraft) UUID of player LordFishSticks is ef21121e-c58f-49fb-9125-529e0945c347
+[15:32:42] [Server thread/INFO] (Minecraft) LordFishSticks[/127.0.0.1:52001] logged in with entity id 149 at (-279.68744402743573, 65.0, 24.22280790966379)
+[15:32:42] [Server thread/INFO] (Minecraft) LordFishSticks joined the game
+[15:32:43] [User Authenticator #2/INFO] (Minecraft) UUID of player Potatoboy9999 is 76a438ae-1732-40b5-98a6-0c1ac7482225
+[15:32:43] [Server thread/INFO] (Minecraft) Potatoboy9999[/127.0.0.1:52004] logged in with entity id 199 at (-279.7206239146764, 65.0, 22.4946591517399)
+[15:32:43] [Server thread/INFO] (Minecraft) Potatoboy9999 joined the game
+[15:33:30] [ForkJoinPool-4-worker-3/INFO] (Minecraft) [LP] LOG > (Potatoboy9999) [G] (loser)
+[15:33:30] [ForkJoinPool-4-worker-3/INFO] (Minecraft) [LP] LOG > permission set htm.command.* true
+[15:33:47] [ForkJoinPool-4-worker-3/INFO] (Minecraft) [LP] LOG > (Potatoboy9999) [G] (loser)
+[15:33:47] [ForkJoinPool-4-worker-3/INFO] (Minecraft) [LP] LOG > permission unset htm.command.*
+[15:33:52] [Server thread/INFO] (Minecraft) LordFishSticks lost connection: Disconnected
+[15:33:52] [Server thread/INFO] (Minecraft) LordFishSticks left the game
+[15:33:54] [User Authenticator #3/INFO] (Minecraft) UUID of player LordFishSticks is ef21121e-c58f-49fb-9125-529e0945c347
+[15:33:54] [Server thread/INFO] (Minecraft) LordFishSticks[/127.0.0.1:52034] logged in with entity id 333 at (-279.68744402743573, 65.0, 24.22280790966379)
+[15:33:54] [Server thread/INFO] (Minecraft) LordFishSticks joined the game
+[15:34:11] [ForkJoinPool-4-worker-3/INFO] (Minecraft) [LP] LOG > (Potatoboy9999) [G] (loser)
+[15:34:11] [ForkJoinPool-4-worker-3/INFO] (Minecraft) [LP] LOG > permission unset htm.command.set
+[15:34:13] [Server thread/INFO] (Minecraft) LordFishSticks lost connection: Disconnected
+[15:34:13] [Server thread/INFO] (Minecraft) LordFishSticks left the game
+[15:34:15] [User Authenticator #4/INFO] (Minecraft) UUID of player LordFishSticks is ef21121e-c58f-49fb-9125-529e0945c347
+[15:34:15] [Server thread/INFO] (Minecraft) LordFishSticks[/127.0.0.1:52047] logged in with entity id 357 at (-279.68744402743573, 65.0, 24.22280790966379)
+[15:34:15] [Server thread/INFO] (Minecraft) LordFishSticks joined the game
+[15:34:19] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:34:37] [ForkJoinPool-4-worker-55/INFO] (Minecraft) [LP] LOG > (Potatoboy9999) [G] (loser)
+[15:34:37] [ForkJoinPool-4-worker-55/INFO] (Minecraft) [LP] LOG > permission set htm.admin true
+[15:34:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:35:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:36:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:36:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:37:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:38:16] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:38:16.845 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[15:38:16] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:38:16.867 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[15:38:19] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:38:19.449 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[15:38:19] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:38:19.454 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
+[15:38:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:38:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:39:06] [Server thread/INFO] (Minecraft) LordFishSticks was slain by Zombie
+[15:39:11] [Server thread/INFO] (Minecraft) Unknown or incomplete command, see below for error
+[15:39:11] [Server thread/INFO] (Minecraft) ifficulty peaceful<--[HERE]
+[15:39:17] [Server thread/INFO] (Minecraft) The difficulty has been set to Peaceful
+[15:39:42] [Server thread/INFO] (Minecraft) Made Potatoboy9999 a server operator
+[15:40:23] [Server thread/INFO] (Minecraft) [Potatoboy9999: Set the time to 1000]
+[15:40:31] [Server thread/INFO] (Minecraft) [Potatoboy9999: Set the weather to clear]
+[15:40:44] [Server thread/INFO] (Minecraft) [Potatoboy9999: Teleported LordFishSticks to Potatoboy9999]
+[15:40:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:41:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:44:37] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:44:37.067 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[15:44:37] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:44:37.105 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[15:44:39] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:44:39.455 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/HTMContainerLock' has been enhanced with anonymous classes for hotswap.
+[15:44:39] [JDWP Transport Listener: dt_socket/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:44:39.470 RELOAD (org.hotswap.agent.plugin.jvm.AnonymousClassPatchPlugin) - Class 'com/github/fabricservertools/htm/InteractionManager' has been enhanced with anonymous classes for hotswap.
+[15:45:38] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:45:38.701 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[15:45:38] [HotSwap Dispatcher/INFO] (Minecraft) [STDOUT]: HOTSWAP AGENT: 15:45:38.742 RELOAD (org.hotswap.agent.plugin.log4j2.Log4j2Plugin) - Log4j2 configuration reloaded from uri 'file:///D:/Programming/FabricMods/heythatsmine/.gradle/loom-cache/log4j.xml'.
+[15:45:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:45:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-282, y=65, z=22}
+[15:46:47] [Server thread/INFO] (Minecraft) Potatoboy9999 lost connection: Disconnected
+[15:46:47] [Server thread/INFO] (Minecraft) Potatoboy9999 left the game
+[15:46:48] [Server thread/INFO] (Minecraft) LordFishSticks lost connection: Disconnected
+[15:46:48] [Server thread/INFO] (Minecraft) LordFishSticks left the game

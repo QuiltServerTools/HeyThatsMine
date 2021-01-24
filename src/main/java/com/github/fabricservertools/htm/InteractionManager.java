@@ -30,9 +30,32 @@ public class InteractionManager {
             case INFO:
                 info(action, player, world, pos);
                 break;
+            case TRANSFER:
+                transfer(action, player, world, pos);
+                break;
         }
 
         pendingActions.remove(player);
+    }
+
+    private static void transfer(HTMInteractAction action, ServerPlayerEntity player, World world, BlockPos pos) {
+        HTMContainerLock lock = getLock(player, pos);
+        if (lock == null) return;
+
+        if (lock.getType() == null) {
+            player.sendMessage(new TranslatableText("text.htm.error.no_lock"), false);
+            return;
+        }
+
+        if (!lock.isOwner(player)) return;
+
+        if (lock.getOwner() == action.getTargetPlayer().getId()) {
+            player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+            return;
+        }
+
+        lock.transfer(action.getTargetPlayer().getId());
+        player.sendMessage(new TranslatableText("text.htm.transfer", action.getTargetPlayer().getName()), false);
     }
 
     private static void info(HTMInteractAction action, ServerPlayerEntity player, World world, BlockPos pos) {
@@ -69,20 +92,17 @@ public class InteractionManager {
             return;
         }
 
-        if (lock.getOwner() != player.getUuid()) {
-            player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
-            return;
-        }
+        if (!lock.isOwner(player)) return;
 
-        if (lock.getOwner() == action.getTrustPlayer().getId()) {
+        if (lock.getOwner() == action.getTargetPlayer().getId()) {
             player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
             return;
         }
 
-        if (lock.addTrust(action.getTrustPlayer().getId())){
-            player.sendMessage(new TranslatableText("text.htm.trust", action.getTrustPlayer().getName()), false);
+        if (lock.addTrust(action.getTargetPlayer().getId())){
+            player.sendMessage(new TranslatableText("text.htm.trust", action.getTargetPlayer().getName()), false);
         } else {
-            player.sendMessage(new TranslatableText("text.htm.error.already_trusted", action.getTrustPlayer().getName()), false);
+            player.sendMessage(new TranslatableText("text.htm.error.already_trusted", action.getTargetPlayer().getName()), false);
         }
     }
 
@@ -95,10 +115,7 @@ public class InteractionManager {
             return;
         }
 
-        if (lock.getOwner() != player.getUuid()) {
-            player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
-            return;
-        }
+        if (!lock.isOwner(player)) return;
 
         lock.remove();
         player.sendMessage(new TranslatableText("text.htm.unlocked"), false);

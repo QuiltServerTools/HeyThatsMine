@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     maven { url = "https://maven.nucleoid.xyz/" }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -28,6 +29,8 @@ dependencies {
 
     modImplementation 'fr.catcore:server-translations-api:1.4.0'
     include 'fr.catcore:server-translations-api:1.4.0'
+
+    modImplementation 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
 }
 
 processResources {

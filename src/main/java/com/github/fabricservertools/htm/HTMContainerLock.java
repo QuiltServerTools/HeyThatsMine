@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm;
 
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
@@ -54,8 +55,6 @@ public class HTMContainerLock {
     public boolean canOpen(ServerPlayerEntity player) {
         if (type == null) return true;
 
-        if (player.getUuid().equals(owner)) return true;
-
         switch (type) {
             case PUBLIC:
                 return true;
@@ -63,6 +62,8 @@ public class HTMContainerLock {
             case PRIVATE:
                 if (trusted.contains(player.getUuid())) return true;
         }
+
+        if (isOwner(player)) return true;
 
         player.sendMessage(new TranslatableText("text.htm.locked"), true);
         player.playSound(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -94,5 +95,25 @@ public class HTMContainerLock {
 
     public boolean addTrust(UUID id) {
         return trusted.add(id);
+    }
+
+    public void transfer(UUID id) {
+        owner = id;
+    }
+
+    public boolean isOwner(ServerPlayerEntity player) {
+        if (owner != player.getUuid()) {
+            if (Permissions.check(player, "htm.admin", 4)) {
+                player.sendMessage(new TranslatableText("text.htm.override",
+                        player.getServerWorld().getServer().getUserCache().getByUuid(owner).getName()),
+                        false);
+                return true;
+            }
+
+            player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
+            return false;
+        }
+
+        return true;
     }
 }
