@@ -102,7 +102,7 @@ public class HTMContainerLock {
     }
 
     public boolean isOwner(ServerPlayerEntity player) {
-        if (owner != player.getUuid()) {
+        if (!owner.equals(player.getUuid())) {
             if (Permissions.check(player, "htm.admin", 4)) {
                 player.sendMessage(new TranslatableText("text.htm.override",
                         player.getServerWorld().getServer().getUserCache().getByUuid(owner).getName()),
@@ -115,5 +115,9 @@ public class HTMContainerLock {
         }
 
         return true;
+    }
+
+    public boolean isLocked () {
+        return owner != null;
     }
 }

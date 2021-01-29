@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.mixin;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import com.github.fabricservertools.htm.LockableObject;
 
 @Mixin(LockableContainerBlockEntity.class)
 public abstract class LockableContainerMixin implements LockableObject {

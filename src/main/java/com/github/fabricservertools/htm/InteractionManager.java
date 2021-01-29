@@ -1,13 +1,15 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.LockableChestBlock;
+import com.github.fabricservertools.htm.api.LockableObject;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -134,15 +136,19 @@ public class InteractionManager {
         player.sendMessage(new TranslatableText("text.htm.set", action.getSetType().name()), false);
     }
 
-    @Nullable
-    private static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
+    public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
         BlockEntity blockEntity = player.getServerWorld().getBlockEntity(pos);
+        BlockState state = blockEntity.getCachedState();
         if (!(blockEntity instanceof LockableContainerBlockEntity) || blockEntity == null) {
             player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
             return null;
         }
 
         HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
+        if (state.getBlock() instanceof LockableChestBlock) {
+            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, player.world, pos);
+        }
+
         return lock;
     }
 }

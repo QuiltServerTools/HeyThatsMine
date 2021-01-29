@@ -1,9 +1,9 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.LockableChestBlock;
+import com.github.fabricservertools.htm.api.LockableObject;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
@@ -13,13 +13,12 @@ public class HTMListeners {
     public static void init() {
         PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
             if (blockEntity instanceof LockableContainerBlockEntity) {
-                if (state.getBlock() instanceof ChestBlock) {
-                    DoubleBlockProperties.Type type = ChestBlock.getDoubleBlockType(state);
+                HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
+                if (state.getBlock() instanceof LockableChestBlock) {
+                    lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, world, pos);
                 }
 
-                HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
-
-                if (lock.getOwner() == null) {
+                if (!lock.isLocked()) {
                     return true;
                 }
 
