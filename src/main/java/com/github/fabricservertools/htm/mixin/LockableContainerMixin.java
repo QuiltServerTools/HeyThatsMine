@@ -42,4 +42,9 @@ public abstract class LockableContainerMixin implements LockableObject {
     public HTMContainerLock getLock() {
         return htmContainerLock;
     }
+
+    @Override
+    public void setLock(HTMContainerLock lock) {
+        htmContainerLock = lock;
+    }
 }

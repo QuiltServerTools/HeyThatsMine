@@ -64,7 +64,7 @@ public class InteractionManager {
         HTMContainerLock lock = getLock(player, pos);
         if (lock == null) return;
 
-        if (lock.getType() == null) {
+        if (!lock.isLocked()) {
             player.sendMessage(new TranslatableText("text.htm.error.no_lock"), false);
             return;
         }
@@ -112,7 +112,7 @@ public class InteractionManager {
         HTMContainerLock lock = getLock(player, pos);
         if (lock == null) return;
 
-        if (lock.getType() == null) {
+        if (!lock.isLocked()) {
             player.sendMessage(new TranslatableText("text.htm.error.no_lock"), false);
             return;
         }
@@ -139,15 +139,22 @@ public class InteractionManager {
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
         BlockEntity blockEntity = player.getServerWorld().getBlockEntity(pos);
         BlockState state = blockEntity.getCachedState();
+
+        HTMContainerLock lock = getRawLock(player, blockEntity);
+        if (state.getBlock() instanceof LockableChestBlock) {
+            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, player.world, pos);
+        }
+
+        return lock;
+    }
+
+    public static HTMContainerLock getRawLock(ServerPlayerEntity player, BlockEntity blockEntity) {
         if (!(blockEntity instanceof LockableContainerBlockEntity) || blockEntity == null) {
             player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
             return null;
         }
 
         HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
-        if (state.getBlock() instanceof LockableChestBlock) {
-            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, player.world, pos);
-        }
 
         return lock;
     }
