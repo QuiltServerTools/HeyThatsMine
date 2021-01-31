@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -138,23 +139,27 @@ public class InteractionManager {
 
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
         BlockEntity blockEntity = player.getServerWorld().getBlockEntity(pos);
-        BlockState state = blockEntity.getCachedState();
 
-        HTMContainerLock lock = getRawLock(player, blockEntity);
-        if (state.getBlock() instanceof LockableChestBlock) {
-            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, player.world, pos);
+        HTMContainerLock lock = getLock(player.getServerWorld(), pos);
+        if (lock == null) {
+            player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
         }
 
         return lock;
     }
 
-    public static HTMContainerLock getRawLock(ServerPlayerEntity player, BlockEntity blockEntity) {
+    public static HTMContainerLock getLock(ServerWorld world, BlockPos pos) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        BlockState state = blockEntity.getCachedState();
+
         if (!(blockEntity instanceof LockableContainerBlockEntity) || blockEntity == null) {
-            player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
             return null;
         }
 
         HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
+        if (state.getBlock() instanceof LockableChestBlock) {
+            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, world, pos);
+        }
 
         return lock;
     }
