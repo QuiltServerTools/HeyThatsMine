@@ -4,6 +4,7 @@
   "text.htm.error.not_owner": "§cNot allowed to modify that container",
   "text.htm.error.already_locked": "§cContainer already locked",
   "text.htm.error.lock_type": "§cInvalid lock type",
+  "text.htm.error.flag_type": "§cInvalid flag type",
   "text.htm.error.trust_self": "§cCan't trust self",
   "text.htm.error.already_trusted": "§cAlready trusted §r§a%s",
 
@@ -17,5 +18,7 @@
   "text.htm.transfer": "§bTransferred container to §a%s",
   "text.htm.unlocked": "§bUnlocked container",
   "text.htm.set": "§bContainer set to: §r§a%s",
-  "text.htm.override": "§bContainer owned by: §r§a%s §cOverriding"
+  "text.htm.override": "§bContainer owned by: §r§a%s §cOverriding",
+  "text.htm.set_flag": "§bSet §r§a%s §bto: §r§a%s",
+  "text.htm.flag": "§b§l%s: §r%s §r"
 }

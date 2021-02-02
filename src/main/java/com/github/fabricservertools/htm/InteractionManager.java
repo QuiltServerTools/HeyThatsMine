@@ -8,11 +8,14 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InteractionManager {
@@ -36,9 +39,40 @@ public class InteractionManager {
             case TRANSFER:
                 transfer(action, player, world, pos);
                 break;
+            case FLAG:
+                flag(action, player, world, pos);
+                break;
         }
 
         pendingActions.remove(player);
+    }
+
+    private static void flag(HTMInteractAction action, ServerPlayerEntity player, World world, BlockPos pos) {
+        HTMContainerLock lock = getLock(player, pos);
+        if (lock == null) return;
+
+        if (lock.getType() == null) {
+            player.sendMessage(new TranslatableText("text.htm.error.no_lock"), false);
+            return;
+        }
+
+        if (action.getFlagType() == null) {
+            player.sendMessage(new TranslatableText("text.htm.divider"), false);
+            for (Map.Entry<HTMContainerLock.FlagType, Boolean> entry : lock.getFlags().entrySet()) {
+                player.sendMessage(new TranslatableText(
+                        "text.htm.flag",
+                        entry.getKey().name(),
+                        new LiteralText(entry.getValue().toString().toUpperCase()).formatted(entry.getValue() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
+                        false);
+            }
+            player.sendMessage(new TranslatableText("text.htm.divider"), false);
+        } else {
+            lock.setflag(action.getFlagType(), action.getBool());
+            player.sendMessage(new TranslatableText(
+                    "text.htm.set_flag",
+                    action.getFlagType().name().toUpperCase(),
+                    new LiteralText(String.valueOf(action.getBool()).toUpperCase()).formatted(action.getBool() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)), false);
+        }
     }
 
     private static void transfer(HTMInteractAction action, ServerPlayerEntity player, World world, BlockPos pos) {
@@ -138,8 +172,6 @@ public class InteractionManager {
     }
 
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
-        BlockEntity blockEntity = player.getServerWorld().getBlockEntity(pos);
-
         HTMContainerLock lock = getLock(player.getServerWorld(), pos);
         if (lock == null) {
             player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
@@ -150,6 +182,11 @@ public class InteractionManager {
 
     public static HTMContainerLock getLock(ServerWorld world, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
+
+        return getLock(world, blockEntity);
+    }
+
+    public static HTMContainerLock getLock(ServerWorld world, BlockEntity blockEntity) {
         BlockState state = blockEntity.getCachedState();
 
         if (!(blockEntity instanceof LockableContainerBlockEntity) || blockEntity == null) {
@@ -158,7 +195,7 @@ public class InteractionManager {
 
         HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
         if (state.getBlock() instanceof LockableChestBlock) {
-            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, world, pos);
+            lock = ((LockableChestBlock)state.getBlock()).getLockAt(state, world, blockEntity.getPos());
         }
 
         return lock;

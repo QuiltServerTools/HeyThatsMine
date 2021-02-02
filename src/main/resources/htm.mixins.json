@@ -6,6 +6,7 @@
   "mixins": [
     "ChestBlockMixin",
     "ExplosionMixin",
+    "HopperBlockEntityMixin",
     "LockableContainerMixin"
   ],
   "injectors": {

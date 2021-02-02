@@ -1,10 +1,12 @@
 package com.github.fabricservertools.htm.command;
 
+import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMInteractAction;
 import com.github.fabricservertools.htm.InteractionManager;
 import com.github.fabricservertools.htm.LockType;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -45,18 +47,28 @@ public class HTMCommand {
                         .then(argument("target", GameProfileArgumentType.gameProfile())
                                 .executes(HTMCommand::trust))
                         .build();
-        
+
         LiteralCommandNode<ServerCommandSource> infoNode =
                 literal("info")
                         .requires(Permissions.require("htm.command.info", true))
                         .executes(HTMCommand::info)
-                .build();
+                        .build();
 
         LiteralCommandNode<ServerCommandSource> transferNode =
                 literal("transfer")
                         .requires(Permissions.require("htm.command.transfer", true))
                         .then(argument("target", GameProfileArgumentType.gameProfile())
                                 .executes(HTMCommand::transfer))
+                        .build();
+
+        LiteralCommandNode<ServerCommandSource> flagNode =
+                literal("flag")
+                        .requires(Permissions.require("htm.command.flag", true))
+                        .executes(HTMCommand::flagInfo)
+                        .then(argument("type", StringArgumentType.word())
+                                .suggests(new FlagTypeSuggestionProvider())
+                                .then(argument("value", BoolArgumentType.bool())
+                                        .executes(HTMCommand::flag)))
                         .build();
 
         dispatcher.getRoot().addChild(htmNode);
@@ -66,6 +78,33 @@ public class HTMCommand {
         htmNode.addChild(trustNode);
         htmNode.addChild(infoNode);
         htmNode.addChild(transferNode);
+        htmNode.addChild(flagNode);
+    }
+
+    private static int flagInfo(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerPlayerEntity player = context.getSource().getPlayer();
+
+        InteractionManager.pendingActions.put(player, HTMInteractAction.flag(null, false));
+        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+
+        return 1;
+    }
+
+    private static int flag(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        HTMContainerLock.FlagType type;
+        ServerPlayerEntity player = context.getSource().getPlayer();
+        boolean value = BoolArgumentType.getBool(context, "value");
+
+        try {
+            type = HTMContainerLock.FlagType.valueOf(StringArgumentType.getString(context, "type").toUpperCase());
+        } catch (IllegalArgumentException e) {
+            context.getSource().sendError(new TranslatableText("text.htm.error.flag_type"));
+            return -3;
+        }
+
+        InteractionManager.pendingActions.put(player, HTMInteractAction.flag(type, value));
+        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+        return 1;
     }
 
     private static int transfer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {

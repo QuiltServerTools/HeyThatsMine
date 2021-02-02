@@ -4,23 +4,35 @@ import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.TranslatableText;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.UUID;
 
 public class HTMContainerLock {
     private LockType type;
     private UUID owner;
     private HashSet<UUID> trusted;
+    private Map<FlagType, Boolean> flags;
 
     public HTMContainerLock() {
         type = null;
         owner = null;
         trusted = new HashSet<>();
+        flags = getDefaultFlags();
+    }
+
+    private HashMap<FlagType, Boolean> getDefaultFlags() {
+        HashMap<FlagType, Boolean> hashMap = new HashMap();
+        hashMap.put(FlagType.HOPPERS, true);
+
+        return hashMap;
     }
 
     public CompoundTag toTag(CompoundTag tag) {
@@ -34,6 +46,17 @@ public class HTMContainerLock {
             }
 
             tag.put("Trusted", trustedTag);
+
+            ListTag flagsTag = new ListTag();
+            for (Map.Entry<FlagType, Boolean> entry : flags.entrySet()) {
+                CompoundTag flagTag = new CompoundTag();
+                flagTag.putString("type", entry.getKey().name());
+                flagTag.putBoolean("value", entry.getValue());
+
+                flagsTag.add(flagTag);
+            }
+
+            tag.put("Flags", flagsTag);
         }
 
         return tag;
@@ -48,6 +71,12 @@ public class HTMContainerLock {
 
             for(int i = 0; i < trustedTag.size(); ++i) {
                 trusted.add(NbtHelper.toUuid(trustedTag.get(i)));
+            }
+
+            ListTag flagTags = tag.getList("Flags", 10);
+            for (Tag flagTag : flagTags) {
+                CompoundTag compoundTag = (CompoundTag) flagTag;
+                flags.put(FlagType.valueOf(compoundTag.getString("type")), compoundTag.getBoolean("value"));
             }
         }
     }
@@ -76,6 +105,10 @@ public class HTMContainerLock {
 
     public UUID getOwner() {
         return owner;
+    }
+
+    public Map<FlagType, Boolean> getFlags() {
+        return flags;
     }
 
     public HashSet<UUID> getTrusted() {
@@ -119,5 +152,13 @@ public class HTMContainerLock {
 
     public boolean isLocked () {
         return owner != null;
+    }
+
+    public void setflag(FlagType flagType, boolean value) {
+        flags.put(flagType, value);
+    }
+
+    public enum FlagType {
+        HOPPERS
     }
 }
