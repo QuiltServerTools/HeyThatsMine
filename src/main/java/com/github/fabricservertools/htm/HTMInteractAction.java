@@ -20,8 +20,10 @@ public class HTMInteractAction {
         return new HTMInteractAction(ActionType.SET, createType, null, null);
     }
 
-    public static HTMInteractAction trust(GameProfile playerEntity) {
-        return new HTMInteractAction(ActionType.TRUST, null, null, playerEntity);
+    public static HTMInteractAction trust(GameProfile playerEntity, boolean untrust) {
+        HTMInteractAction action = new HTMInteractAction(ActionType.TRUST, null, null, playerEntity);
+        action.bool = untrust;
+        return action;
     }
 
     public static HTMInteractAction transfer(GameProfile playerEntity) {

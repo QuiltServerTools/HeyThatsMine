@@ -90,6 +90,7 @@ public class HTMContainerLock {
 
             case PRIVATE:
                 if (trusted.contains(player.getUuid())) return true;
+                if (player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust").isTrusted(owner, player.getUuid())) return true;
         }
 
         if (isOwner(player)) return true;
@@ -130,6 +131,10 @@ public class HTMContainerLock {
         return trusted.add(id);
     }
 
+    public boolean removeTrust(UUID id) {
+        return trusted.remove(id);
+    }
+
     public void transfer(UUID id) {
         owner = id;
     }
@@ -154,7 +159,7 @@ public class HTMContainerLock {
         return owner != null;
     }
 
-    public void setflag(FlagType flagType, boolean value) {
+    public void setFlag(FlagType flagType, boolean value) {
         flags.put(flagType, value);
     }
 

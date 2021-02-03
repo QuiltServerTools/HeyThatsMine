@@ -1,9 +1,6 @@
 package com.github.fabricservertools.htm.command;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
-import com.github.fabricservertools.htm.HTMInteractAction;
-import com.github.fabricservertools.htm.InteractionManager;
-import com.github.fabricservertools.htm.LockType;
+import com.github.fabricservertools.htm.*;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -16,6 +13,8 @@ import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
+
+import java.util.stream.Collectors;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -44,8 +43,32 @@ public class HTMCommand {
         LiteralCommandNode<ServerCommandSource> trustNode =
                 literal("trust")
                         .requires(Permissions.require("htm.command.trust", true))
+                        .executes(HTMCommand::trustList)
                         .then(argument("target", GameProfileArgumentType.gameProfile())
-                                .executes(HTMCommand::trust))
+                                .executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
+                                .then(argument("global", StringArgumentType.word())
+                                        .suggests((context, builder) -> builder.suggest("global").buildFuture())
+                                        .executes(ctx -> trust(
+                                                ctx.getSource(),
+                                                GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+                                                StringArgumentType.getString(ctx, "global").equalsIgnoreCase("global"))
+                                        )
+                                ))
+                        .build();
+
+        LiteralCommandNode<ServerCommandSource> untrustNode =
+                literal("untrust")
+                        .requires(Permissions.require("htm.command.trust", true))
+                        .then(argument("target", GameProfileArgumentType.gameProfile())
+                                .executes(ctx -> untrust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
+                                .then(argument("global", StringArgumentType.word())
+                                        .suggests((context, builder) -> builder.suggest("global").buildFuture())
+                                        .executes(ctx -> untrust(
+                                                ctx.getSource(),
+                                                GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+                                                StringArgumentType.getString(ctx, "global").equalsIgnoreCase("global"))
+                                        )
+                                ))
                         .build();
 
         LiteralCommandNode<ServerCommandSource> infoNode =
@@ -76,6 +99,7 @@ public class HTMCommand {
         htmNode.addChild(setNode);
         htmNode.addChild(removeNode);
         htmNode.addChild(trustNode);
+        htmNode.addChild(untrustNode);
         htmNode.addChild(infoNode);
         htmNode.addChild(transferNode);
         htmNode.addChild(flagNode);
@@ -124,12 +148,53 @@ public class HTMCommand {
         return 1;
     }
 
-    private static int trust(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-        GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
+    private static int trust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
+        ServerPlayerEntity player = source.getPlayer();
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.trust(gameProfile));
-        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+        if (global) {
+            GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+            if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
+                source.sendFeedback(new TranslatableText("text.htm.trust.global", gameProfile.getName()), false);
+            } else {
+                source.sendError(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()));
+            }
+        } else {
+            InteractionManager.pendingActions.put(player, HTMInteractAction.trust(gameProfile, false));
+            source.sendFeedback(new TranslatableText("text.htm.select"), false);
+        }
+
+
+        return 1;
+    }
+
+    private static int untrust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
+        ServerPlayerEntity player = source.getPlayer();
+
+        if (global) {
+            GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+            if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
+                source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()), false);
+            }
+        } else {
+            InteractionManager.pendingActions.put(player, HTMInteractAction.trust(gameProfile, true));
+            source.sendFeedback(new TranslatableText("text.htm.select"), false);
+        }
+
+
+        return 1;
+    }
+
+    private static int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerPlayerEntity player = context.getSource().getPlayer();
+        GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+
+        String trustedList = globalTrustState.getTrusted().get(player.getUuid())
+                .stream()
+                .map(a -> player.getServer().getUserCache().getByUuid(a).getName())
+                .collect(Collectors.joining(", "));
+
+        player.sendMessage(new TranslatableText("text.htm.trusted.global", trustedList), false);
+
         return 1;
     }
 

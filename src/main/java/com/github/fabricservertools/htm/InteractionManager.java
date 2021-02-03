@@ -67,7 +67,7 @@ public class InteractionManager {
             }
             player.sendMessage(new TranslatableText("text.htm.divider"), false);
         } else {
-            lock.setflag(action.getFlagType(), action.getBool());
+            lock.setFlag(action.getFlagType(), action.getBool());
             player.sendMessage(new TranslatableText(
                     "text.htm.set_flag",
                     action.getFlagType().name().toUpperCase(),
@@ -136,10 +136,17 @@ public class InteractionManager {
             return;
         }
 
-        if (lock.addTrust(action.getTargetPlayer().getId())){
-            player.sendMessage(new TranslatableText("text.htm.trust", action.getTargetPlayer().getName()), false);
+        if (action.getBool()) {
+            //untrust
+            lock.removeTrust(action.getTargetPlayer().getId());
+            player.sendMessage(new TranslatableText("text.htm.untrust", action.getTargetPlayer().getName()), false);
         } else {
-            player.sendMessage(new TranslatableText("text.htm.error.already_trusted", action.getTargetPlayer().getName()), false);
+            //trust
+            if (lock.addTrust(action.getTargetPlayer().getId())){
+                player.sendMessage(new TranslatableText("text.htm.trust", action.getTargetPlayer().getName()), false);
+            } else {
+                player.sendMessage(new TranslatableText("text.htm.error.already_trusted", action.getTargetPlayer().getName()), false);
+            }
         }
     }
 
@@ -182,6 +189,7 @@ public class InteractionManager {
 
     public static HTMContainerLock getLock(ServerWorld world, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity == null) return null;
 
         return getLock(world, blockEntity);
     }
@@ -189,7 +197,7 @@ public class InteractionManager {
     public static HTMContainerLock getLock(ServerWorld world, BlockEntity blockEntity) {
         BlockState state = blockEntity.getCachedState();
 
-        if (!(blockEntity instanceof LockableContainerBlockEntity) || blockEntity == null) {
+        if (!(blockEntity instanceof LockableContainerBlockEntity)) {
             return null;
         }
 
