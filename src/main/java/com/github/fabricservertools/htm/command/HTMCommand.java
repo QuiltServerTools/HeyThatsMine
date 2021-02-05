@@ -94,6 +94,12 @@ public class HTMCommand {
                                         .executes(HTMCommand::flag)))
                         .build();
 
+        LiteralCommandNode<ServerCommandSource> persistNode =
+                literal("persist")
+                        .requires(Permissions.require("htm.command.persist", true))
+                                .executes(HTMCommand::persist)
+                        .build();
+
         dispatcher.getRoot().addChild(htmNode);
 
         htmNode.addChild(setNode);
@@ -103,6 +109,19 @@ public class HTMCommand {
         htmNode.addChild(infoNode);
         htmNode.addChild(transferNode);
         htmNode.addChild(flagNode);
+        htmNode.addChild(persistNode);
+    }
+
+    private static int persist(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerPlayerEntity player = context.getSource().getPlayer();
+
+        InteractionManager.togglePersist(player);
+        if (InteractionManager.persisting.contains(player)) {
+            player.sendMessage(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.on")), false);
+        } else {
+            player.sendMessage(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.off")), false);
+        }
+        return 1;
     }
 
     private static int flagInfo(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
@@ -153,8 +172,13 @@ public class HTMCommand {
 
         if (global) {
             GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+            if (player.getUuid().equals(gameProfile.getId())) {
+                player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+                return -1;
+            }
+
             if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
-                source.sendFeedback(new TranslatableText("text.htm.trust.global", gameProfile.getName()), false);
+                source.sendFeedback(new TranslatableText("text.htm.trust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
             } else {
                 source.sendError(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()));
             }
@@ -173,7 +197,7 @@ public class HTMCommand {
         if (global) {
             GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
             if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
-                source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()), false);
+                source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
             }
         } else {
             InteractionManager.pendingActions.put(player, HTMInteractAction.trust(gameProfile, true));

@@ -15,11 +15,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InteractionManager {
     public static HashMap<ServerPlayerEntity, HTMInteractAction> pendingActions = new HashMap<>();
+    public static HashSet<ServerPlayerEntity> persisting = new HashSet<>();
 
     public static void execute(ServerPlayerEntity player, World world, BlockPos pos) {
         HTMInteractAction action = pendingActions.get(player);
@@ -44,7 +46,9 @@ public class InteractionManager {
                 break;
         }
 
-        pendingActions.remove(player);
+        if (!persisting.contains(player)) {
+            pendingActions.remove(player);
+        }
     }
 
     private static void flag(HTMInteractAction action, ServerPlayerEntity player, World world, BlockPos pos) {
@@ -207,5 +211,13 @@ public class InteractionManager {
         }
 
         return lock;
+    }
+
+    public static void togglePersist(ServerPlayerEntity player) {
+        if (persisting.contains(player)) {
+            persisting.remove(player);
+        } else {
+            persisting.add(player);
+        }
     }
 }

@@ -30,7 +30,9 @@ public class HTMContainerLock {
 
     private HashMap<FlagType, Boolean> getDefaultFlags() {
         HashMap<FlagType, Boolean> hashMap = new HashMap();
-        hashMap.put(FlagType.HOPPERS, true);
+        for (FlagType flagType : FlagType.values()) {
+            hashMap.put(flagType, Htm.config.defaultFlags.getOrDefault(flagType, false));
+        }
 
         return hashMap;
     }
@@ -125,6 +127,7 @@ public class HTMContainerLock {
         type = null;
         owner = null;
         trusted = new HashSet<>();
+        flags = getDefaultFlags();
     }
 
     public boolean addTrust(UUID id) {
