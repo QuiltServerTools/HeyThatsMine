@@ -1,5 +1,7 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.FlagType;
+import com.github.fabricservertools.htm.api.LockType;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,21 +27,22 @@ public class HTMContainerLock {
         type = null;
         owner = null;
         trusted = new HashSet<>();
-        flags = getDefaultFlags();
+        initFlags();
     }
 
-    private HashMap<FlagType, Boolean> getDefaultFlags() {
+    private void initFlags() {
         HashMap<FlagType, Boolean> hashMap = new HashMap();
-        for (FlagType flagType : FlagType.values()) {
-            hashMap.put(flagType, Htm.config.defaultFlags.getOrDefault(flagType, false));
+        for (FlagType flagType : HTMRegistry.getFlagTypes().values()) {
+            hashMap.put(flagType, HTM.config.defaultFlags.getOrDefault(HTMRegistry.getNameFromFlag(flagType), false));
         }
 
-        return hashMap;
+        flags = hashMap;
     }
 
     public CompoundTag toTag(CompoundTag tag) {
         if (type != null) {
-            tag.putString("Type", this.type.name());
+            tag.putString("Type", HTMRegistry.getNameFromLock(type));
+            tag.put("TypeData", type.toTag());
             tag.putUuid("Owner", owner);
 
             ListTag trustedTag = new ListTag();
@@ -52,7 +55,7 @@ public class HTMContainerLock {
             ListTag flagsTag = new ListTag();
             for (Map.Entry<FlagType, Boolean> entry : flags.entrySet()) {
                 CompoundTag flagTag = new CompoundTag();
-                flagTag.putString("type", entry.getKey().name());
+                flagTag.putString("type", HTMRegistry.getNameFromFlag(entry.getKey()));
                 flagTag.putBoolean("value", entry.getValue());
 
                 flagsTag.add(flagTag);
@@ -66,7 +69,8 @@ public class HTMContainerLock {
 
     public void fromTag(CompoundTag tag) {
         if (tag.contains("Type")) {
-            type = LockType.valueOf(tag.getString("Type"));
+            type = HTMRegistry.getLockFromName(tag.getString("Type"));
+            type.fromTag(tag.getCompound("TypeData"));
             owner = tag.getUuid("Owner");
 
             ListTag trustedTag = tag.getList("Trusted", 11);
@@ -78,7 +82,7 @@ public class HTMContainerLock {
             ListTag flagTags = tag.getList("Flags", 10);
             for (Tag flagTag : flagTags) {
                 CompoundTag compoundTag = (CompoundTag) flagTag;
-                flags.put(FlagType.valueOf(compoundTag.getString("type")), compoundTag.getBoolean("value"));
+                flags.put(HTMRegistry.getFlagFromName(compoundTag.getString("type")), compoundTag.getBoolean("value"));
             }
         }
     }
@@ -86,16 +90,9 @@ public class HTMContainerLock {
     public boolean canOpen(ServerPlayerEntity player) {
         if (type == null) return true;
 
-        switch (type) {
-            case PUBLIC:
-                return true;
-
-            case PRIVATE:
-                if (trusted.contains(player.getUuid())) return true;
-                if (player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust").isTrusted(owner, player.getUuid())) return true;
-        }
-
         if (isOwner(player)) return true;
+
+        if (type.canOpen(player, this)) return true;
 
         player.sendMessage(new TranslatableText("text.htm.locked"), true);
         player.playSound(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -121,13 +118,14 @@ public class HTMContainerLock {
     public void setType(LockType type, ServerPlayerEntity owner) {
         this.type = type;
         this.owner = owner.getUuid();
+        type.onLockSet(owner, this);
     }
 
     public void remove() {
         type = null;
         owner = null;
         trusted = new HashSet<>();
-        flags = getDefaultFlags();
+        initFlags();
     }
 
     public boolean addTrust(UUID id) {
@@ -164,9 +162,5 @@ public class HTMContainerLock {
 
     public void setFlag(FlagType flagType, boolean value) {
         flags.put(flagType, value);
-    }
-
-    public enum FlagType {
-        HOPPERS
     }
 }

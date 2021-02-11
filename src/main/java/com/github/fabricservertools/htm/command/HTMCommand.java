@@ -1,6 +1,11 @@
 package com.github.fabricservertools.htm.command;
 
-import com.github.fabricservertools.htm.*;
+import com.github.fabricservertools.htm.GlobalTrustState;
+import com.github.fabricservertools.htm.HTMInteractAction;
+import com.github.fabricservertools.htm.HTMRegistry;
+import com.github.fabricservertools.htm.InteractionManager;
+import com.github.fabricservertools.htm.api.FlagType;
+import com.github.fabricservertools.htm.api.LockType;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -134,12 +139,12 @@ public class HTMCommand {
     }
 
     private static int flag(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        HTMContainerLock.FlagType type;
+        FlagType type;
         ServerPlayerEntity player = context.getSource().getPlayer();
         boolean value = BoolArgumentType.getBool(context, "value");
 
         try {
-            type = HTMContainerLock.FlagType.valueOf(StringArgumentType.getString(context, "type").toUpperCase());
+            type = HTMRegistry.getFlagFromName(StringArgumentType.getString(context, "type").toLowerCase());
         } catch (IllegalArgumentException e) {
             context.getSource().sendError(new TranslatableText("text.htm.error.flag_type"));
             return -3;
@@ -235,7 +240,7 @@ public class HTMCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         try {
-            type = LockType.valueOf(StringArgumentType.getString(context, "type").toUpperCase());
+            type = HTMRegistry.getLockFromName(StringArgumentType.getString(context, "type").toLowerCase());
         } catch (IllegalArgumentException e) {
             context.getSource().sendError(new TranslatableText("text.htm.error.lock_type"));
             return -3;

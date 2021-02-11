@@ -1,9 +1,9 @@
 package com.github.fabricservertools.htm.mixin;
 
+import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
-import com.github.fabricservertools.htm.Htm;
+import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.InteractionManager;
-import com.github.fabricservertools.htm.LockType;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -38,17 +38,17 @@ public abstract class BlockItemMixin {
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
-                if(Htm.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
+                if(HTM.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
                     if (InteractionManager.getLock((ServerWorld) world, blockEntity).isLocked()) return;
 
                     HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
-                    lock.setType(LockType.PRIVATE, (ServerPlayerEntity) playerEntity);
-                    playerEntity.sendMessage(new TranslatableText("text.htm.set", LockType.PRIVATE.name()), false);
+                    lock.setType(HTMRegistry.getLockFromName("private"), (ServerPlayerEntity) playerEntity);
+                    playerEntity.sendMessage(new TranslatableText("text.htm.set", "PRIVATE"), false);
                 }
             }
         } catch (Exception e) {
-            Htm.LOGGER.warn("Something went wrong auto locking");
+            HTM.LOGGER.warn("Something went wrong auto locking");
             e.printStackTrace();
         }
     }

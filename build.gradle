@@ -31,6 +31,7 @@ dependencies {
     include "fr.catcore:server-translations-api:${project.translation_version}"
 
     modImplementation 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
+    include 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
 }
 
 processResources {

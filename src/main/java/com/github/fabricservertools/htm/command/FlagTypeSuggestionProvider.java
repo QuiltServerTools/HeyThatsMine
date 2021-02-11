@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.command;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.HTMRegistry;
+import com.github.fabricservertools.htm.api.FlagType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -15,9 +16,11 @@ public class FlagTypeSuggestionProvider implements SuggestionProvider<ServerComm
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) throws CommandSyntaxException {
         String current = builder.getRemaining().toUpperCase();
 
-        for (HTMContainerLock.FlagType type : HTMContainerLock.FlagType.values()) {
-            if (type.name().contains(current.toUpperCase())) {
-                builder.suggest(type.name());
+        for (FlagType type : HTMRegistry.getFlagTypes().values()) {
+            String name = HTMRegistry.getNameFromFlag(type);
+
+            if (name.contains(current.toLowerCase())) {
+                builder.suggest(name.toUpperCase());
             }
         }
 

@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.fabricservertools.htm.Htm"
+      "com.github.fabricservertools.htm.HTM"
     ]
   },
   "mixins": [

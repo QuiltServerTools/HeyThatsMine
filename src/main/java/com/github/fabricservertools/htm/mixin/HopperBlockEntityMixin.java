@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.mixin;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.InteractionManager;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -23,7 +24,7 @@ public abstract class HopperBlockEntityMixin {
             return blockEntity;
         }
 
-        if (lock.getFlags().get(HTMContainerLock.FlagType.HOPPERS)) {
+        if (lock.getFlags().get(HTMRegistry.getFlagFromName("hoppers"))) {
             return blockEntity;
         }
 

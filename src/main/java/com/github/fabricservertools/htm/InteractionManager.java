@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.LockableChestBlock;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.mojang.authlib.GameProfile;
@@ -62,10 +63,10 @@ public class InteractionManager {
 
         if (action.getFlagType() == null) {
             player.sendMessage(new TranslatableText("text.htm.divider"), false);
-            for (Map.Entry<HTMContainerLock.FlagType, Boolean> entry : lock.getFlags().entrySet()) {
+            for (Map.Entry<FlagType, Boolean> entry : lock.getFlags().entrySet()) {
                 player.sendMessage(new TranslatableText(
                         "text.htm.flag",
-                        entry.getKey().name(),
+                        HTMRegistry.getNameFromFlag(entry.getKey()).toUpperCase(),
                         new LiteralText(entry.getValue().toString().toUpperCase()).formatted(entry.getValue() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
                         false);
             }
@@ -74,7 +75,7 @@ public class InteractionManager {
             lock.setFlag(action.getFlagType(), action.getBool());
             player.sendMessage(new TranslatableText(
                     "text.htm.set_flag",
-                    action.getFlagType().name().toUpperCase(),
+                    HTMRegistry.getNameFromFlag(action.getFlagType()).toUpperCase(),
                     new LiteralText(String.valueOf(action.getBool()).toUpperCase()).formatted(action.getBool() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)), false);
         }
     }
@@ -111,7 +112,7 @@ public class InteractionManager {
         GameProfile owner = world.getServer().getUserCache().getByUuid(lock.getOwner());
 
         player.sendMessage(new TranslatableText("text.htm.divider"), false);
-        player.sendMessage(new TranslatableText("text.htm.type", lock.getType().name()), false);
+        player.sendMessage(new TranslatableText("text.htm.type", HTMRegistry.getNameFromLock(lock.getType()).toUpperCase()), false);
         player.sendMessage(new TranslatableText("text.htm.owner", owner.getName()), false);
         if (owner.getId().equals(player.getUuid())) {
             String trustedList = lock.getTrusted()
@@ -179,7 +180,7 @@ public class InteractionManager {
         }
 
         lock.setType(action.getSetType(), player);
-        player.sendMessage(new TranslatableText("text.htm.set", action.getSetType().name()), false);
+        player.sendMessage(new TranslatableText("text.htm.set", HTMRegistry.getNameFromLock(action.getSetType()).toUpperCase()), false);
     }
 
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {

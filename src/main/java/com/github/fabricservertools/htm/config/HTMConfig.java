@@ -1,7 +1,6 @@
 package com.github.fabricservertools.htm.config;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
-import com.github.fabricservertools.htm.Htm;
+import com.github.fabricservertools.htm.HTM;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.util.Identifier;
@@ -16,7 +15,7 @@ import java.util.Map;
 public class HTMConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public Map<HTMContainerLock.FlagType, Boolean> defaultFlags = new HashMap<>();
+    public Map<String, Boolean> defaultFlags = new HashMap<>();
 
     public ArrayList<Identifier> autolockingContainers = new ArrayList<>(Arrays.asList(
             new Identifier("chest"),
@@ -47,7 +46,7 @@ public class HTMConfig {
     ));
 
     public HTMConfig() {
-        defaultFlags.put(HTMContainerLock.FlagType.HOPPERS, true);
+        defaultFlags.put("hoppers", true);
     }
 
 
@@ -80,7 +79,7 @@ public class HTMConfig {
         ) {
             GSON.toJson(this, writer);
         } catch (IOException e) {
-            Htm.LOGGER.error("Failed to save config");
+            HTM.LOGGER.error("Failed to save config");
         }
     }
 }
