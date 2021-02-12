@@ -17,6 +17,11 @@ public class PublicLock implements LockType {
     }
 
     @Override
+    public void onInfo(ServerPlayerEntity player, HTMContainerLock lock) {
+
+    }
+
+    @Override
     public CompoundTag toTag() {
         return new CompoundTag();
     }

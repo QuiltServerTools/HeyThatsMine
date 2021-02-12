@@ -1,8 +1,8 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.command.HTMCommand;
 import com.github.fabricservertools.htm.config.HTMConfig;
+import com.github.fabricservertools.htm.locks.KeyLock;
 import com.github.fabricservertools.htm.locks.PrivateLock;
 import com.github.fabricservertools.htm.locks.PublicLock;
 import net.fabricmc.api.ModInitializer;
@@ -31,11 +31,12 @@ public class HTM implements ModInitializer {
     }
 
     private void registerLocks() {
-        HTMRegistry.registerLockType("private", new PrivateLock());
-        HTMRegistry.registerLockType("public", new PublicLock());
+        HTMRegistry.registerLockType("private", PrivateLock.class);
+        HTMRegistry.registerLockType("public", PublicLock.class);
+        HTMRegistry.registerLockType("key", KeyLock.class);
     }
 
     private void registerFlags() {
-        HTMRegistry.registerFlagType("hoppers", new FlagType() {});
+        HTMRegistry.registerFlagType("hoppers");
     }
 }

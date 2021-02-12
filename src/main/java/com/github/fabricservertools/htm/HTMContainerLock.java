@@ -1,6 +1,5 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.LockType;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +20,7 @@ public class HTMContainerLock {
     private LockType type;
     private UUID owner;
     private HashSet<UUID> trusted;
-    private Map<FlagType, Boolean> flags;
+    private Map<String, Boolean> flags;
 
     public HTMContainerLock() {
         type = null;
@@ -31,9 +30,9 @@ public class HTMContainerLock {
     }
 
     private void initFlags() {
-        HashMap<FlagType, Boolean> hashMap = new HashMap();
-        for (FlagType flagType : HTMRegistry.getFlagTypes().values()) {
-            hashMap.put(flagType, HTM.config.defaultFlags.getOrDefault(HTMRegistry.getNameFromFlag(flagType), false));
+        HashMap<String, Boolean> hashMap = new HashMap();
+        for (String flagType : HTMRegistry.getFlagTypes()) {
+            hashMap.put(flagType, HTM.config.defaultFlags.getOrDefault(flagType, false));
         }
 
         flags = hashMap;
@@ -53,9 +52,9 @@ public class HTMContainerLock {
             tag.put("Trusted", trustedTag);
 
             ListTag flagsTag = new ListTag();
-            for (Map.Entry<FlagType, Boolean> entry : flags.entrySet()) {
+            for (Map.Entry<String, Boolean> entry : flags.entrySet()) {
                 CompoundTag flagTag = new CompoundTag();
-                flagTag.putString("type", HTMRegistry.getNameFromFlag(entry.getKey()));
+                flagTag.putString("type", entry.getKey());
                 flagTag.putBoolean("value", entry.getValue());
 
                 flagsTag.add(flagTag);
@@ -69,7 +68,13 @@ public class HTMContainerLock {
 
     public void fromTag(CompoundTag tag) {
         if (tag.contains("Type")) {
-            type = HTMRegistry.getLockFromName(tag.getString("Type"));
+            try {
+                type = HTMRegistry.getLockFromName(tag.getString("Type")).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                HTM.LOGGER.error("Failed to create lock type");
+                type = null;
+                return;
+            }
             type.fromTag(tag.getCompound("TypeData"));
             owner = tag.getUuid("Owner");
 
@@ -82,7 +87,7 @@ public class HTMContainerLock {
             ListTag flagTags = tag.getList("Flags", 10);
             for (Tag flagTag : flagTags) {
                 CompoundTag compoundTag = (CompoundTag) flagTag;
-                flags.put(HTMRegistry.getFlagFromName(compoundTag.getString("type")), compoundTag.getBoolean("value"));
+                flags.put(compoundTag.getString("type"), compoundTag.getBoolean("value"));
             }
         }
     }
@@ -90,9 +95,9 @@ public class HTMContainerLock {
     public boolean canOpen(ServerPlayerEntity player) {
         if (type == null) return true;
 
-        if (isOwner(player)) return true;
-
         if (type.canOpen(player, this)) return true;
+
+        if (isOwner(player)) return true;
 
         player.sendMessage(new TranslatableText("text.htm.locked"), true);
         player.playSound(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -107,7 +112,7 @@ public class HTMContainerLock {
         return owner;
     }
 
-    public Map<FlagType, Boolean> getFlags() {
+    public Map<String, Boolean> getFlags() {
         return flags;
     }
 
@@ -160,7 +165,7 @@ public class HTMContainerLock {
         return owner != null;
     }
 
-    public void setFlag(FlagType flagType, boolean value) {
+    public void setFlag(String flagType, boolean value) {
         flags.put(flagType, value);
     }
 }

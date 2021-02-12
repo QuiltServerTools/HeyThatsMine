@@ -50,6 +50,7 @@ public class HTMListeners {
 
             if (InteractionManager.pendingActions.containsKey(player)) {
                 InteractionManager.execute((ServerPlayerEntity) player, world, pos);
+                world.updateNeighbors(pos, world.getBlockState(pos).getBlock());
                 return ActionResult.SUCCESS;
             }
 

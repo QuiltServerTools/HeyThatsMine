@@ -43,7 +43,7 @@ public abstract class BlockItemMixin {
 
                     HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
-                    lock.setType(HTMRegistry.getLockFromName("private"), (ServerPlayerEntity) playerEntity);
+                    lock.setType(HTMRegistry.getLockFromName("private").getDeclaredConstructor().newInstance(), (ServerPlayerEntity) playerEntity);
                     playerEntity.sendMessage(new TranslatableText("text.htm.set", "PRIVATE"), false);
                 }
             }

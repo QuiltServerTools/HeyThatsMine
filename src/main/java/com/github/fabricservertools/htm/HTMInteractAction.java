@@ -1,17 +1,16 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.LockType;
 import com.mojang.authlib.GameProfile;
 
 public class HTMInteractAction {
     private final ActionType type;
     private final LockType setType;
-    private final FlagType flagType;
+    private final String flagType;
     private final GameProfile targetPlayer;
     private boolean bool;
 
-    private HTMInteractAction(ActionType type, LockType createType, FlagType flagType, GameProfile trustPlayer) {
+    private HTMInteractAction(ActionType type, LockType createType, String flagType, GameProfile trustPlayer) {
         this.type = type;
         this.setType = createType;
         this.flagType = flagType;
@@ -40,7 +39,7 @@ public class HTMInteractAction {
         return new HTMInteractAction(ActionType.INFO, null, null, null);
     }
 
-    public static HTMInteractAction flag(FlagType flagType, boolean bool) {
+    public static HTMInteractAction flag(String flagType, boolean bool) {
         HTMInteractAction action = new HTMInteractAction(ActionType.FLAG, null, flagType, null);
         action.bool = bool;
         return action;
@@ -58,7 +57,7 @@ public class HTMInteractAction {
         return targetPlayer;
     }
 
-    public FlagType getFlagType() {
+    public String getFlagType() {
         return flagType;
     }
 
