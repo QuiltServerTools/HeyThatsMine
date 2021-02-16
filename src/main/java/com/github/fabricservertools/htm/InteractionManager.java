@@ -71,7 +71,7 @@ public class InteractionManager {
             }
             player.sendMessage(new TranslatableText("text.htm.divider"), false);
         } else {
-            lock.setFlag(action.getFlagType(), action.getBool());
+            lock.setFlag(action.getFlagType().toLowerCase(), action.getBool());
             player.sendMessage(new TranslatableText(
                     "text.htm.set_flag",
                     action.getFlagType().toUpperCase(),
