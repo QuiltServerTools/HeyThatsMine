@@ -39,6 +39,7 @@ public class HTMListeners {
                     return true;
                 }
 
+                player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
                 return false;
             }
 
@@ -50,7 +51,8 @@ public class HTMListeners {
 
             if (InteractionManager.pendingActions.containsKey(player)) {
                 InteractionManager.execute((ServerPlayerEntity) player, world, pos);
-                world.updateNeighbors(pos, world.getBlockState(pos).getBlock());
+
+                world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
                 return ActionResult.SUCCESS;
             }
 

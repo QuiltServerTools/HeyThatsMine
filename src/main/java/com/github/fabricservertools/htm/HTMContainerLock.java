@@ -154,7 +154,6 @@ public class HTMContainerLock {
                 return true;
             }
 
-            player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
             return false;
         }
 

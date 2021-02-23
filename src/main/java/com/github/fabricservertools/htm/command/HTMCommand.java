@@ -1,10 +1,10 @@
 package com.github.fabricservertools.htm.command;
 
 import com.github.fabricservertools.htm.GlobalTrustState;
-import com.github.fabricservertools.htm.HTMInteractAction;
 import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.InteractionManager;
 import com.github.fabricservertools.htm.api.LockType;
+import com.github.fabricservertools.htm.interactions.*;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -17,7 +17,9 @@ import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Pair;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static net.minecraft.server.command.CommandManager.argument;
@@ -64,14 +66,17 @@ public class HTMCommand {
                 literal("untrust")
                         .requires(Permissions.require("htm.command.trust", true))
                         .then(argument("target", GameProfileArgumentType.gameProfile())
-                                .executes(ctx -> untrust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
-                                .then(argument("global", StringArgumentType.word())
-                                        .suggests((context, builder) -> builder.suggest("global").buildFuture())
+                                .executes(ctx -> untrust(
+                                        ctx.getSource(),
+                                        GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+                                        false
+                                ))
+                                .then(literal("global")
                                         .executes(ctx -> untrust(
                                                 ctx.getSource(),
                                                 GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
-                                                StringArgumentType.getString(ctx, "global").equalsIgnoreCase("global"))
-                                        )
+                                                true
+                                        ))
                                 ))
                         .build();
 
@@ -131,7 +136,7 @@ public class HTMCommand {
     private static int flagInfo(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.flag(null, false));
+        InteractionManager.pendingActions.put(player, new FlagAction(Optional.empty()));
         context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
 
         return 1;
@@ -149,7 +154,7 @@ public class HTMCommand {
             return -3;
         }
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.flag(type, value));
+        InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Pair<>(type, value))));
         context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
         return 1;
     }
@@ -158,7 +163,7 @@ public class HTMCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
         GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.transfer(gameProfile));
+        InteractionManager.pendingActions.put(player, new TransferAction(gameProfile));
         context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
         return 1;
     }
@@ -166,7 +171,7 @@ public class HTMCommand {
     private static int info(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.info());
+        InteractionManager.pendingActions.put(player, new InfoAction());
         context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
         return 1;
     }
@@ -187,7 +192,7 @@ public class HTMCommand {
                 source.sendError(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()));
             }
         } else {
-            InteractionManager.pendingActions.put(player, HTMInteractAction.trust(gameProfile, false));
+            InteractionManager.pendingActions.put(player,  new TrustAction(gameProfile, false));
             source.sendFeedback(new TranslatableText("text.htm.select"), false);
         }
 
@@ -204,7 +209,7 @@ public class HTMCommand {
                 source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
             }
         } else {
-            InteractionManager.pendingActions.put(player, HTMInteractAction.trust(gameProfile, true));
+            InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, true));
             source.sendFeedback(new TranslatableText("text.htm.select"), false);
         }
 
@@ -229,7 +234,7 @@ public class HTMCommand {
     private static int remove(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.remove());
+        InteractionManager.pendingActions.put(player, new RemoveAction());
         context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
         return 1;
     }
@@ -245,7 +250,7 @@ public class HTMCommand {
             return -3;
         }
 
-        InteractionManager.pendingActions.put(player, HTMInteractAction.set(type));
+        InteractionManager.pendingActions.put(player, new SetAction(type));
         context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
         return 1;
     }
