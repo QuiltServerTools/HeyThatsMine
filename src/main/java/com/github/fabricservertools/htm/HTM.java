@@ -29,8 +29,9 @@ public class HTM implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             registerCommands(dispatcher);
-            HTMListeners.init();
         }));
+
+        HTMListeners.init();
     }
 
     private void registerLocks() {

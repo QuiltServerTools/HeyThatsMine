@@ -2,8 +2,8 @@ package com.github.fabricservertools.htm.command.subcommands;
 
 import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.api.LockType;
-import com.github.fabricservertools.htm.command.LockTypeSuggestionProvider;
 import com.github.fabricservertools.htm.command.SubCommand;
+import com.github.fabricservertools.htm.command.suggestors.LockTypeSuggestionProvider;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.SetAction;
 import com.mojang.brigadier.arguments.StringArgumentType;

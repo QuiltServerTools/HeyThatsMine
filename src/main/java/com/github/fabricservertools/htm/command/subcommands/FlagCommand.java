@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.command.FlagTypeSuggestionProvider;
 import com.github.fabricservertools.htm.command.SubCommand;
+import com.github.fabricservertools.htm.command.suggestors.FlagTypeSuggestionProvider;
 import com.github.fabricservertools.htm.interactions.FlagAction;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.mojang.brigadier.arguments.BoolArgumentType;
