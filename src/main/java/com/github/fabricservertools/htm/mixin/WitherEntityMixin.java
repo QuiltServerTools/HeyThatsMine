@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.mixin;
 
-import com.github.fabricservertools.htm.InteractionManager;
 import com.github.fabricservertools.htm.api.LockableObject;
+import com.github.fabricservertools.htm.interactions.InteractionManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;

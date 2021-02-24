@@ -1,5 +1,6 @@
-package com.github.fabricservertools.htm;
+package com.github.fabricservertools.htm.interactions;
 
+import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableChestBlock;
 import com.github.fabricservertools.htm.api.LockableObject;

@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.api.LockableChestBlock;
 import com.github.fabricservertools.htm.api.LockableObject;
+import com.github.fabricservertools.htm.interactions.InteractionManager;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.entity.BlockEntity;

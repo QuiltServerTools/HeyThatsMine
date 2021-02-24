@@ -36,8 +36,11 @@ public class TrustAction implements LockInteraction {
 
         if (untrust) {
             //untrust
-            lock.removeTrust(trustPlayer.getId());
-            player.sendMessage(new TranslatableText("text.htm.untrust", trustPlayer.getName()), false);
+            if (lock.removeTrust(trustPlayer.getId())) {
+                player.sendMessage(new TranslatableText("text.htm.untrust", trustPlayer.getName()), false);
+            } else {
+                player.sendMessage(new TranslatableText("text.htm.error.not_trusted", trustPlayer.getName()), false);
+            }
         } else {
             //trust
             if (lock.addTrust(trustPlayer.getId())){

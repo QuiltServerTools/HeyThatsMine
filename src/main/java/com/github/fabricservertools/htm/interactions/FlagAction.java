@@ -43,6 +43,7 @@ public class FlagAction implements LockInteraction {
         }
 
         if (!flagSet.isPresent()) {
+            //flag info
             player.sendMessage(new TranslatableText("text.htm.divider"), false);
             for (Map.Entry<String, Boolean> entry : lock.getFlags().entrySet()) {
                 player.sendMessage(new TranslatableText(
@@ -53,6 +54,7 @@ public class FlagAction implements LockInteraction {
             }
             player.sendMessage(new TranslatableText("text.htm.divider"), false);
         } else {
+            //flag set
             String flagType = flagSet.get().getLeft();
             boolean value = flagSet.get().getRight();
             lock.setFlag(flagType.toLowerCase(), value);

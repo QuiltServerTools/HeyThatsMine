@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.mixin;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
-import com.github.fabricservertools.htm.InteractionManager;
+import com.github.fabricservertools.htm.interactions.InteractionManager;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.server.world.ServerWorld;

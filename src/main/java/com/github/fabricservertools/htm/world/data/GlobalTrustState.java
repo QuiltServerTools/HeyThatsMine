@@ -1,4 +1,4 @@
-package com.github.fabricservertools.htm;
+package com.github.fabricservertools.htm.world.data;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;

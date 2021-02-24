@@ -1,8 +1,8 @@
 package com.github.fabricservertools.htm.locks;
 
-import com.github.fabricservertools.htm.GlobalTrustState;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockType;
+import com.github.fabricservertools.htm.world.data.GlobalTrustState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
