@@ -5,12 +5,12 @@
   "text.htm.error.already_locked": "§cDieser Behälter ist bereits gesperrt",
   "text.htm.error.lock_type": "§cUngültiger Sperrtyp",
   "text.htm.error.flag_type": "§cUngültiger flag-Typ",
-  "text.htm.error.trust_self": "§cKann nicht sich selbst vertrauen",
+  "text.htm.error.trust_self": "§cEs ist nicht möglich, sich selbst zu vertrauen",
   "text.htm.error.already_trusted": "§r§a%s §cwurde bereits vertraut",
-  "text.htm.error.not_trusted": "§r§a%s §cwurde nicht vertraut",
+  "text.htm.error.not_trusted": "§r§a%s §cwird nicht vertraut",
 
 
-  "text.htm.select": "§bLinksklicke einen Block, um ihn auszuwählen",
+  "text.htm.select": "§bNutze die linke Maustaste, um einen Block auszuwählen",
   "text.htm.locked": "§cGesperrt",
   "text.htm.divider": "§b-------------------------",
   "text.htm.type": "§b§lTyp: §r§a%s",
@@ -20,7 +20,7 @@
   "text.htm.trust": "§a%s §bwird vertraut",
   "text.htm.untrust": "§a%s §b wird nicht vertraut",
   "text.htm.global": " §a§lGlobal",
-  "text.htm.transfer": "§bBehälter wurde nach §a%s transferiert",
+  "text.htm.transfer": "§bBehälter wurde §a%s übertragen",
   "text.htm.unlocked": "§bBehälter entsperrt",
   "text.htm.key": "§b§lSchlüssel: §r§a%s",
   "text.htm.set": "§bDer Behälter wurde auf folgendes gesetzt: §r§a%s",
@@ -28,7 +28,7 @@
   "text.htm.override": "§bDieser Behälter gehört: §r§a%s §cWird ignoriert",
   "text.htm.set_flag": "§r§a%s §bwurde auf §r§a%s §bgesetzt",
   "text.htm.flag": "§b§l%s: §r%s §r",
-  "text.htm.persist": "§bFortbestehen wurde umgeschaltet ",
+  "text.htm.persist": "§bFortbestehen: ",
   "text.htm.on": "§a§lAn",
   "text.htm.off": "§c§lAus"
 }
