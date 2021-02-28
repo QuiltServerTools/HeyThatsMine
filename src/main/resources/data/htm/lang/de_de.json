@@ -28,7 +28,7 @@
   "text.htm.override": "§bDieser Behälter gehört: §r§a%s §cWird ignoriert",
   "text.htm.set_flag": "§r§a%s §bwurde auf §r§a%s §bgesetzt",
   "text.htm.flag": "§b§l%s: §r%s §r",
-  "text.htm.persist": "§bFortbestehen: ",
+  "text.htm.persist": "§bLanglebig: ",
   "text.htm.on": "§a§lAn",
   "text.htm.off": "§c§lAus"
 }
