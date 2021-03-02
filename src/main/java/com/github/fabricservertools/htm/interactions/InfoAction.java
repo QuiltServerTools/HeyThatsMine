@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm.interactions;
 
+import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.api.LockInteraction;
@@ -20,6 +21,11 @@ public class InfoAction implements LockInteraction {
         }
 
         GameProfile owner = world.getServer().getUserCache().getByUuid(lock.getOwner());
+
+        if (owner == null) {
+            HTM.LOGGER.error("Can't find lock owner: " + lock.getOwner());
+            return;
+        }
 
         player.sendMessage(new TranslatableText("text.htm.divider"), false);
         player.sendMessage(new TranslatableText("text.htm.type", HTMRegistry.getNameFromLock(lock.getType()).toUpperCase()), false);
