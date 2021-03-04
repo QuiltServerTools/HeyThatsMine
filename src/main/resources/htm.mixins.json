@@ -6,10 +6,11 @@
   "mixins": [
     "BlockItemMixin",
     "ChestBlockMixin",
+    "EnderDragonEntityMixin",
     "ExplosionMixin",
     "HopperBlockEntityMixin",
     "LockableContainerMixin",
-    "WitherEntityMixin"
+    "WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1
