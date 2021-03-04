@@ -17,21 +17,21 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class TransferCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("transfer")
-                .requires(Permissions.require("htm.command.transfer", true))
-                .then(argument("target", GameProfileArgumentType.gameProfile())
-                        .executes(this::transfer))
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("transfer")
+				.requires(Permissions.require("htm.command.transfer", true))
+				.then(argument("target", GameProfileArgumentType.gameProfile())
+						.executes(this::transfer))
+				.build();
+	}
 
-    private int transfer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-        GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
+	private int transfer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		ServerPlayerEntity player = context.getSource().getPlayer();
+		GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
 
-        InteractionManager.pendingActions.put(player, new TransferAction(gameProfile));
-        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
-        return 1;
-    }
+		InteractionManager.pendingActions.put(player, new TransferAction(gameProfile));
+		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		return 1;
+	}
 }

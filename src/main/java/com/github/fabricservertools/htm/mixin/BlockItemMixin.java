@@ -25,31 +25,31 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {
 
-    @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getBlockPos()Lnet/minecraft/util/math/BlockPos;"))
-    private void place(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir) {
-        try {
-            BlockPos pos = context.getBlockPos();
-            World world = context.getWorld();
-            PlayerEntity playerEntity = context.getPlayer();
-            BlockState state = world.getBlockState(pos);
+	@Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getBlockPos()Lnet/minecraft/util/math/BlockPos;"))
+	private void place(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir) {
+		try {
+			BlockPos pos = context.getBlockPos();
+			World world = context.getWorld();
+			PlayerEntity playerEntity = context.getPlayer();
+			BlockState state = world.getBlockState(pos);
 
-            if (world.isClient) return;
-            if (!state.getBlock().hasBlockEntity()) return;
+			if (world.isClient) return;
+			if (!state.getBlock().hasBlockEntity()) return;
 
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof LockableObject) {
-                if(HTM.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
-                    if (InteractionManager.getLock((ServerWorld) world, blockEntity).isLocked()) return;
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof LockableObject) {
+				if (HTM.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
+					if (InteractionManager.getLock((ServerWorld) world, blockEntity).isLocked()) return;
 
-                    HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
+					HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
-                    lock.setType(HTMRegistry.getLockFromName("private").getDeclaredConstructor().newInstance(), (ServerPlayerEntity) playerEntity);
-                    playerEntity.sendMessage(new TranslatableText("text.htm.set", "PRIVATE"), false);
-                }
-            }
-        } catch (Exception e) {
-            HTM.LOGGER.warn("Something went wrong auto locking");
-            e.printStackTrace();
-        }
-    }
+					lock.setType(HTMRegistry.getLockFromName("private").getDeclaredConstructor().newInstance(), (ServerPlayerEntity) playerEntity);
+					playerEntity.sendMessage(new TranslatableText("text.htm.set", "PRIVATE"), false);
+				}
+			}
+		} catch (Exception e) {
+			HTM.LOGGER.warn("Something went wrong auto locking");
+			e.printStackTrace();
+		}
+	}
 }

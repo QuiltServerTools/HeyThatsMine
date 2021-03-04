@@ -22,7 +22,7 @@ public abstract class WorldMixin {
 		HTMContainerLock lock = InteractionManager.getLock((ServerWorld) world, pos);
 
 		if (lock == null) return;
-		if(!lock.isLocked()) return;
+		if (!lock.isLocked()) return;
 
 		if (breakingEntity instanceof ServerPlayerEntity) {
 			if (lock.isOwner((ServerPlayerEntity) breakingEntity)) return;

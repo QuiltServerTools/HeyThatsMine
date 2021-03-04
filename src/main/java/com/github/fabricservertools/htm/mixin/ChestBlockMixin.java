@@ -23,81 +23,81 @@ import java.util.function.Supplier;
 @SuppressWarnings("MixinInnerClass")
 @Mixin(ChestBlock.class)
 public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntity> implements LockableChestBlock {
-    protected ChestBlockMixin(Settings settings, Supplier<BlockEntityType<? extends ChestBlockEntity>> blockEntityTypeSupplier) {
-        super(settings, blockEntityTypeSupplier);
-    }
+	protected ChestBlockMixin(Settings settings, Supplier<BlockEntityType<? extends ChestBlockEntity>> blockEntityTypeSupplier) {
+		super(settings, blockEntityTypeSupplier);
+	}
 
-    private final DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, HTMContainerLock> LOCK_RETRIEVER =
-            new DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, HTMContainerLock>() {
-                @Override
-                public HTMContainerLock getFromBoth(ChestBlockEntity first, ChestBlockEntity second) {
-                    if (((LockableObject) first).getLock().isLocked()) {
-                        return ((LockableObject) first).getLock();
-                    }
+	private final DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, HTMContainerLock> LOCK_RETRIEVER =
+			new DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, HTMContainerLock>() {
+				@Override
+				public HTMContainerLock getFromBoth(ChestBlockEntity first, ChestBlockEntity second) {
+					if (((LockableObject) first).getLock().isLocked()) {
+						return ((LockableObject) first).getLock();
+					}
 
-                    if (((LockableObject) second).getLock().isLocked()) {
-                        return ((LockableObject) second).getLock();
-                    }
+					if (((LockableObject) second).getLock().isLocked()) {
+						return ((LockableObject) second).getLock();
+					}
 
-                    return ((LockableObject) first).getLock();
-                }
+					return ((LockableObject) first).getLock();
+				}
 
-                @Override
-                public HTMContainerLock getFrom(ChestBlockEntity single) {
-                    if (((LockableObject) single).getLock().isLocked()) {
-                        return ((LockableObject) single).getLock();
-                    }
+				@Override
+				public HTMContainerLock getFrom(ChestBlockEntity single) {
+					if (((LockableObject) single).getLock().isLocked()) {
+						return ((LockableObject) single).getLock();
+					}
 
-                    return ((LockableObject) single).getLock();
-                }
+					return ((LockableObject) single).getLock();
+				}
 
-                @Override
-                public HTMContainerLock getFallback() {
-                    return null;
-                }
-            };
+				@Override
+				public HTMContainerLock getFallback() {
+					return null;
+				}
+			};
 
-    private final DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, Optional<ChestBlockEntity>> UNLOCKED_RETRIEVER =
-            new DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, Optional<ChestBlockEntity>>() {
-                @Override
-                public Optional<ChestBlockEntity> getFromBoth(ChestBlockEntity first, ChestBlockEntity second) {
-                    if (!((LockableObject) first).getLock().isLocked()) {
-                        return Optional.of(first);
-                    }
+	private final DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, Optional<ChestBlockEntity>> UNLOCKED_RETRIEVER =
+			new DoubleBlockProperties.PropertyRetriever<ChestBlockEntity, Optional<ChestBlockEntity>>() {
+				@Override
+				public Optional<ChestBlockEntity> getFromBoth(ChestBlockEntity first, ChestBlockEntity second) {
+					if (!((LockableObject) first).getLock().isLocked()) {
+						return Optional.of(first);
+					}
 
-                    if (!((LockableObject) second).getLock().isLocked()) {
-                        return Optional.of(second);
-                    }
+					if (!((LockableObject) second).getLock().isLocked()) {
+						return Optional.of(second);
+					}
 
-                    return Optional.empty();
-                }
+					return Optional.empty();
+				}
 
-                @Override
-                public Optional<ChestBlockEntity> getFrom(ChestBlockEntity single) {
-                    return Optional.empty();
-                }
+				@Override
+				public Optional<ChestBlockEntity> getFrom(ChestBlockEntity single) {
+					return Optional.empty();
+				}
 
-                @Override
-                public Optional<ChestBlockEntity> getFallback() {
-                    return Optional.empty();
-                }
-            };
+				@Override
+				public Optional<ChestBlockEntity> getFallback() {
+					return Optional.empty();
+				}
+			};
 
-    @Override
-    public HTMContainerLock getLockAt(BlockState state, World world, BlockPos pos) {
-        BiPredicate<WorldAccess, BlockPos> biPredicate2 = (worldAccess, blockPos) -> false;
-        ChestBlock chestblock = (ChestBlock)(Object)this;
+	@Override
+	public HTMContainerLock getLockAt(BlockState state, World world, BlockPos pos) {
+		BiPredicate<WorldAccess, BlockPos> biPredicate2 = (worldAccess, blockPos) -> false;
+		ChestBlock chestblock = (ChestBlock) (Object) this;
 
-        DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType)this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, chestblock.FACING, state, world, pos, biPredicate2);
-        return (HTMContainerLock) propertySource.apply(LOCK_RETRIEVER);
-    }
+		DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType) this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, chestblock.FACING, state, world, pos, biPredicate2);
+		return (HTMContainerLock) propertySource.apply(LOCK_RETRIEVER);
+	}
 
-    @Override
-    public Optional<BlockEntity> getUnlockedPart(BlockState state, World world, BlockPos pos) {
-        BiPredicate<WorldAccess, BlockPos> biPredicate2 = (worldAccess, blockPos) -> false;
-        ChestBlock chestblock = (ChestBlock)(Object)this;
+	@Override
+	public Optional<BlockEntity> getUnlockedPart(BlockState state, World world, BlockPos pos) {
+		BiPredicate<WorldAccess, BlockPos> biPredicate2 = (worldAccess, blockPos) -> false;
+		ChestBlock chestblock = (ChestBlock) (Object) this;
 
-        DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType)this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, chestblock.FACING, state, world, pos, biPredicate2);
-        return (Optional<BlockEntity>) propertySource.apply(UNLOCKED_RETRIEVER);
-    }
+		DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType) this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, chestblock.FACING, state, world, pos, biPredicate2);
+		return (Optional<BlockEntity>) propertySource.apply(UNLOCKED_RETRIEVER);
+	}
 }

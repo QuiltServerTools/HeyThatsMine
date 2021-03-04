@@ -10,66 +10,66 @@ import net.minecraft.world.PersistentState;
 import java.util.UUID;
 
 public class GlobalTrustState extends PersistentState {
-    private Multimap<UUID, UUID> globalTrust;
+	private Multimap<UUID, UUID> globalTrust;
 
-    public GlobalTrustState() {
-        super("globalTrust");
-        globalTrust = HashMultimap.create();
-    }
+	public GlobalTrustState() {
+		super("globalTrust");
+		globalTrust = HashMultimap.create();
+	}
 
-    @Override
-    public void fromTag(CompoundTag tag) {
-        ListTag trustList = tag.getList("GlobalTrusts", 10);
+	@Override
+	public void fromTag(CompoundTag tag) {
+		ListTag trustList = tag.getList("GlobalTrusts", 10);
 
-        trustList.forEach(tag1 -> {
-            CompoundTag compoundTag = (CompoundTag) tag1;
-            UUID truster = compoundTag.getUuid("Truster");
+		trustList.forEach(tag1 -> {
+			CompoundTag compoundTag = (CompoundTag) tag1;
+			UUID truster = compoundTag.getUuid("Truster");
 
-            ListTag trustedTag = compoundTag.getList("Trusted", 11);
+			ListTag trustedTag = compoundTag.getList("Trusted", 11);
 
-            for(int i = 0; i < trustedTag.size(); ++i) {
-                globalTrust.put(truster, NbtHelper.toUuid(trustedTag.get(i)));
-            }
-        });
-    }
+			for (int i = 0; i < trustedTag.size(); ++i) {
+				globalTrust.put(truster, NbtHelper.toUuid(trustedTag.get(i)));
+			}
+		});
+	}
 
-    @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        ListTag trustList = new ListTag();
+	@Override
+	public CompoundTag toTag(CompoundTag tag) {
+		ListTag trustList = new ListTag();
 
-        for (UUID trusterID : globalTrust.keySet()) {
-            CompoundTag trustTag = new CompoundTag();
-            trustTag.putUuid("Truster", trusterID);
+		for (UUID trusterID : globalTrust.keySet()) {
+			CompoundTag trustTag = new CompoundTag();
+			trustTag.putUuid("Truster", trusterID);
 
-            ListTag trustedTag = new ListTag();
-            for (UUID trustedID : globalTrust.get(trusterID)) {
-                trustedTag.add(NbtHelper.fromUuid(trustedID));
-            }
+			ListTag trustedTag = new ListTag();
+			for (UUID trustedID : globalTrust.get(trusterID)) {
+				trustedTag.add(NbtHelper.fromUuid(trustedID));
+			}
 
-            trustTag.put("Trusted", trustedTag);
+			trustTag.put("Trusted", trustedTag);
 
-            trustList.add(trustTag);
-        }
+			trustList.add(trustTag);
+		}
 
-        tag.put("GlobalTrusts", trustList);
-        return tag;
-    }
+		tag.put("GlobalTrusts", trustList);
+		return tag;
+	}
 
-    public boolean isTrusted(UUID truster, UUID trusted) {
-        return globalTrust.get(truster).contains(trusted);
-    }
+	public boolean isTrusted(UUID truster, UUID trusted) {
+		return globalTrust.get(truster).contains(trusted);
+	}
 
-    public boolean addTrust(UUID truster, UUID trusted) {
-        markDirty();
-        return globalTrust.put(truster, trusted);
-    }
+	public boolean addTrust(UUID truster, UUID trusted) {
+		markDirty();
+		return globalTrust.put(truster, trusted);
+	}
 
-    public boolean removeTrust(UUID truster, UUID trusted) {
-        markDirty();
-        return globalTrust.remove(truster, trusted);
-    }
+	public boolean removeTrust(UUID truster, UUID trusted) {
+		markDirty();
+		return globalTrust.remove(truster, trusted);
+	}
 
-    public Multimap<UUID, UUID> getTrusted() {
-        return globalTrust;
-    }
+	public Multimap<UUID, UUID> getTrusted() {
+		return globalTrust;
+	}
 }

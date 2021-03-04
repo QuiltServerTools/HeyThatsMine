@@ -21,41 +21,41 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class FlagCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("flag")
-                .requires(Permissions.require("htm.command.flag", true))
-                .executes(this::flagInfo)
-                .then(argument("type", StringArgumentType.word())
-                        .suggests(new FlagTypeSuggestionProvider())
-                        .then(argument("value", BoolArgumentType.bool())
-                                .executes(this::flag)))
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("flag")
+				.requires(Permissions.require("htm.command.flag", true))
+				.executes(this::flagInfo)
+				.then(argument("type", StringArgumentType.word())
+						.suggests(new FlagTypeSuggestionProvider())
+						.then(argument("value", BoolArgumentType.bool())
+								.executes(this::flag)))
+				.build();
+	}
 
-    private int flagInfo(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
+	private int flagInfo(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		ServerPlayerEntity player = context.getSource().getPlayer();
 
-        InteractionManager.pendingActions.put(player, new FlagAction(Optional.empty()));
-        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		InteractionManager.pendingActions.put(player, new FlagAction(Optional.empty()));
+		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
 
-        return 1;
-    }
+		return 1;
+	}
 
-    private int flag(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        String type;
-        ServerPlayerEntity player = context.getSource().getPlayer();
-        boolean value = BoolArgumentType.getBool(context, "value");
+	private int flag(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		String type;
+		ServerPlayerEntity player = context.getSource().getPlayer();
+		boolean value = BoolArgumentType.getBool(context, "value");
 
-        try {
-            type = StringArgumentType.getString(context, "type".toLowerCase());
-        } catch (IllegalArgumentException e) {
-            context.getSource().sendFeedback(new TranslatableText("text.htm.error.flag_type"), false);
-            return -3;
-        }
+		try {
+			type = StringArgumentType.getString(context, "type".toLowerCase());
+		} catch (IllegalArgumentException e) {
+			context.getSource().sendFeedback(new TranslatableText("text.htm.error.flag_type"), false);
+			return -3;
+		}
 
-        InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Pair<>(type, value))));
-        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
-        return 1;
-    }
+		InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Pair<>(type, value))));
+		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		return 1;
+	}
 }

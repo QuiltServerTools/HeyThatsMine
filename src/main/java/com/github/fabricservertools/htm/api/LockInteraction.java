@@ -6,5 +6,5 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface LockInteraction {
-    void execute(ServerPlayerEntity player, World world, BlockPos pos, HTMContainerLock lock);
+	void execute(ServerPlayerEntity player, World world, BlockPos pos, HTMContainerLock lock);
 }

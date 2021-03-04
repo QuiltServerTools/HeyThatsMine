@@ -13,23 +13,23 @@ import net.minecraft.text.TranslatableText;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class PersistCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("persist")
-                .requires(Permissions.require("htm.command.persist", true))
-                .executes(this::persist)
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("persist")
+				.requires(Permissions.require("htm.command.persist", true))
+				.executes(this::persist)
+				.build();
+	}
 
-    private int persist(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
+	private int persist(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		ServerPlayerEntity player = context.getSource().getPlayer();
 
-        InteractionManager.togglePersist(player);
-        if (InteractionManager.persisting.contains(player)) {
-            player.sendMessage(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.on")), false);
-        } else {
-            player.sendMessage(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.off")), false);
-        }
-        return 1;
-    }
+		InteractionManager.togglePersist(player);
+		if (InteractionManager.persisting.contains(player)) {
+			player.sendMessage(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.on")), false);
+		} else {
+			player.sendMessage(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.off")), false);
+		}
+		return 1;
+	}
 }

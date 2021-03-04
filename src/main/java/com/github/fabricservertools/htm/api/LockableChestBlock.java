@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import java.util.Optional;
 
 public interface LockableChestBlock {
-    HTMContainerLock getLockAt(final BlockState state, final World world, final BlockPos pos);
+	HTMContainerLock getLockAt(final BlockState state, final World world, final BlockPos pos);
 
-    Optional<BlockEntity> getUnlockedPart(final BlockState state, final World world, final BlockPos pos);
+	Optional<BlockEntity> getUnlockedPart(final BlockState state, final World world, final BlockPos pos);
 }

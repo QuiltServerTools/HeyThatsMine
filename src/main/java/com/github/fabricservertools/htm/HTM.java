@@ -17,42 +17,42 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 public class HTM implements ModInitializer {
-    public static final Logger LOGGER = LogManager.getLogger();
-    public static HTMConfig config;
+	public static final Logger LOGGER = LogManager.getLogger();
+	public static HTMConfig config;
 
-    @Override
-    public void onInitialize() {
-        registerLocks();
-        registerFlags();
+	@Override
+	public void onInitialize() {
+		registerLocks();
+		registerFlags();
 
-        config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
+		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
 
-        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
-            registerCommands(dispatcher);
-        }));
+		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
+			registerCommands(dispatcher);
+		}));
 
-        HTMListeners.init();
-    }
+		HTMListeners.init();
+	}
 
-    private void registerLocks() {
-        HTMRegistry.registerLockType("private", PrivateLock.class);
-        HTMRegistry.registerLockType("public", PublicLock.class);
-        HTMRegistry.registerLockType("key", KeyLock.class);
-    }
+	private void registerLocks() {
+		HTMRegistry.registerLockType("private", PrivateLock.class);
+		HTMRegistry.registerLockType("public", PublicLock.class);
+		HTMRegistry.registerLockType("key", KeyLock.class);
+	}
 
-    private void registerFlags() {
-        HTMRegistry.registerFlagType("hoppers");
-    }
+	private void registerFlags() {
+		HTMRegistry.registerFlagType("hoppers");
+	}
 
-    private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-        HTMCommand.register(dispatcher);
-        HTMCommand.registerSubCommand(new SetCommand().build());
-        HTMCommand.registerSubCommand(new RemoveCommand().build());
-        HTMCommand.registerSubCommand(new TrustCommand().build());
-        HTMCommand.registerSubCommand(new UntrustCommand().build());
-        HTMCommand.registerSubCommand(new InfoCommand().build());
-        HTMCommand.registerSubCommand(new TransferCommand().build());
-        HTMCommand.registerSubCommand(new FlagCommand().build());
-        HTMCommand.registerSubCommand(new PersistCommand().build());
-    }
+	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
+		HTMCommand.register(dispatcher);
+		HTMCommand.registerSubCommand(new SetCommand().build());
+		HTMCommand.registerSubCommand(new RemoveCommand().build());
+		HTMCommand.registerSubCommand(new TrustCommand().build());
+		HTMCommand.registerSubCommand(new UntrustCommand().build());
+		HTMCommand.registerSubCommand(new InfoCommand().build());
+		HTMCommand.registerSubCommand(new TransferCommand().build());
+		HTMCommand.registerSubCommand(new FlagCommand().build());
+		HTMCommand.registerSubCommand(new PersistCommand().build());
+	}
 }

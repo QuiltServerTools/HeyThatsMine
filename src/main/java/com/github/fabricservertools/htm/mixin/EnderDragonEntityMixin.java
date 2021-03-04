@@ -14,19 +14,20 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EnderDragonEntity.class)
 public abstract class EnderDragonEntityMixin {
-    @Redirect(method = "destroyBlocks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"))
-    private boolean mobTick(World world, BlockPos pos, boolean move) {
-        if (world.isClient) return false;
+	@Redirect(method = "destroyBlocks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"))
+	private boolean mobTick(World world, BlockPos pos, boolean move) {
+		if (world.isClient) return false;
 
-        BlockState state = world.getBlockState(pos);
-        if (!state.getBlock().hasBlockEntity()) return world.removeBlock(pos, move);;
+		BlockState state = world.getBlockState(pos);
+		if (!state.getBlock().hasBlockEntity()) return world.removeBlock(pos, move);
+		;
 
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
 
-        if (blockEntity instanceof LockableObject) {
-            if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return false;
-        }
+		if (blockEntity instanceof LockableObject) {
+			if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return false;
+		}
 
-        return world.removeBlock(pos, move);
-    }
+		return world.removeBlock(pos, move);
+	}
 }

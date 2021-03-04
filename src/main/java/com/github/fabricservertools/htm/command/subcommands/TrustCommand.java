@@ -21,59 +21,59 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class TrustCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("trust")
-                .requires(Permissions.require("htm.command.trust", true))
-                .executes(this::trustList)
-                .then(argument("target", GameProfileArgumentType.gameProfile())
-                        .executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
-                        .then(argument("global", StringArgumentType.word())
-                                .suggests((context, builder) -> builder.suggest("global").buildFuture())
-                                .executes(ctx -> trust(
-                                        ctx.getSource(),
-                                        GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
-                                        StringArgumentType.getString(ctx, "global").equalsIgnoreCase("global"))
-                                )
-                        ))
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("trust")
+				.requires(Permissions.require("htm.command.trust", true))
+				.executes(this::trustList)
+				.then(argument("target", GameProfileArgumentType.gameProfile())
+						.executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
+						.then(argument("global", StringArgumentType.word())
+								.suggests((context, builder) -> builder.suggest("global").buildFuture())
+								.executes(ctx -> trust(
+										ctx.getSource(),
+										GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+										StringArgumentType.getString(ctx, "global").equalsIgnoreCase("global"))
+								)
+						))
+				.build();
+	}
 
-    private int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-        GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+	private int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		ServerPlayerEntity player = context.getSource().getPlayer();
+		GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
 
-        String trustedList = globalTrustState.getTrusted().get(player.getUuid())
-                .stream()
-                .map(a -> player.getServer().getUserCache().getByUuid(a).getName())
-                .collect(Collectors.joining(", "));
+		String trustedList = globalTrustState.getTrusted().get(player.getUuid())
+				.stream()
+				.map(a -> player.getServer().getUserCache().getByUuid(a).getName())
+				.collect(Collectors.joining(", "));
 
-        player.sendMessage(new TranslatableText("text.htm.trusted.global", trustedList), false);
+		player.sendMessage(new TranslatableText("text.htm.trusted.global", trustedList), false);
 
-        return 1;
-    }
+		return 1;
+	}
 
-    private static int trust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
-        ServerPlayerEntity player = source.getPlayer();
+	private static int trust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
+		ServerPlayerEntity player = source.getPlayer();
 
-        if (global) {
-            GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
-            if (player.getUuid().equals(gameProfile.getId())) {
-                player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
-                return -1;
-            }
+		if (global) {
+			GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+			if (player.getUuid().equals(gameProfile.getId())) {
+				player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+				return -1;
+			}
 
-            if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
-                source.sendFeedback(new TranslatableText("text.htm.trust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
-            } else {
-                source.sendFeedback(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()), false);
-            }
-        } else {
-            InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, false));
-            source.sendFeedback(new TranslatableText("text.htm.select"), false);
-        }
+			if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
+				source.sendFeedback(new TranslatableText("text.htm.trust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+			} else {
+				source.sendFeedback(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()), false);
+			}
+		} else {
+			InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, false));
+			source.sendFeedback(new TranslatableText("text.htm.select"), false);
+		}
 
 
-        return 1;
-    }
+		return 1;
+	}
 }

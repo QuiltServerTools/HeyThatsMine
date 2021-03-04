@@ -14,19 +14,19 @@ import net.minecraft.text.TranslatableText;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class RemoveCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("remove")
-                .requires(Permissions.require("htm.command.remove", true))
-                .executes(this::remove)
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("remove")
+				.requires(Permissions.require("htm.command.remove", true))
+				.executes(this::remove)
+				.build();
+	}
 
-    private int remove(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
+	private int remove(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		ServerPlayerEntity player = context.getSource().getPlayer();
 
-        InteractionManager.pendingActions.put(player, new RemoveAction());
-        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
-        return 1;
-    }
+		InteractionManager.pendingActions.put(player, new RemoveAction());
+		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		return 1;
+	}
 }

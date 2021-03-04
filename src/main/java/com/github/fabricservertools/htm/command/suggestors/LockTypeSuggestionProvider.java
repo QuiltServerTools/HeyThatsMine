@@ -10,16 +10,16 @@ import net.minecraft.server.command.ServerCommandSource;
 import java.util.concurrent.CompletableFuture;
 
 public class LockTypeSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
-    @Override
-    public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
-        String current = builder.getRemaining().toUpperCase();
+	@Override
+	public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
+		String current = builder.getRemaining().toUpperCase();
 
-        for (String type : HTMRegistry.getLockTypes().keySet()) {
-            if (type.contains(current.toLowerCase())) {
-                builder.suggest(type.toUpperCase());
-            }
-        }
+		for (String type : HTMRegistry.getLockTypes().keySet()) {
+			if (type.contains(current.toLowerCase())) {
+				builder.suggest(type.toUpperCase());
+			}
+		}
 
-        return builder.buildFuture();
-    }
+		return builder.buildFuture();
+	}
 }

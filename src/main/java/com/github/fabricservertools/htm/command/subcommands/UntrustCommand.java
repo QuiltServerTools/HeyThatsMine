@@ -17,41 +17,41 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class UntrustCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("untrust")
-                .requires(Permissions.require("htm.command.trust", true))
-                .then(argument("target", GameProfileArgumentType.gameProfile())
-                        .executes(ctx -> untrust(
-                                ctx.getSource(),
-                                GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
-                                false
-                        ))
-                        .then(literal("global")
-                                .executes(ctx -> untrust(
-                                        ctx.getSource(),
-                                        GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
-                                        true
-                                ))
-                        ))
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("untrust")
+				.requires(Permissions.require("htm.command.trust", true))
+				.then(argument("target", GameProfileArgumentType.gameProfile())
+						.executes(ctx -> untrust(
+								ctx.getSource(),
+								GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+								false
+						))
+						.then(literal("global")
+								.executes(ctx -> untrust(
+										ctx.getSource(),
+										GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+										true
+								))
+						))
+				.build();
+	}
 
-    private int untrust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
-        ServerPlayerEntity player = source.getPlayer();
+	private int untrust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
+		ServerPlayerEntity player = source.getPlayer();
 
-        if (global) {
-            GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
-            if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
-                source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
-            } else {
-                source.sendFeedback(new TranslatableText("text.htm.error.not_trusted", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
-            }
-        } else {
-            InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, true));
-            source.sendFeedback(new TranslatableText("text.htm.select"), false);
-        }
+		if (global) {
+			GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+			if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
+				source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+			} else {
+				source.sendFeedback(new TranslatableText("text.htm.error.not_trusted", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+			}
+		} else {
+			InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, true));
+			source.sendFeedback(new TranslatableText("text.htm.select"), false);
+		}
 
-        return 1;
-    }
+		return 1;
+	}
 }

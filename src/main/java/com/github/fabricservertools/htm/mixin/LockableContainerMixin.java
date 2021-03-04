@@ -16,35 +16,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LockableContainerBlockEntity.class)
 public abstract class LockableContainerMixin implements LockableObject {
-    public HTMContainerLock htmContainerLock;
+	public HTMContainerLock htmContainerLock;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
-    private void init(BlockEntityType<?> blockEntityType, CallbackInfo ci) {
-        htmContainerLock = new HTMContainerLock();
-    }
+	@Inject(method = "<init>", at = @At("RETURN"))
+	private void init(BlockEntityType<?> blockEntityType, CallbackInfo ci) {
+		htmContainerLock = new HTMContainerLock();
+	}
 
-    @Inject(method = "toTag", at = @At("HEAD"))
-    private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
-        htmContainerLock.toTag(tag);
-    }
+	@Inject(method = "toTag", at = @At("HEAD"))
+	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
+		htmContainerLock.toTag(tag);
+	}
 
-    @Inject(method = "fromTag", at = @At("HEAD"))
-    private void fromTag(BlockState state, CompoundTag tag, CallbackInfo ci) {
-        htmContainerLock.fromTag(tag);
-    }
+	@Inject(method = "fromTag", at = @At("HEAD"))
+	private void fromTag(BlockState state, CompoundTag tag, CallbackInfo ci) {
+		htmContainerLock.fromTag(tag);
+	}
 
-    @Inject(method = "checkUnlocked(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)
-    private void checkUnlocked(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(htmContainerLock.canOpen((ServerPlayerEntity) player));
-    }
+	@Inject(method = "checkUnlocked(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)
+	private void checkUnlocked(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+		cir.setReturnValue(htmContainerLock.canOpen((ServerPlayerEntity) player));
+	}
 
-    @Override
-    public HTMContainerLock getLock() {
-        return htmContainerLock;
-    }
+	@Override
+	public HTMContainerLock getLock() {
+		return htmContainerLock;
+	}
 
-    @Override
-    public void setLock(HTMContainerLock lock) {
-        htmContainerLock = lock;
-    }
+	@Override
+	public void setLock(HTMContainerLock lock) {
+		htmContainerLock = lock;
+	}
 }

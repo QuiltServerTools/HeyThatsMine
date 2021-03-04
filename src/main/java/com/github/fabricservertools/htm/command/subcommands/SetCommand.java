@@ -19,29 +19,29 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class SetCommand implements SubCommand {
-    @Override
-    public LiteralCommandNode<ServerCommandSource> build() {
-        return literal("set")
-                .requires(Permissions.require("htm.command.set", true))
-                .then(argument("type", StringArgumentType.word())
-                        .suggests(new LockTypeSuggestionProvider())
-                        .executes(this::set))
-                .build();
-    }
+	@Override
+	public LiteralCommandNode<ServerCommandSource> build() {
+		return literal("set")
+				.requires(Permissions.require("htm.command.set", true))
+				.then(argument("type", StringArgumentType.word())
+						.suggests(new LockTypeSuggestionProvider())
+						.executes(this::set))
+				.build();
+	}
 
-    private int set(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        LockType type;
-        ServerPlayerEntity player = context.getSource().getPlayer();
+	private int set(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		LockType type;
+		ServerPlayerEntity player = context.getSource().getPlayer();
 
-        try {
-            type = HTMRegistry.getLockFromName(StringArgumentType.getString(context, "type").toLowerCase()).getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            context.getSource().sendFeedback(new TranslatableText("text.htm.error.lock_type"), false);
-            return -3;
-        }
+		try {
+			type = HTMRegistry.getLockFromName(StringArgumentType.getString(context, "type").toLowerCase()).getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			context.getSource().sendFeedback(new TranslatableText("text.htm.error.lock_type"), false);
+			return -3;
+		}
 
-        InteractionManager.pendingActions.put(player, new SetAction(type));
-        context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
-        return 1;
-    }
+		InteractionManager.pendingActions.put(player, new SetAction(type));
+		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		return 1;
+	}
 }

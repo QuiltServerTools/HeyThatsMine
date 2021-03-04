@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Explosion.class)
 public abstract class ExplosionMixin {
-    @Redirect(method = "collectBlocksAndDamageEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/explosion/ExplosionBehavior;canDestroyBlock(Lnet/minecraft/world/explosion/Explosion;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;F)Z"))
-    private boolean checkProtection(ExplosionBehavior explosionBehavior, Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power) {
-        boolean original = explosionBehavior.canDestroyBlock((Explosion) (Object) this, world, pos, state, power);
+	@Redirect(method = "collectBlocksAndDamageEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/explosion/ExplosionBehavior;canDestroyBlock(Lnet/minecraft/world/explosion/Explosion;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;F)Z"))
+	private boolean checkProtection(ExplosionBehavior explosionBehavior, Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power) {
+		boolean original = explosionBehavior.canDestroyBlock((Explosion) (Object) this, world, pos, state, power);
 
-        if (!state.getBlock().hasBlockEntity()) return original;
+		if (!state.getBlock().hasBlockEntity()) return original;
 
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof LockableObject) {
-            if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return false;
-        }
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof LockableObject) {
+			if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return false;
+		}
 
-        return original;
-    }
+		return original;
+	}
 }
