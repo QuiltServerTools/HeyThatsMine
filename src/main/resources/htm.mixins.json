@@ -4,13 +4,13 @@
   "package": "com.github.fabricservertools.htm.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "BlockItemMixin",
     "ChestBlockMixin",
-    "EnderDragonEntityMixin",
-    "ExplosionMixin",
     "HopperBlockEntityMixin",
     "LockableContainerMixin",
-    "WorldMixin"
+    "events.BlockItemMixin",
+    "events.EnderDragonEntityMixin",
+    "events.ExplosionMixin",
+    "events.WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1
