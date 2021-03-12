@@ -5,12 +5,13 @@ import com.google.common.collect.Multimap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.PersistentState;
 
 import java.util.UUID;
 
 public class GlobalTrustState extends PersistentState {
-	private Multimap<UUID, UUID> globalTrust;
+	private final Multimap<UUID, UUID> globalTrust;
 
 	public GlobalTrustState() {
 		super("globalTrust");
@@ -27,8 +28,8 @@ public class GlobalTrustState extends PersistentState {
 
 			ListTag trustedTag = compoundTag.getList("Trusted", 11);
 
-			for (int i = 0; i < trustedTag.size(); ++i) {
-				globalTrust.put(truster, NbtHelper.toUuid(trustedTag.get(i)));
+			for (Tag value : trustedTag) {
+				globalTrust.put(truster, NbtHelper.toUuid(value));
 			}
 		});
 	}

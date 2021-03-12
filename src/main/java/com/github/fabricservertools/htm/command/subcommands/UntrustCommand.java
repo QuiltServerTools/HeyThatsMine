@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
+import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
@@ -37,11 +38,12 @@ public class UntrustCommand implements SubCommand {
 				.build();
 	}
 
+	@SuppressWarnings("SameReturnValue")
 	private int untrust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
 		ServerPlayerEntity player = source.getPlayer();
 
 		if (global) {
-			GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+			GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
 			if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
 				source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
 			} else {

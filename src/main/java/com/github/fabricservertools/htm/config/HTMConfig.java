@@ -15,9 +15,9 @@ import java.util.Map;
 public class HTMConfig {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-	public Map<String, Boolean> defaultFlags = new HashMap<>();
+	public final Map<String, Boolean> defaultFlags = new HashMap<>();
 
-	public ArrayList<Identifier> autolockingContainers = new ArrayList<>(Arrays.asList(
+	public final ArrayList<Identifier> autolockingContainers = new ArrayList<>(Arrays.asList(
 			new Identifier("chest"),
 			new Identifier("trapped_chest"),
 			new Identifier("barrel"),
@@ -57,7 +57,7 @@ public class HTMConfig {
 			try (
 					FileInputStream fileInputStream = new FileInputStream(file);
 					InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
-					BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+					BufferedReader bufferedReader = new BufferedReader(inputStreamReader)
 			) {
 				config = GSON.fromJson(bufferedReader, HTMConfig.class);
 			} catch (IOException e) {
@@ -75,7 +75,7 @@ public class HTMConfig {
 	public void saveConfig(File config) {
 		try (
 				FileOutputStream stream = new FileOutputStream(config);
-				Writer writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
+				Writer writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)
 		) {
 			GSON.toJson(this, writer);
 		} catch (IOException e) {

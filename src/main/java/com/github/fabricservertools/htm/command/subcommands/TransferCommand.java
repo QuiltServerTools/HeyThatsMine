@@ -26,6 +26,7 @@ public class TransferCommand implements SubCommand {
 				.build();
 	}
 
+	@SuppressWarnings("SameReturnValue")
 	private int transfer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 		GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();

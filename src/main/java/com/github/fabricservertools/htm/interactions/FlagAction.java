@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class FlagAction implements LockInteraction {
 	/**
 	 * Optional flag type and value to set it to.

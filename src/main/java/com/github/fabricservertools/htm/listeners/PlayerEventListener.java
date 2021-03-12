@@ -36,7 +36,8 @@ public class PlayerEventListener {
 	private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
 		if (world.isClient) return ActionResult.PASS;
 
-		if (InteractionManager.pendingActions.containsKey(player)) {
+		//noinspection RedundantCast
+		if (InteractionManager.pendingActions.containsKey((ServerPlayerEntity) player)) {
 			InteractionManager.execute((ServerPlayerEntity) player, world, pos);
 
 			world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
@@ -78,6 +79,7 @@ public class PlayerEventListener {
 		return true;
 	}
 
+	@SuppressWarnings({"ConstantConditions", "SameReturnValue"})
 	private static ActionResult onPlace(PlayerEntity playerEntity, ItemPlacementContext context) {
 		try {
 			BlockPos pos = context.getBlockPos();

@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashSet;
 
 public final class HTMRegistry {
-	private static BiMap<String, Class<? extends LockType>> lockTypes = HashBiMap.create();
-	private static HashSet<String> flagTypes = new HashSet<>();
+	private static final BiMap<String, Class<? extends LockType>> lockTypes = HashBiMap.create();
+	private static final HashSet<String> flagTypes = new HashSet<>();
 
 	public static void registerLockType(String name, Class<? extends LockType> lockType) {
 		lockTypes.put(name.toLowerCase(), lockType);
@@ -27,9 +27,11 @@ public final class HTMRegistry {
 		return flagTypes;
 	}
 
-	@Nullable
 	public static String getNameFromLock(LockType lockType) {
-		return lockTypes.inverse().get(lockType.getClass());
+		String name = lockTypes.inverse().get(lockType.getClass());
+		if (name == null) name = "ERROR";
+
+		return name;
 	}
 
 	@Nullable

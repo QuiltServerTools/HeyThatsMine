@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
+import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
@@ -35,13 +36,14 @@ public class TrustCommand implements SubCommand {
 				.build();
 	}
 
+	@SuppressWarnings("SameReturnValue")
 	private int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
-		GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+		GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
 
 		String trustedList = globalTrustState.getTrusted().get(player.getUuid())
 				.stream()
-				.map(a -> player.getServer().getUserCache().getByUuid(a).getName())
+				.map(a -> Utility.getNameFromUUID(player.getUuid(), player.server))
 				.collect(Collectors.joining(", "));
 
 		player.sendMessage(new TranslatableText("text.htm.trusted.global", trustedList), false);
@@ -53,7 +55,7 @@ public class TrustCommand implements SubCommand {
 		ServerPlayerEntity player = source.getPlayer();
 
 		if (global) {
-			GlobalTrustState globalTrustState = player.getServer().getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+			GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
 			if (player.getUuid().equals(gameProfile.getId())) {
 				player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
 				return -1;

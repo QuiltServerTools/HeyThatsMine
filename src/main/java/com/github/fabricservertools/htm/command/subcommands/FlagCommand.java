@@ -33,6 +33,7 @@ public class FlagCommand implements SubCommand {
 				.build();
 	}
 
+	@SuppressWarnings("SameReturnValue")
 	private int flagInfo(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 

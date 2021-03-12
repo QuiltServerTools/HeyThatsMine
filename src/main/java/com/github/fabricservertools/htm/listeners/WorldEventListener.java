@@ -36,6 +36,7 @@ public class WorldEventListener {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 
 		if (blockEntity instanceof LockableObject) {
+			//noinspection ConstantConditions
 			if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return ActionResult.FAIL;
 		}
 
@@ -62,6 +63,7 @@ public class WorldEventListener {
 
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof LockableObject) {
+			//noinspection ConstantConditions
 			if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return ActionResult.FAIL;
 		}
 

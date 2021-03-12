@@ -22,6 +22,7 @@ public class RemoveCommand implements SubCommand {
 				.build();
 	}
 
+	@SuppressWarnings("SameReturnValue")
 	private int remove(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 

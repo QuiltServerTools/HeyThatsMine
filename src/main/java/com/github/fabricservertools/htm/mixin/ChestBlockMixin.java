@@ -20,7 +20,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
 
-@SuppressWarnings("MixinInnerClass")
+@SuppressWarnings("ALL")
 @Mixin(ChestBlock.class)
 public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntity> implements LockableChestBlock {
 	protected ChestBlockMixin(Settings settings, Supplier<BlockEntityType<? extends ChestBlockEntity>> blockEntityTypeSupplier) {
@@ -44,10 +44,6 @@ public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntit
 
 				@Override
 				public HTMContainerLock getFrom(ChestBlockEntity single) {
-					if (((LockableObject) single).getLock().isLocked()) {
-						return ((LockableObject) single).getLock();
-					}
-
 					return ((LockableObject) single).getLock();
 				}
 
@@ -86,18 +82,16 @@ public abstract class ChestBlockMixin extends AbstractChestBlock<ChestBlockEntit
 	@Override
 	public HTMContainerLock getLockAt(BlockState state, World world, BlockPos pos) {
 		BiPredicate<WorldAccess, BlockPos> biPredicate2 = (worldAccess, blockPos) -> false;
-		ChestBlock chestblock = (ChestBlock) (Object) this;
 
-		DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType) this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, chestblock.FACING, state, world, pos, biPredicate2);
+		DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType) this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, ChestBlock.FACING, state, world, pos, biPredicate2);
 		return (HTMContainerLock) propertySource.apply(LOCK_RETRIEVER);
 	}
 
 	@Override
 	public Optional<BlockEntity> getUnlockedPart(BlockState state, World world, BlockPos pos) {
 		BiPredicate<WorldAccess, BlockPos> biPredicate2 = (worldAccess, blockPos) -> false;
-		ChestBlock chestblock = (ChestBlock) (Object) this;
 
-		DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType) this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, chestblock.FACING, state, world, pos, biPredicate2);
+		DoubleBlockProperties.PropertySource propertySource = DoubleBlockProperties.toPropertySource((BlockEntityType) this.entityTypeRetriever.get(), ChestBlock::getDoubleBlockType, ChestBlock::getFacing, ChestBlock.FACING, state, world, pos, biPredicate2);
 		return (Optional<BlockEntity>) propertySource.apply(UNLOCKED_RETRIEVER);
 	}
 }

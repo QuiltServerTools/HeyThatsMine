@@ -30,7 +30,7 @@ public class HTMContainerLock {
 	}
 
 	private void initFlags() {
-		HashMap<String, Boolean> hashMap = new HashMap();
+		HashMap<String, Boolean> hashMap = new HashMap<>();
 		for (String flagType : HTMRegistry.getFlagTypes()) {
 			hashMap.put(flagType, HTM.config.defaultFlags.getOrDefault(flagType, false));
 		}
@@ -38,7 +38,7 @@ public class HTMContainerLock {
 		flags = hashMap;
 	}
 
-	public CompoundTag toTag(CompoundTag tag) {
+	public void toTag(CompoundTag tag) {
 		if (type != null) {
 			tag.putString("Type", HTMRegistry.getNameFromLock(type));
 			tag.put("TypeData", type.toTag());
@@ -63,15 +63,15 @@ public class HTMContainerLock {
 			tag.put("Flags", flagsTag);
 		}
 
-		return tag;
 	}
 
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("Type")) {
 			try {
+				//noinspection ConstantConditions
 				type = HTMRegistry.getLockFromName(tag.getString("Type")).getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
-				HTM.LOGGER.error("Failed to create lock type");
+				HTM.LOGGER.error("Failed to create lock type: " + tag.getString("Type"));
 				type = null;
 				return;
 			}
@@ -80,8 +80,8 @@ public class HTMContainerLock {
 
 			ListTag trustedTag = tag.getList("Trusted", 11);
 
-			for (int i = 0; i < trustedTag.size(); ++i) {
-				trusted.add(NbtHelper.toUuid(trustedTag.get(i)));
+			for (Tag value : trustedTag) {
+				trusted.add(NbtHelper.toUuid(value));
 			}
 
 			ListTag flagTags = tag.getList("Flags", 10);
@@ -148,9 +148,9 @@ public class HTMContainerLock {
 	public boolean isOwner(ServerPlayerEntity player) {
 		if (!owner.equals(player.getUuid())) {
 			if (Permissions.check(player, "htm.admin", 4)) {
-				player.sendMessage(new TranslatableText("text.htm.override",
-								player.getServerWorld().getServer().getUserCache().getByUuid(owner).getName()),
-						false);
+				String name = Utility.getNameFromUUID(player.getUuid(), player.server);
+
+				player.sendMessage(new TranslatableText("text.htm.override", name), false);
 				return true;
 			}
 

@@ -13,7 +13,6 @@ public class PublicLock implements LockType {
 
 	@Override
 	public void onLockSet(ServerPlayerEntity player, HTMContainerLock lock) {
-		return;
 	}
 
 	@Override

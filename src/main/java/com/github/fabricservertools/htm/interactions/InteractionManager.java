@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class InteractionManager {
-	public static HashMap<ServerPlayerEntity, LockInteraction> pendingActions = new HashMap<>();
-	public static HashSet<ServerPlayerEntity> persisting = new HashSet<>();
+	public static final HashMap<ServerPlayerEntity, LockInteraction> pendingActions = new HashMap<>();
+	public static final HashSet<ServerPlayerEntity> persisting = new HashSet<>();
 
 	public static void execute(ServerPlayerEntity player, World world, BlockPos pos) {
 		LockInteraction action = pendingActions.get(player);

@@ -3,6 +3,7 @@ package com.github.fabricservertools.htm.interactions;
 import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMRegistry;
+import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,7 +21,7 @@ public class InfoAction implements LockInteraction {
 			return;
 		}
 
-		GameProfile owner = world.getServer().getUserCache().getByUuid(lock.getOwner());
+		GameProfile owner = player.getServerWorld().getServer().getUserCache().getByUuid(lock.getOwner());
 
 		if (owner == null) {
 			HTM.LOGGER.error("Can't find lock owner: " + lock.getOwner());
@@ -33,7 +34,7 @@ public class InfoAction implements LockInteraction {
 		if (lock.isOwner(player)) {
 			String trustedList = lock.getTrusted()
 					.stream()
-					.map(a -> world.getServer().getUserCache().getByUuid(a).getName())
+					.map(a -> Utility.getNameFromUUID(a, player.server))
 					.collect(Collectors.joining(", "));
 
 			player.sendMessage(new TranslatableText("text.htm.trusted", trustedList), false);
