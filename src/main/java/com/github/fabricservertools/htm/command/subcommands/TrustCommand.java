@@ -5,7 +5,6 @@ import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
 import com.mojang.authlib.GameProfile;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -28,12 +27,9 @@ public class TrustCommand implements SubCommand {
 				.executes(this::trustList)
 				.then(argument("target", GameProfileArgumentType.gameProfile())
 						.executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
-						.then(argument("global", StringArgumentType.word())
-								.suggests((context, builder) -> builder.suggest("global").buildFuture())
+						.then(literal("global")
 								.executes(ctx -> trust(
-										ctx.getSource(),
-										GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
-										StringArgumentType.getString(ctx, "global").equalsIgnoreCase("global"))
+										ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), true)
 								)
 						))
 				.build();

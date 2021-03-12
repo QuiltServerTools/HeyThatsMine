@@ -3,6 +3,8 @@ package com.github.fabricservertools.htm;
 import com.github.fabricservertools.htm.command.HTMCommand;
 import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
+import com.github.fabricservertools.htm.listeners.PlayerEventListener;
+import com.github.fabricservertools.htm.listeners.WorldEventListener;
 import com.github.fabricservertools.htm.locks.KeyLock;
 import com.github.fabricservertools.htm.locks.PrivateLock;
 import com.github.fabricservertools.htm.locks.PublicLock;
@@ -17,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 public class HTM implements ModInitializer {
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger("HTM");
 	public static HTMConfig config;
 
 	@Override
@@ -27,11 +29,10 @@ public class HTM implements ModInitializer {
 
 		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
 
-		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
-			registerCommands(dispatcher);
-		}));
+		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> registerCommands(dispatcher)));
 
-		HTMListeners.init();
+		PlayerEventListener.init();
+		WorldEventListener.init();
 	}
 
 	private void registerLocks() {
