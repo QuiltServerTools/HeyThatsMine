@@ -22,7 +22,9 @@ public class InteractionManager {
 
 	public static void execute(ServerPlayerEntity player, World world, BlockPos pos) {
 		LockInteraction action = pendingActions.get(player);
-		action.execute(player, world, pos, getLock(player, pos));
+
+		HTMContainerLock lock = getLock(player, pos);
+		if (lock != null) action.execute(player, world, pos, getLock(player, pos));
 
 		if (!persisting.contains(player)) {
 			pendingActions.remove(player);
