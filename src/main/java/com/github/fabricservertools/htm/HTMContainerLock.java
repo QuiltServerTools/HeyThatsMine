@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.api.LockType;
 import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
@@ -78,13 +79,13 @@ public class HTMContainerLock {
 			type.fromTag(tag.getCompound("TypeData"));
 			owner = tag.getUuid("Owner");
 
-			ListTag trustedTag = tag.getList("Trusted", 11);
+			ListTag trustedTag = tag.getList("Trusted", NbtType.INT_ARRAY);
 
 			for (Tag value : trustedTag) {
 				trusted.add(NbtHelper.toUuid(value));
 			}
 
-			ListTag flagTags = tag.getList("Flags", 10);
+			ListTag flagTags = tag.getList("Flags", NbtType.COMPOUND);
 			for (Tag flagTag : flagTags) {
 				CompoundTag compoundTag = (CompoundTag) flagTag;
 				flags.put(compoundTag.getString("type"), compoundTag.getBoolean("value"));

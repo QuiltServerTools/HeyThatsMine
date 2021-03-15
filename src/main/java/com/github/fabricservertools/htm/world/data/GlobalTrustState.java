@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm.world.data;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
@@ -20,13 +21,13 @@ public class GlobalTrustState extends PersistentState {
 
 	@Override
 	public void fromTag(CompoundTag tag) {
-		ListTag trustList = tag.getList("GlobalTrusts", 10);
+		ListTag trustList = tag.getList("GlobalTrusts", NbtType.COMPOUND);
 
 		trustList.forEach(tag1 -> {
 			CompoundTag compoundTag = (CompoundTag) tag1;
 			UUID truster = compoundTag.getUuid("Truster");
 
-			ListTag trustedTag = compoundTag.getList("Trusted", 11);
+			ListTag trustedTag = compoundTag.getList("Trusted", NbtType.INT_ARRAY);
 
 			for (Tag value : trustedTag) {
 				globalTrust.put(truster, NbtHelper.toUuid(value));
