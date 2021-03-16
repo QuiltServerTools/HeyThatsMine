@@ -29,7 +29,7 @@ public class InfoAction implements LockInteraction {
 		}
 
 		player.sendMessage(new TranslatableText("text.htm.divider"), false);
-		player.sendMessage(new TranslatableText("text.htm.type", HTMRegistry.getNameFromLock(lock.getType()).toUpperCase()), false);
+		player.sendMessage(new TranslatableText("text.htm.type", HTMRegistry.getLockId(lock.getType().getType()).toUpperCase()), false);
 		player.sendMessage(new TranslatableText("text.htm.owner", owner.getName()), false);
 		if (lock.isOwner(player)) {
 			String trustedList = lock.getTrusted()

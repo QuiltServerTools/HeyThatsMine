@@ -1,17 +1,34 @@
 package com.github.fabricservertools.htm.api;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.network.ServerPlayerEntity;
+import com.github.fabricservertools.htm.HTMRegistry;
+import com.github.fabricservertools.htm.locks.KeyLock;
+import com.github.fabricservertools.htm.locks.PrivateLock;
+import com.github.fabricservertools.htm.locks.PublicLock;
 
-public interface LockType {
-	boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock);
+import java.util.function.Supplier;
 
-	void onLockSet(ServerPlayerEntity player, HTMContainerLock lock);
+public class LockType<T extends Lock> {
+	public static LockType<PrivateLock> PRIVATE_LOCK;
+	public static LockType<PublicLock> PUBLIC_LOCK;
+	public static LockType<KeyLock> KEY_LOCK;
 
-	void onInfo(ServerPlayerEntity player, HTMContainerLock lock);
+	private final Supplier<T> supplier;
 
-	CompoundTag toTag();
+	private static <T extends Lock> LockType<T> register(String id, LockType<T> lockType) {
+		return HTMRegistry.registerLockType(id, lockType);
+	}
 
-	void fromTag(CompoundTag tag);
+	public LockType(Supplier<T> supplier) {
+		this.supplier = supplier;
+	}
+
+	public Lock build() {
+		return supplier.get();
+	}
+
+	public static void init() {
+		PRIVATE_LOCK = register("private", new LockType<>(PrivateLock::new));
+		PUBLIC_LOCK = register("public", new LockType<>(PublicLock::new));
+		KEY_LOCK = register("key", new LockType<>(KeyLock::new));
+	}
 }

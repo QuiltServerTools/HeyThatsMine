@@ -2,17 +2,17 @@ package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMRegistry;
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockInteraction;
-import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SetAction implements LockInteraction {
-	private final LockType setType;
+	private final Lock setType;
 
-	public SetAction(LockType setType) {
+	public SetAction(Lock setType) {
 		this.setType = setType;
 	}
 
@@ -24,6 +24,6 @@ public class SetAction implements LockInteraction {
 		}
 
 		lock.setType(setType, player);
-		player.sendMessage(new TranslatableText("text.htm.set", HTMRegistry.getNameFromLock(setType).toUpperCase()), false);
+		player.sendMessage(new TranslatableText("text.htm.set", HTMRegistry.getLockId(setType.getType()).toUpperCase()), false);
 	}
 }
