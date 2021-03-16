@@ -7,13 +7,15 @@ import com.google.common.collect.HashBiMap;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 public final class HTMRegistry {
 	private static final BiMap<String, LockType<? extends Lock>> lockTypes = HashBiMap.create();
 	private static final HashSet<String> flagTypes = new HashSet<>();
 
 	public static <T extends Lock> LockType<T> registerLockType(String name, LockType<T> lockType) {
-		return (LockType<T>) lockTypes.put(name.toLowerCase(), lockType);
+		lockTypes.put(name.toLowerCase(), lockType);
+		return lockType;
 	}
 
 	public static void registerFlagType(String name) {
@@ -33,8 +35,8 @@ public final class HTMRegistry {
 		return id == null ? "ERROR" : id;
 	}
 
-	public static @Nullable Lock getLock(String name) {
+	public static @Nullable Optional<Lock> getLock(String name) {
 		LockType<?> lockType = lockTypes.get(name);
-		return lockType != null ? lockType.build() : null;
+		return Optional.ofNullable(lockType.build());
 	}
 }

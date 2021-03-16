@@ -34,7 +34,7 @@ public class SetCommand implements SubCommand {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
 		try {
-			type = HTMRegistry.getLock(StringArgumentType.getString(context, "type").toLowerCase());
+			type = HTMRegistry.getLock(StringArgumentType.getString(context, "type").toLowerCase()).orElseThrow(RuntimeException::new);
 		} catch (Exception e) {
 			context.getSource().sendFeedback(new TranslatableText("text.htm.error.lock_type"), false);
 			return -3;

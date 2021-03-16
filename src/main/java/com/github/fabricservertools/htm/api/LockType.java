@@ -15,8 +15,7 @@ public class LockType<T extends Lock> {
 	private final Supplier<T> supplier;
 
 	private static <T extends Lock> LockType<T> register(String id, LockType<T> lockType) {
-		HTMRegistry.registerLockType(id, lockType);
-		return lockType;
+		return HTMRegistry.registerLockType(id, lockType);
 	}
 
 	public LockType(Supplier<T> supplier) {

@@ -69,7 +69,7 @@ public class HTMContainerLock {
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("Type")) {
 			try {
-				type = HTMRegistry.getLock(tag.getString("Type"));
+				type = HTMRegistry.getLock(tag.getString("Type")).orElseThrow(RuntimeException::new);
 			} catch (Exception e) {
 				HTM.LOGGER.error("Failed to create lock type: " + tag.getString("Type"));
 				type = null;
