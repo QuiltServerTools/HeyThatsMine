@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.LockType;
+import com.github.fabricservertools.htm.api.Lock;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class HTMContainerLock {
-	private LockType type;
+	private Lock type;
 	private UUID owner;
 	private HashSet<UUID> trusted;
 	private Map<String, Boolean> flags;
@@ -41,7 +41,7 @@ public class HTMContainerLock {
 
 	public void toTag(CompoundTag tag) {
 		if (type != null) {
-			tag.putString("Type", HTMRegistry.getNameFromLock(type));
+			tag.putString("Type", HTMRegistry.getLockId(type.getType()));
 			tag.put("TypeData", type.toTag());
 			tag.putUuid("Owner", owner);
 
@@ -69,8 +69,7 @@ public class HTMContainerLock {
 	public void fromTag(CompoundTag tag) {
 		if (tag.contains("Type")) {
 			try {
-				//noinspection ConstantConditions
-				type = HTMRegistry.getLockFromName(tag.getString("Type")).getDeclaredConstructor().newInstance();
+				type = HTMRegistry.getLock(tag.getString("Type"));
 			} catch (Exception e) {
 				HTM.LOGGER.error("Failed to create lock type: " + tag.getString("Type"));
 				type = null;
@@ -105,7 +104,7 @@ public class HTMContainerLock {
 		return false;
 	}
 
-	public LockType getType() {
+	public Lock getType() {
 		return type;
 	}
 
@@ -121,7 +120,7 @@ public class HTMContainerLock {
 		return trusted;
 	}
 
-	public void setType(LockType type, ServerPlayerEntity owner) {
+	public void setType(Lock type, ServerPlayerEntity owner) {
 		this.type = type;
 		this.owner = owner.getUuid();
 		type.onLockSet(owner, this);
@@ -148,7 +147,7 @@ public class HTMContainerLock {
 
 	public boolean isOwner(ServerPlayerEntity player) {
 		if (!owner.equals(player.getUuid())) {
-			if (Permissions.check(player, "htm.admin", 4)) {
+			if (Permissions.check(player, "htm.admin", 2)) {
 				String name = Utility.getNameFromUUID(player.getUuid(), player.server);
 
 				player.sendMessage(new TranslatableText("text.htm.override", name), false);

@@ -2,7 +2,7 @@ package com.github.fabricservertools.htm.listeners;
 
 import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
-import com.github.fabricservertools.htm.HTMRegistry;
+import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.api.LockableChestBlock;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.github.fabricservertools.htm.events.PlayerPlaceBlockCallback;
@@ -96,7 +96,7 @@ public class PlayerEventListener {
 
 					HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
-					lock.setType(HTMRegistry.getLockFromName("private").getDeclaredConstructor().newInstance(), (ServerPlayerEntity) playerEntity);
+					lock.setType(LockType.PRIVATE_LOCK.build(), (ServerPlayerEntity) playerEntity);
 					playerEntity.sendMessage(new TranslatableText("text.htm.set", "PRIVATE"), false);
 				}
 			}

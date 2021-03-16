@@ -2,13 +2,14 @@ package com.github.fabricservertools.htm.locks;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.Utility;
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
-public class KeyLock implements LockType {
+public class KeyLock implements Lock {
 	private ItemStack key;
 
 	@Override
@@ -42,5 +43,10 @@ public class KeyLock implements LockType {
 	@Override
 	public void fromTag(CompoundTag tag) {
 		key = ItemStack.fromTag(tag);
+	}
+
+	@Override
+	public LockType<?> getType() {
+		return LockType.KEY_LOCK;
 	}
 }

@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
 import com.github.fabricservertools.htm.HTMRegistry;
-import com.github.fabricservertools.htm.api.LockType;
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.command.suggestors.LockTypeSuggestionProvider;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -30,12 +30,11 @@ public class SetCommand implements SubCommand {
 	}
 
 	private int set(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		LockType type;
+		Lock type;
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
 		try {
-			//noinspection ConstantConditions
-			type = HTMRegistry.getLockFromName(StringArgumentType.getString(context, "type").toLowerCase()).getDeclaredConstructor().newInstance();
+			type = HTMRegistry.getLock(StringArgumentType.getString(context, "type").toLowerCase());
 		} catch (Exception e) {
 			context.getSource().sendFeedback(new TranslatableText("text.htm.error.lock_type"), false);
 			return -3;

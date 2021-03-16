@@ -1,13 +1,11 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.command.HTMCommand;
 import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.listeners.PlayerEventListener;
 import com.github.fabricservertools.htm.listeners.WorldEventListener;
-import com.github.fabricservertools.htm.locks.KeyLock;
-import com.github.fabricservertools.htm.locks.PrivateLock;
-import com.github.fabricservertools.htm.locks.PublicLock;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -24,7 +22,7 @@ public class HTM implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		registerLocks();
+		LockType.init();
 		registerFlags();
 
 		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
@@ -33,12 +31,6 @@ public class HTM implements ModInitializer {
 
 		PlayerEventListener.init();
 		WorldEventListener.init();
-	}
-
-	private void registerLocks() {
-		HTMRegistry.registerLockType("private", PrivateLock.class);
-		HTMRegistry.registerLockType("public", PublicLock.class);
-		HTMRegistry.registerLockType("key", KeyLock.class);
 	}
 
 	private void registerFlags() {
