@@ -1,17 +1,18 @@
 # HeyThatsMine
 
-[![build](https://img.shields.io/github/workflow/status/fabricservertools/HeyThatsMine/build)](https://github.com/fabricservertools/HeyThatsMine/actions)
-[![discord](https://img.shields.io/discord/764543203772334100?label=discord)](https://discord.gg/jydqZzkyEa)
-<!--![stable](https://img.shields.io/github/v/release/fabricservertools/DeltaLogger?label=latest%20release)
-![Modrinth downloads](https://img.shields.io/badge/dynamic/json?color=brightgreen&label=Modrinth%20downloads&query=downloads&url=https%3A%2F%2Fapi.modrinth.com%2Fapi%2Fv1%2Fmod%2FWgFOx7Xi)
-![GitHub downloads](https://img.shields.io/github/downloads/fabricservertools/HeyThatsMine/total?label=GitHub%20downloads&color=blueviolet)-->
+[![discord](https://img.shields.io/discord/764543203772334100?label=Fabric%20Server%20Tools%20Discord)](https://discord.gg/jydqZzkyEa)
 
+[![discord](https://img.shields.io/discord/776126068024410135?label=Potatos%20Place)](https://discord.gg/ByaVuebAPb)
 
-A fabric mod for a container claiming and trusting system.
+HTM is a fabric mod for protecting your containers and trusting people with access to them
+
+[Requires Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 
 ## Getting started
 
 HTM requires no additional setup apart from placing it in your mods folder. All new containers will automatically be set to private.
+
+HTM also supports the luckperms API, which allows you to manage permissions. Permission nodes are listed in the relevant section. All nodes except admin are enabled for all users by default
 
 ## Using HTM
 
@@ -19,9 +20,11 @@ The mod has multiple commands which you can use on your containers
 
 ### Flag
 
-`/htm flag`: Checks the flags of a specific container. Right click on the container after running this command to check
+`/htm flag`: Checks the flags of a specific container. Left click on the container after running this command to check
 
-`/htm flag <type> <value>`: Right click a container to set the flag
+`/htm flag <type> <value>`: Left click a container to set the flag
+
+Permission node: `htm.command.flag`
 
 ### Set
 
@@ -31,18 +34,40 @@ The mod has multiple commands which you can use on your containers
 
 `/htm set KEY`: Allows only those with a key to access the container
 
+Permission node: `htm.command.set`
+
 ### Trust
 
-`/htm trust <player>`: Allows a player to access that container if private
+`/htm trust <player> [global]`: Allows a player to access that container if private
+
+Permission node: `htm.command.trust`
 
 ### Untrust
 
-`/htm untrust <player>`: Revokes a player's access to the container
+`/htm untrust <player> [global]`: Revokes a player's access to the container
+
+Permission node: `htm.command.trust`
 
 ### Remove
 
 `/htm remove`: Removes all protections from a container
 
+Permission node: `htm.command.remove`
+
 ### Transfer
 
 `/htm transfer <player>`: Transfers ownership to another player
+
+Permission node: `htm.command.transfer`
+
+### Persist
+
+Toggles persist mode, which allows you to continue executing the same action without typing the command again
+
+`/htm persist`
+
+Permission node: `htm.command.persist`
+
+### Additional permissions
+
+`htm.admin`: Allows unrestricted access to containers and other managerial permissions

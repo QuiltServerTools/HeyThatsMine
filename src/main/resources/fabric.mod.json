@@ -7,7 +7,10 @@
   "authors": [
     "Potatoboy9999"
   ],
-  "contact": {},
+  "contact": {
+    "sources": "https://github.com/fabricservertools/HeyThatsMine",
+    "issues": "https://github.com/fabricservertools/HeyThatsMine/issues"
+  },
   "license": "MIT",
   "icon": "assets/htm/icon.png",
   "environment": "*",
