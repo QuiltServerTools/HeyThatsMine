@@ -1,8 +1,11 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.text.Text;
 
 import java.util.UUID;
 
@@ -15,5 +18,15 @@ public class Utility {
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {
 		return server.getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+	}
+
+	public static void sendMessage(PlayerEntity player, Text message) {
+		sendMessage(player, message, false);
+	}
+
+	public static void sendMessage(PlayerEntity player, Text message, boolean actionBar) {
+		if (!InteractionManager.noMessage.contains(player.getUuid())) {
+			player.sendMessage(message, actionBar);
+		}
 	}
 }

@@ -28,6 +28,7 @@
   "text.htm.set_flag": "§bSet §r§a%s §bto: §r§a%s",
   "text.htm.flag": "§b§l%s: §r%s §r",
   "text.htm.persist": "§bToggled persist ",
+  "text.htm.no_msg": "§bToggled no messages ",
   "text.htm.on": "§a§lOn",
   "text.htm.off": "§c§lOff"
 }

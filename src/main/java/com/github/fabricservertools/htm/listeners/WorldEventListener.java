@@ -8,6 +8,7 @@ import com.github.fabricservertools.htm.events.WorldBreakBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -59,6 +60,7 @@ public class WorldEventListener {
 	}
 
 	private static ActionResult onBlockExplode(ExplosionBehavior explosionBehavior, Explosion explosion, BlockView world, BlockPos pos, BlockState state, float v) {
+		if (world instanceof ClientWorld) return ActionResult.PASS;
 		if (!state.getBlock().hasBlockEntity()) return ActionResult.PASS;
 
 		BlockEntity blockEntity = world.getBlockEntity(pos);

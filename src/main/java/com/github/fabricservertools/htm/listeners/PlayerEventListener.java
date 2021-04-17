@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm.listeners;
 
 import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.api.LockableChestBlock;
 import com.github.fabricservertools.htm.api.LockableObject;
@@ -67,12 +68,12 @@ public class PlayerEventListener {
 				}
 
 
-				player.sendMessage(new TranslatableText("text.htm.unlocked"), false);
+				Utility.sendMessage(playerEntity, new TranslatableText("text.htm.unlocked"));
 
 				return true;
 			}
 
-			player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
+			Utility.sendMessage(playerEntity, new TranslatableText("text.htm.error.not_owner"));
 			return false;
 		}
 
@@ -97,7 +98,7 @@ public class PlayerEventListener {
 					HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
 					lock.setType(LockType.PRIVATE_LOCK.build(), (ServerPlayerEntity) playerEntity);
-					playerEntity.sendMessage(new TranslatableText("text.htm.set", "PRIVATE"), false);
+					Utility.sendMessage(playerEntity, new TranslatableText("text.htm.set", "PRIVATE"));
 				}
 			}
 		} catch (Exception e) {

@@ -4,7 +4,7 @@ plugins {
 }
 
 repositories {
-    maven { url = "https://maven.nucleoid.xyz/" }
+    maven { url = "https://maven.tomthegeek.ml" }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 

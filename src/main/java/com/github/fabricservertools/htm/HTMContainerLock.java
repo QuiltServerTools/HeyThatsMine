@@ -148,9 +148,9 @@ public class HTMContainerLock {
 	public boolean isOwner(ServerPlayerEntity player) {
 		if (!owner.equals(player.getUuid())) {
 			if (Permissions.check(player, "htm.admin", 2)) {
-				String name = Utility.getNameFromUUID(player.getUuid(), player.server);
+				String name = Utility.getNameFromUUID(owner, player.server);
 
-				player.sendMessage(new TranslatableText("text.htm.override", name), false);
+				Utility.sendMessage(player, new TranslatableText("text.htm.override", name));
 				return true;
 			}
 

@@ -47,5 +47,6 @@ public class HTM implements ModInitializer {
 		HTMCommand.registerSubCommand(new TransferCommand().build());
 		HTMCommand.registerSubCommand(new FlagCommand().build());
 		HTMCommand.registerSubCommand(new PersistCommand().build());
+		HTMCommand.registerSubCommand(new QuietCommand().build());
 	}
 }

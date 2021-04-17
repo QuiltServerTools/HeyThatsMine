@@ -70,6 +70,14 @@ Toggles persist mode, which allows you to continue executing the same action wit
 
 Permission node: `htm.command.persist`
 
+### Quiet
+
+Toggles no message mode, which hides non-command messages like automatic protection creation and override.
+
+`/htm quiet`
+
+Permission node: `htm.command.quiet`
+
 ### Additional permissions
 
 `htm.admin`: Allows unrestricted access to containers and other managerial permissions
