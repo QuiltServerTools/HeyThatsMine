@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.api;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public interface Lock {
@@ -11,9 +11,9 @@ public interface Lock {
 
 	void onInfo(ServerPlayerEntity player, HTMContainerLock lock);
 
-	CompoundTag toTag();
+	NbtCompound toTag();
 
-	void fromTag(CompoundTag tag);
+	void fromTag(NbtCompound tag);
 
 	LockType<?> getType();
 }

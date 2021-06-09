@@ -17,7 +17,7 @@ public class Utility {
 	}
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {
-		return server.getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::new, "globalTrust");
+		return server.getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState::fromNbt, GlobalTrustState::new, "globalTrust");
 	}
 
 	public static void sendMessage(PlayerEntity player, Text message) {

@@ -32,7 +32,7 @@ public abstract class PistonBlockMixin {
 	private void HTMPistonMoveCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, PistonHandler pistonHandler, Map<BlockPos, BlockState> map, List<BlockPos> list, List<BlockState> list2, int i, BlockPos blockPos2, BlockState blockState) {
 		if (world.isClient) return;
 
-		if (blockState.getBlock().hasBlockEntity()) {
+		if (blockState.hasBlockEntity()) {
 			HTMContainerLock lock = InteractionManager.getLock((ServerWorld) world, blockPos2);
 			if (lock != null && lock.isLocked()) {
 				cir.setReturnValue(false);
@@ -52,7 +52,7 @@ public abstract class PistonBlockMixin {
 	private void HTMPistonDestroyCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, PistonHandler pistonHandler, Map map, List list, List list2, List list3, BlockState blockStates[], Direction direction, int j, int k, BlockPos blockPos3, BlockState blockState2) {
 		if (world.isClient) return;
 
-		if (blockState2.getBlock().hasBlockEntity()) {
+		if (blockState2.hasBlockEntity()) {
 			HTMContainerLock lock = InteractionManager.getLock((ServerWorld) world, blockPos3);
 			if (lock != null && lock.isLocked()) {
 				cir.setReturnValue(false);

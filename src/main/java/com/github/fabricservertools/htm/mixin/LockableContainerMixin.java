@@ -6,8 +6,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,18 +20,18 @@ public abstract class LockableContainerMixin implements LockableObject {
 	public HTMContainerLock htmContainerLock;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
-	private void init(BlockEntityType<?> blockEntityType, CallbackInfo ci) {
+	private void init(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
 		htmContainerLock = new HTMContainerLock();
 	}
 
-	@Inject(method = "toTag", at = @At("HEAD"))
-	private void toTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
+	@Inject(method = "writeNbt", at = @At("HEAD"))
+	private void toTag(NbtCompound tag, CallbackInfoReturnable<NbtCompound> cir) {
 		htmContainerLock.toTag(tag);
 	}
 
-	@Inject(method = "fromTag", at = @At("HEAD"))
-	private void fromTag(BlockState state, CompoundTag tag, CallbackInfo ci) {
-		htmContainerLock.fromTag(tag);
+	@Inject(method = "readNbt", at = @At("HEAD"))
+	private void fromTag(NbtCompound nbt, CallbackInfo ci) {
+		htmContainerLock.fromTag(nbt);
 	}
 
 	@Inject(method = "checkUnlocked(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)

@@ -5,7 +5,7 @@ import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
@@ -34,15 +34,15 @@ public class KeyLock implements Lock {
 	}
 
 	@Override
-	public CompoundTag toTag() {
-		CompoundTag tag = new CompoundTag();
-		key.toTag(tag);
+	public NbtCompound toTag() {
+		NbtCompound tag = new NbtCompound();
+		key.writeNbt(tag);
 		return tag;
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag) {
-		key = ItemStack.fromTag(tag);
+	public void fromTag(NbtCompound tag) {
+		key = ItemStack.fromNbt(tag);
 	}
 
 	@Override

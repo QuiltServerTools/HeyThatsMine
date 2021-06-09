@@ -88,7 +88,7 @@ public class PlayerEventListener {
 			BlockState state = world.getBlockState(pos);
 
 			if (world.isClient) return ActionResult.PASS;
-			if (!state.getBlock().hasBlockEntity()) return ActionResult.PASS;
+			if (!state.hasBlockEntity()) return ActionResult.PASS;
 
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof LockableObject) {

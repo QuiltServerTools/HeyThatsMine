@@ -29,7 +29,7 @@ public class WorldEventListener {
 		if (world.isClient) return ActionResult.PASS;
 
 		BlockState state = world.getBlockState(pos);
-		if (!state.getBlock().hasBlockEntity()) return ActionResult.PASS;
+		if (!state.hasBlockEntity()) return ActionResult.PASS;
 
 
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -59,7 +59,7 @@ public class WorldEventListener {
 
 	private static ActionResult onBlockExplode(ExplosionBehavior explosionBehavior, Explosion explosion, World world, BlockPos pos, BlockState state, float v) {
 		if (world.isClient) return ActionResult.PASS;
-		if (!state.getBlock().hasBlockEntity()) return ActionResult.PASS;
+		if (!state.hasBlockEntity()) return ActionResult.PASS;
 
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof LockableObject) {

@@ -3,10 +3,10 @@ package com.github.fabricservertools.htm.world.data;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.world.PersistentState;
 
 import java.util.UUID;
@@ -15,35 +15,36 @@ public class GlobalTrustState extends PersistentState {
 	private final Multimap<UUID, UUID> globalTrust;
 
 	public GlobalTrustState() {
-		super("globalTrust");
 		globalTrust = HashMultimap.create();
 	}
 
-	@Override
-	public void fromTag(CompoundTag tag) {
-		ListTag trustList = tag.getList("GlobalTrusts", NbtType.COMPOUND);
+	public static GlobalTrustState fromNbt(NbtCompound tag) {
+		GlobalTrustState trustState = new GlobalTrustState();
+		NbtList trustList = tag.getList("GlobalTrusts", NbtType.COMPOUND);
 
 		trustList.forEach(tag1 -> {
-			CompoundTag compoundTag = (CompoundTag) tag1;
+			NbtCompound compoundTag = (NbtCompound) tag1;
 			UUID truster = compoundTag.getUuid("Truster");
 
-			ListTag trustedTag = compoundTag.getList("Trusted", NbtType.INT_ARRAY);
+			NbtList trustedTag = compoundTag.getList("Trusted", NbtType.INT_ARRAY);
 
-			for (Tag value : trustedTag) {
-				globalTrust.put(truster, NbtHelper.toUuid(value));
+			for (NbtElement value : trustedTag) {
+				trustState.globalTrust.put(truster, NbtHelper.toUuid(value));
 			}
 		});
+
+		return trustState;
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		ListTag trustList = new ListTag();
+	public NbtCompound writeNbt(NbtCompound tag) {
+		NbtList trustList = new NbtList();
 
 		for (UUID trusterID : globalTrust.keySet()) {
-			CompoundTag trustTag = new CompoundTag();
+			NbtCompound trustTag = new NbtCompound();
 			trustTag.putUuid("Truster", trusterID);
 
-			ListTag trustedTag = new ListTag();
+			NbtList trustedTag = new NbtList();
 			for (UUID trustedID : globalTrust.get(trusterID)) {
 				trustedTag.add(NbtHelper.fromUuid(trustedID));
 			}

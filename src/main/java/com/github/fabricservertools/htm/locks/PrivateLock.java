@@ -4,7 +4,7 @@ import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PrivateLock implements Lock {
@@ -24,12 +24,12 @@ public class PrivateLock implements Lock {
 	}
 
 	@Override
-	public CompoundTag toTag() {
-		return new CompoundTag();
+	public NbtCompound toTag() {
+		return new NbtCompound();
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag) {
+	public void fromTag(NbtCompound tag) {
 
 	}
 
