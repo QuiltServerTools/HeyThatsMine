@@ -15,6 +15,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static net.minecraft.server.command.CommandManager.argument;
@@ -27,10 +28,10 @@ public class TrustCommand implements SubCommand {
 				.requires(Permissions.require("htm.command.trust", true))
 				.executes(this::trustList)
 				.then(argument("target", GameProfileArgumentType.gameProfile())
-						.executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), false))
+						.executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target"), false))
 						.then(literal("global")
 								.executes(ctx -> trust(
-										ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(), true)
+										ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target"), true)
 								)
 						))
 				.build();
@@ -51,23 +52,25 @@ public class TrustCommand implements SubCommand {
 		return 1;
 	}
 
-	private static int trust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
+	private static int trust(ServerCommandSource source, Collection<GameProfile> gameProfiles, boolean global) throws CommandSyntaxException {
 		ServerPlayerEntity player = source.getPlayer();
 
 		if (global) {
-			GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
-			if (player.getUuid().equals(gameProfile.getId())) {
-				player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
-				return -1;
-			}
+			for (GameProfile gameProfile : gameProfiles) {
+				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
+				if (player.getUuid().equals(gameProfile.getId())) {
+					player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+					return -1;
+				}
 
-			if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
-				source.sendFeedback(new TranslatableText("text.htm.trust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
-			} else {
-				source.sendFeedback(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()), false);
+				if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
+					source.sendFeedback(new TranslatableText("text.htm.trust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+				} else {
+					source.sendFeedback(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()), false);
+				}
 			}
 		} else {
-			InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, false));
+			InteractionManager.pendingActions.put(player, new TrustAction(gameProfiles, false));
 			source.sendFeedback(new TranslatableText("text.htm.select"), false);
 		}
 

@@ -43,7 +43,7 @@ public class FlagAction implements LockInteraction {
 			return;
 		}
 
-		if (!flagSet.isPresent()) {
+		if (flagSet.isEmpty()) {
 			//flag info
 			player.sendMessage(new TranslatableText("text.htm.divider"), false);
 			for (Map.Entry<String, Boolean> entry : lock.getFlags().entrySet()) {

@@ -22,7 +22,7 @@ import java.util.UUID;
 public class InteractionManager {
 	public static final Object2ObjectMap<ServerPlayerEntity, LockInteraction> pendingActions = new Object2ObjectOpenHashMap<>();
 	public static final ObjectSet<UUID> persisting = new ObjectOpenHashSet<>();
-	public static ObjectSet<UUID> noMessage = new ObjectOpenHashSet<>();
+	public static final ObjectSet<UUID> noMessage = new ObjectOpenHashSet<>();
 
 	public static void execute(ServerPlayerEntity player, World world, BlockPos pos) {
 		LockInteraction action = pendingActions.get(player);

@@ -14,6 +14,8 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
+import java.util.Collection;
+
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
@@ -25,13 +27,13 @@ public class UntrustCommand implements SubCommand {
 				.then(argument("target", GameProfileArgumentType.gameProfile())
 						.executes(ctx -> untrust(
 								ctx.getSource(),
-								GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+								GameProfileArgumentType.getProfileArgument(ctx, "target"),
 								false
 						))
 						.then(literal("global")
 								.executes(ctx -> untrust(
 										ctx.getSource(),
-										GameProfileArgumentType.getProfileArgument(ctx, "target").iterator().next(),
+										GameProfileArgumentType.getProfileArgument(ctx, "target"),
 										true
 								))
 						))
@@ -39,18 +41,20 @@ public class UntrustCommand implements SubCommand {
 	}
 
 	@SuppressWarnings("SameReturnValue")
-	private int untrust(ServerCommandSource source, GameProfile gameProfile, boolean global) throws CommandSyntaxException {
+	private int untrust(ServerCommandSource source, Collection<GameProfile> gameProfiles, boolean global) throws CommandSyntaxException {
 		ServerPlayerEntity player = source.getPlayer();
 
 		if (global) {
-			GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
-			if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
-				source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
-			} else {
-				source.sendFeedback(new TranslatableText("text.htm.error.not_trusted", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+			for (GameProfile gameProfile : gameProfiles) {
+				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
+				if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
+					source.sendFeedback(new TranslatableText("text.htm.untrust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+				} else {
+					source.sendFeedback(new TranslatableText("text.htm.error.not_trusted", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+				}
 			}
 		} else {
-			InteractionManager.pendingActions.put(player, new TrustAction(gameProfile, true));
+			InteractionManager.pendingActions.put(player, new TrustAction(gameProfiles, true));
 			source.sendFeedback(new TranslatableText("text.htm.select"), false);
 		}
 

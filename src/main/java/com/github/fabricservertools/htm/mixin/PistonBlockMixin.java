@@ -49,7 +49,7 @@ public abstract class PistonBlockMixin {
 			),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			cancellable = true)
-	private void HTMPistonDestroyCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, PistonHandler pistonHandler, Map map, List list, List list2, List list3, BlockState blockStates[], Direction direction, int j, int k, BlockPos blockPos3, BlockState blockState2) {
+	private void HTMPistonDestroyCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, PistonHandler pistonHandler, Map<BlockPos, BlockState> map, List<BlockPos> list, List<BlockState> list2, List<BlockPos> list3, BlockState[] blockStates, Direction direction, int j, int k, BlockPos blockPos3, BlockState blockState2) {
 		if (world.isClient) return;
 
 		if (blockState2.hasBlockEntity()) {

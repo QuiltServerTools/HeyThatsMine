@@ -37,7 +37,6 @@ public class PlayerEventListener {
 	private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
 		if (world.isClient) return ActionResult.PASS;
 
-		//noinspection RedundantCast
 		if (InteractionManager.pendingActions.containsKey((ServerPlayerEntity) player)) {
 			InteractionManager.execute((ServerPlayerEntity) player, world, pos);
 

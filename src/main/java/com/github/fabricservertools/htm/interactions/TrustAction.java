@@ -8,12 +8,14 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Collection;
+
 public class TrustAction implements LockInteraction {
-	private final GameProfile trustPlayer;
+	private final Collection<GameProfile> trustPlayers;
 	private final boolean untrust;
 
-	public TrustAction(GameProfile trustPlayer, boolean untrust) {
-		this.trustPlayer = trustPlayer;
+	public TrustAction(Collection<GameProfile> trustPlayers, boolean untrust) {
+		this.trustPlayers = trustPlayers;
 		this.untrust = untrust;
 	}
 
@@ -29,24 +31,26 @@ public class TrustAction implements LockInteraction {
 			return;
 		}
 
-		if (lock.getOwner() == trustPlayer.getId()) {
-			player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
-			return;
-		}
-
-		if (untrust) {
-			//untrust
-			if (lock.removeTrust(trustPlayer.getId())) {
-				player.sendMessage(new TranslatableText("text.htm.untrust", trustPlayer.getName()), false);
-			} else {
-				player.sendMessage(new TranslatableText("text.htm.error.not_trusted", trustPlayer.getName()), false);
+		for (GameProfile trustPlayer : trustPlayers) {
+			if (lock.getOwner() == trustPlayer.getId()) {
+				player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+				continue;
 			}
-		} else {
-			//trust
-			if (lock.addTrust(trustPlayer.getId())) {
-				player.sendMessage(new TranslatableText("text.htm.trust", trustPlayer.getName()), false);
+
+			if (untrust) {
+				//untrust
+				if (lock.removeTrust(trustPlayer.getId())) {
+					player.sendMessage(new TranslatableText("text.htm.untrust", trustPlayer.getName()), false);
+				} else {
+					player.sendMessage(new TranslatableText("text.htm.error.not_trusted", trustPlayer.getName()), false);
+				}
 			} else {
-				player.sendMessage(new TranslatableText("text.htm.error.already_trusted", trustPlayer.getName()), false);
+				//trust
+				if (lock.addTrust(trustPlayer.getId())) {
+					player.sendMessage(new TranslatableText("text.htm.trust", trustPlayer.getName()), false);
+				} else {
+					player.sendMessage(new TranslatableText("text.htm.error.already_trusted", trustPlayer.getName()), false);
+				}
 			}
 		}
 	}
