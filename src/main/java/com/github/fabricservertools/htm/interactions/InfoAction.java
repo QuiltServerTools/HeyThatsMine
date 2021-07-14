@@ -11,6 +11,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InfoAction implements LockInteraction {
@@ -21,16 +22,16 @@ public class InfoAction implements LockInteraction {
 			return;
 		}
 
-		GameProfile owner = player.getServerWorld().getServer().getUserCache().getByUuid(lock.getOwner());
+		Optional<GameProfile> owner = player.getServerWorld().getServer().getUserCache().getByUuid(lock.getOwner());
 
-		if (owner == null) {
+		if (owner.isEmpty()) {
 			HTM.LOGGER.error("Can't find lock owner: " + lock.getOwner());
 			return;
 		}
 
 		player.sendMessage(new TranslatableText("text.htm.divider"), false);
 		player.sendMessage(new TranslatableText("text.htm.type", HTMRegistry.getLockId(lock.getType().getType()).toUpperCase()), false);
-		player.sendMessage(new TranslatableText("text.htm.owner", owner.getName()), false);
+		player.sendMessage(new TranslatableText("text.htm.owner", owner.get().getName()), false);
 		if (lock.isOwner(player)) {
 			String trustedList = lock.getTrusted()
 					.stream()

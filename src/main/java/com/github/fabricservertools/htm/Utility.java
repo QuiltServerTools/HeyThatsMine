@@ -7,13 +7,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class Utility {
 	public static String getNameFromUUID (UUID uuid, MinecraftServer server) {
-		GameProfile ownerProfile = server.getUserCache().getByUuid(uuid);
+		Optional<GameProfile> ownerProfile = server.getUserCache().getByUuid(uuid);
 
-		return ownerProfile != null ? ownerProfile.getName() : "unknown";
+		return ownerProfile.isPresent() ? ownerProfile.get().getName() : "unknown";
 	}
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {
