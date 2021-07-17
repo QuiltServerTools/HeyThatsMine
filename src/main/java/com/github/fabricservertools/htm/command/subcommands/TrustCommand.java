@@ -44,7 +44,7 @@ public class TrustCommand implements SubCommand {
 
 		String trustedList = globalTrustState.getTrusted().get(player.getUuid())
 				.stream()
-				.map(a -> Utility.getNameFromUUID(player.getUuid(), player.server))
+				.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
 				.collect(Collectors.joining(", "));
 
 		player.sendMessage(new TranslatableText("text.htm.trusted.global", trustedList), false);

@@ -35,7 +35,7 @@ public class InfoAction implements LockInteraction {
 		if (lock.isOwner(player)) {
 			String trustedList = lock.getTrusted()
 					.stream()
-					.map(a -> Utility.getNameFromUUID(a, player.server))
+					.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
 					.collect(Collectors.joining(", "));
 
 			player.sendMessage(new TranslatableText("text.htm.trusted", trustedList), false);
