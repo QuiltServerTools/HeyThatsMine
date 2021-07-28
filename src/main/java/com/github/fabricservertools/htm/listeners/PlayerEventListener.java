@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -28,83 +27,84 @@ import net.minecraft.world.World;
 import java.util.Optional;
 
 public class PlayerEventListener {
-	public static void init() {
-		PlayerPlaceBlockCallback.EVENT.register(PlayerEventListener::onPlace);
-		PlayerBlockBreakEvents.BEFORE.register(PlayerEventListener::onBeforeBreak);
-		AttackBlockCallback.EVENT.register(PlayerEventListener::onAttackBlock);
-	}
+    public static void init() {
+        PlayerPlaceBlockCallback.EVENT.register(PlayerEventListener::onPlace);
+        PlayerBlockBreakEvents.BEFORE.register(PlayerEventListener::onBeforeBreak);
+        AttackBlockCallback.EVENT.register(PlayerEventListener::onAttackBlock);
+    }
 
-	private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
-		if (world.isClient) return ActionResult.PASS;
+    private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
+        if (world.isClient) return ActionResult.PASS;
 
-		if (InteractionManager.pendingActions.containsKey((ServerPlayerEntity) player)) {
-			InteractionManager.execute((ServerPlayerEntity) player, world, pos);
+        if (InteractionManager.pendingActions.containsKey((ServerPlayerEntity) player)) {
+            InteractionManager.execute((ServerPlayerEntity) player, world, pos);
 
-			world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
-			return ActionResult.SUCCESS;
-		}
+            world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
+            return ActionResult.SUCCESS;
+        }
 
-		return ActionResult.PASS;
-	}
+        return ActionResult.PASS;
+    }
 
-	private static boolean onBeforeBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-		if (world.isClient) return true;
-		ServerPlayerEntity playerEntity = (ServerPlayerEntity) player;
+    private static boolean onBeforeBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        if (world.isClient) return true;
+        ServerPlayerEntity playerEntity = (ServerPlayerEntity) player;
 
-		if (blockEntity instanceof LockableContainerBlockEntity) {
-			HTMContainerLock lock = InteractionManager.getLock(playerEntity, pos);
+        if (blockEntity instanceof LockableObject) {
+            HTMContainerLock lock = InteractionManager.getLock(playerEntity, pos);
 
-			if (!lock.isLocked()) return true;
+            if (!lock.isLocked()) return true;
 
-			if (lock.isOwner((ServerPlayerEntity) player)) {
-				if (state.getBlock() instanceof LockableChestBlock) {
-					Optional<BlockEntity> unlocked = ((LockableChestBlock) state.getBlock()).getUnlockedPart(state, world, pos);
-					if (unlocked.isPresent()) {
-						BlockEntity unlockedBlockEntity = unlocked.get();
-						((LockableObject) unlockedBlockEntity).setLock(lock);
-						return true;
-					}
-				}
+            if (lock.isOwner((ServerPlayerEntity) player)) {
+                if (state.getBlock() instanceof LockableChestBlock) {
+                    Optional<BlockEntity> unlocked = ((LockableChestBlock) state.getBlock()).getUnlockedPart(state, world, pos);
+                    if (unlocked.isPresent()) {
+                        BlockEntity unlockedBlockEntity = unlocked.get();
+                        ((LockableObject) unlockedBlockEntity).setLock(lock);
+                        return true;
+                    }
+                }
 
 
-				Utility.sendMessage(playerEntity, new TranslatableText("text.htm.unlocked"));
+                Utility.sendMessage(playerEntity, new TranslatableText("text.htm.unlocked"));
 
-				return true;
-			}
+                return true;
+            }
 
-			Utility.sendMessage(playerEntity, new TranslatableText("text.htm.error.not_owner"));
-			return false;
-		}
+            Utility.sendMessage(playerEntity, new TranslatableText("text.htm.error.not_owner"));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@SuppressWarnings({"ConstantConditions", "SameReturnValue"})
-	private static ActionResult onPlace(PlayerEntity playerEntity, ItemPlacementContext context) {
-		try {
-			BlockPos pos = context.getBlockPos();
-			World world = context.getWorld();
-			BlockState state = world.getBlockState(pos);
+    @SuppressWarnings({"ConstantConditions", "SameReturnValue"})
+    private static ActionResult onPlace(PlayerEntity playerEntity, ItemPlacementContext context) {
+        try {
+            BlockPos pos = context.getBlockPos();
+            World world = context.getWorld();
+            BlockState state = world.getBlockState(pos);
 
-			if (world.isClient) return ActionResult.PASS;
-			if (!state.hasBlockEntity()) return ActionResult.PASS;
+            if (world.isClient) return ActionResult.PASS;
+            if (!state.hasBlockEntity()) return ActionResult.PASS;
 
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof LockableObject) {
-				if (HTM.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
-					if (InteractionManager.getLock((ServerWorld) world, blockEntity).isLocked()) return ActionResult.PASS;
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof LockableObject) {
+                if (HTM.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
+                    if (InteractionManager.getLock((ServerWorld) world, blockEntity).isLocked())
+                        return ActionResult.PASS;
 
-					HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
+                    HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
-					lock.setType(LockType.PRIVATE_LOCK.build(), (ServerPlayerEntity) playerEntity);
-					Utility.sendMessage(playerEntity, new TranslatableText("text.htm.set", "PRIVATE"));
-				}
-			}
-		} catch (Exception e) {
-			HTM.LOGGER.warn("Something went wrong auto locking");
-			e.printStackTrace();
-		}
+                    lock.setType(LockType.PRIVATE_LOCK.build(), (ServerPlayerEntity) playerEntity);
+                    Utility.sendMessage(playerEntity, new TranslatableText("text.htm.set", "PRIVATE"));
+                }
+            }
+        } catch (Exception e) {
+            HTM.LOGGER.warn("Something went wrong auto locking");
+            e.printStackTrace();
+        }
 
-		return ActionResult.PASS;
-	}
+        return ActionResult.PASS;
+    }
 }
