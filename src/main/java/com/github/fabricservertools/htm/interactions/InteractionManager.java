@@ -35,7 +35,7 @@ public class InteractionManager {
     }
 
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
-        HTMContainerLock lock = getLock(player.getServerWorld(), pos);
+        HTMContainerLock lock = getLock(player.getWorld(), pos);
         if (lock == null) {
             player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
         }

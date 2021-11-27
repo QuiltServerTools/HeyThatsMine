@@ -22,7 +22,7 @@ public class InfoAction implements LockInteraction {
 			return;
 		}
 
-		Optional<GameProfile> owner = player.getServerWorld().getServer().getUserCache().getByUuid(lock.getOwner());
+		Optional<GameProfile> owner = player.server.getUserCache().getByUuid(lock.getOwner());
 
 		if (owner.isEmpty()) {
 			HTM.LOGGER.error("Can't find lock owner: " + lock.getOwner());

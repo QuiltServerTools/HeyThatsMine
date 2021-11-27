@@ -25,8 +25,8 @@ public abstract class LockableContainerMixin implements LockableObject {
 	}
 
 	@Inject(method = "writeNbt", at = @At("HEAD"))
-	private void toTag(NbtCompound tag, CallbackInfoReturnable<NbtCompound> cir) {
-		htmContainerLock.toTag(tag);
+	private void toTag(NbtCompound nbt, CallbackInfo ci) {
+		htmContainerLock.toTag(nbt);
 	}
 
 	@Inject(method = "readNbt", at = @At("HEAD"))

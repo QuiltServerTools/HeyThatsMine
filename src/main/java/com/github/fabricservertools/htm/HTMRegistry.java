@@ -4,7 +4,6 @@ import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -35,7 +34,7 @@ public final class HTMRegistry {
 		return id == null ? "ERROR" : id;
 	}
 
-	public static @Nullable Optional<Lock> getLock(String name) {
+	public static Optional<Lock> getLock(String name) {
 		LockType<?> lockType = lockTypes.get(name);
 		return Optional.ofNullable(lockType.build());
 	}
