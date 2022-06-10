@@ -3,8 +3,7 @@ package com.github.fabricservertools.htm.interactions;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -34,35 +33,35 @@ public class FlagAction implements LockInteraction {
 	@Override
 	public void execute(ServerPlayerEntity player, World world, BlockPos pos, HTMContainerLock lock) {
 		if (!lock.isLocked()) {
-			player.sendMessage(new TranslatableText("text.htm.error.no_lock"), false);
+			player.sendMessage(Text.translatable("text.htm.error.no_lock"), false);
 			return;
 		}
 
 		if (!lock.isOwner(player)) {
-			player.sendMessage(new TranslatableText("text.htm.error.not_owner"), false);
+			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
 			return;
 		}
 
 		if (flagSet.isEmpty()) {
 			//flag info
-			player.sendMessage(new TranslatableText("text.htm.divider"), false);
+			player.sendMessage(Text.translatable("text.htm.divider"), false);
 			for (Map.Entry<String, Boolean> entry : lock.getFlags().entrySet()) {
-				player.sendMessage(new TranslatableText(
+				player.sendMessage(Text.translatable(
 								"text.htm.flag",
 								entry.getKey().toUpperCase(),
-								new LiteralText(entry.getValue().toString().toUpperCase()).formatted(entry.getValue() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
+								Text.literal(entry.getValue().toString().toUpperCase()).formatted(entry.getValue() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
 						false);
 			}
-			player.sendMessage(new TranslatableText("text.htm.divider"), false);
+			player.sendMessage(Text.translatable("text.htm.divider"), false);
 		} else {
 			//flag set
 			String flagType = flagSet.get().getLeft();
 			boolean value = flagSet.get().getRight();
 			lock.setFlag(flagType.toLowerCase(), value);
-			player.sendMessage(new TranslatableText(
+			player.sendMessage(Text.translatable(
 					"text.htm.set_flag",
 					flagType.toUpperCase(),
-					new LiteralText(String.valueOf(value).toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)), false);
+					Text.literal(String.valueOf(value).toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)), false);
 		}
 	}
 }

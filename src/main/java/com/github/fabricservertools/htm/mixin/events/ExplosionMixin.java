@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.mixin.events;
 
 import com.github.fabricservertools.htm.events.BlockExplodeCallback;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Mixin(Explosion.class)
 public abstract class ExplosionMixin {
 	@Mutable
-	@Shadow @Final private List<BlockPos> affectedBlocks;
+	@Shadow @Final private ObjectArrayList<BlockPos> affectedBlocks;
 
 	@Shadow @Final private ExplosionBehavior behavior;
 
@@ -30,9 +31,9 @@ public abstract class ExplosionMixin {
 
 	@Inject(method = "affectWorld", at = @At(value = "NEW", target = "it/unimi/dsi/fastutil/objects/ObjectArrayList"))
 	private void HTMExplosionProtectionCheck(boolean bl, CallbackInfo ci) {
-		this.affectedBlocks = this.affectedBlocks.stream().filter(pos ->
-						BlockExplodeCallback.EVENT.invoker().explode(this.behavior, (Explosion) (Object) this, this.world, pos, this.world.getBlockState(pos), this.power) == ActionResult.PASS
-				).collect(Collectors.toList());
+		this.affectedBlocks.removeIf(pos -> {
+			return BlockExplodeCallback.EVENT.invoker().explode(this.behavior, (Explosion) (Object) this, this.world, pos, this.world.getBlockState(pos), this.power) != ActionResult.PASS;
+		});
 
 	}
 }

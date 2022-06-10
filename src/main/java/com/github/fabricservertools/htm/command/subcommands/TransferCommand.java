@@ -11,7 +11,7 @@ import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -32,7 +32,7 @@ public class TransferCommand implements SubCommand {
 		GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
 
 		InteractionManager.pendingActions.put(player, new TransferAction(gameProfile));
-		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
 		return 1;
 	}
 }
