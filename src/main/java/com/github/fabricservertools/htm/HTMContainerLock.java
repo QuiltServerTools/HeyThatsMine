@@ -10,7 +10,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -99,7 +99,7 @@ public class HTMContainerLock {
 
 		if (isOwner(player)) return true;
 
-		player.sendMessage(new TranslatableText("text.htm.locked"), true);
+		player.sendMessage(Text.translatable("text.htm.locked"), true);
 		player.playSound(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		return false;
 	}
@@ -150,7 +150,7 @@ public class HTMContainerLock {
 			if (Permissions.check(player, "htm.admin", 2)) {
 				String name = Utility.getNameFromUUID(owner, player.server);
 
-				Utility.sendMessage(player, new TranslatableText("text.htm.override", name));
+				Utility.sendMessage(player, Text.translatable("text.htm.override", name));
 				return true;
 			}
 

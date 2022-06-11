@@ -16,7 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -66,12 +66,12 @@ public class PlayerEventListener {
                 }
 
 
-                Utility.sendMessage(playerEntity, new TranslatableText("text.htm.unlocked"));
+                Utility.sendMessage(playerEntity, Text.translatable("text.htm.unlocked"));
 
                 return true;
             }
 
-            Utility.sendMessage(playerEntity, new TranslatableText("text.htm.error.not_owner"));
+            Utility.sendMessage(playerEntity, Text.translatable("text.htm.error.not_owner"));
             return false;
         }
 
@@ -97,7 +97,7 @@ public class PlayerEventListener {
                     HTMContainerLock lock = ((LockableObject) blockEntity).getLock();
 
                     lock.setType(LockType.PRIVATE_LOCK.build(), (ServerPlayerEntity) playerEntity);
-                    Utility.sendMessage(playerEntity, new TranslatableText("text.htm.set", "PRIVATE"));
+                    Utility.sendMessage(playerEntity, Text.translatable("text.htm.set", "PRIVATE"));
                 }
             }
         } catch (Exception e) {

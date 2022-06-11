@@ -12,7 +12,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class FlagCommand implements SubCommand {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
 		InteractionManager.pendingActions.put(player, new FlagAction(Optional.empty()));
-		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
 
 		return 1;
 	}
@@ -51,12 +51,12 @@ public class FlagCommand implements SubCommand {
 		try {
 			type = StringArgumentType.getString(context, "type".toLowerCase());
 		} catch (IllegalArgumentException e) {
-			context.getSource().sendFeedback(new TranslatableText("text.htm.error.flag_type"), false);
+			context.getSource().sendFeedback(Text.translatable("text.htm.error.flag_type"), false);
 			return -3;
 		}
 
 		InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Pair<>(type, value))));
-		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
 		return 1;
 	}
 }

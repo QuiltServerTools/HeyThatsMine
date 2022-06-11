@@ -8,7 +8,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import static net.minecraft.server.command.CommandManager.literal;
 
@@ -27,9 +27,9 @@ public class PersistCommand implements SubCommand {
 
 		InteractionManager.togglePersist(player);
 		if (InteractionManager.persisting.contains(player.getUuid())) {
-			context.getSource().sendFeedback(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.on")), false);
+			context.getSource().sendFeedback(Text.translatable("text.htm.persist").append(Text.translatable("text.htm.on")), false);
 		} else {
-			context.getSource().sendFeedback(new TranslatableText("text.htm.persist").append(new TranslatableText("text.htm.off")), false);
+			context.getSource().sendFeedback(Text.translatable("text.htm.persist").append(Text.translatable("text.htm.off")), false);
 		}
 		return 1;
 	}

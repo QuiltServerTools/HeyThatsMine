@@ -12,7 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -37,7 +37,7 @@ public class InteractionManager {
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
         HTMContainerLock lock = getLock(player.getWorld(), pos);
         if (lock == null) {
-            player.sendMessage(new TranslatableText("text.htm.error.unlockable"), false);
+            player.sendMessage(Text.translatable("text.htm.error.unlockable"), false);
         }
 
         return lock;

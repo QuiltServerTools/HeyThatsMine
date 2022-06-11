@@ -8,7 +8,7 @@ import com.github.fabricservertools.htm.listeners.PlayerEventListener;
 import com.github.fabricservertools.htm.listeners.WorldEventListener;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +27,7 @@ public class HTM implements ModInitializer {
 
 		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
 
-		CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> registerCommands(dispatcher)));
+		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));
 
 		PlayerEventListener.init();
 		WorldEventListener.init();

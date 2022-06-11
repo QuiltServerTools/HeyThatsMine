@@ -13,7 +13,7 @@ import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -47,7 +47,7 @@ public class TrustCommand implements SubCommand {
 				.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
 				.collect(Collectors.joining(", "));
 
-		player.sendMessage(new TranslatableText("text.htm.trusted.global", trustedList), false);
+		player.sendMessage(Text.translatable("text.htm.trusted.global", trustedList), false);
 
 		return 1;
 	}
@@ -59,19 +59,19 @@ public class TrustCommand implements SubCommand {
 			for (GameProfile gameProfile : gameProfiles) {
 				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
 				if (player.getUuid().equals(gameProfile.getId())) {
-					player.sendMessage(new TranslatableText("text.htm.error.trust_self"), false);
+					player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
 					return -1;
 				}
 
 				if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
-					source.sendFeedback(new TranslatableText("text.htm.trust", gameProfile.getName()).append(new TranslatableText("text.htm.global")), false);
+					source.sendFeedback(Text.translatable("text.htm.trust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
 				} else {
-					source.sendFeedback(new TranslatableText("text.htm.error.already_trusted", gameProfile.getName()), false);
+					source.sendFeedback(Text.translatable("text.htm.error.already_trusted", gameProfile.getName()), false);
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(gameProfiles, false));
-			source.sendFeedback(new TranslatableText("text.htm.select"), false);
+			source.sendFeedback(Text.translatable("text.htm.select"), false);
 		}
 
 

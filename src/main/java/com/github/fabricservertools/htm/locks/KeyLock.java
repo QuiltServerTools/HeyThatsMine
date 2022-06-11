@@ -7,7 +7,7 @@ import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 public class KeyLock implements Lock {
 	private ItemStack key;
@@ -25,12 +25,12 @@ public class KeyLock implements Lock {
 	@Override
 	public void onLockSet(ServerPlayerEntity player, HTMContainerLock lock) {
 		key = player.getMainHandStack().copy();
-		player.sendMessage(new TranslatableText("text.htm.key_set", key.toHoverableText()), false);
+		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
 	}
 
 	@Override
 	public void onInfo(ServerPlayerEntity player, HTMContainerLock lock) {
-		player.sendMessage(new TranslatableText("text.htm.key", key.toHoverableText()), false);
+		player.sendMessage(Text.translatable("text.htm.key", key.toHoverableText()), false);
 	}
 
 	@Override

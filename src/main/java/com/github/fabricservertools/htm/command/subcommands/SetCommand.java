@@ -13,7 +13,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -36,12 +36,12 @@ public class SetCommand implements SubCommand {
 		try {
 			type = HTMRegistry.getLock(StringArgumentType.getString(context, "type").toLowerCase()).orElseThrow(RuntimeException::new);
 		} catch (Exception e) {
-			context.getSource().sendFeedback(new TranslatableText("text.htm.error.lock_type"), false);
+			context.getSource().sendFeedback(Text.translatable("text.htm.error.lock_type"), false);
 			return -3;
 		}
 
 		InteractionManager.pendingActions.put(player, new SetAction(type));
-		context.getSource().sendFeedback(new TranslatableText("text.htm.select"), false);
+		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
 		return 1;
 	}
 }
