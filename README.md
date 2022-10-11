@@ -95,7 +95,7 @@ Permission node: `htm.command.quiet`
 
 `autolockingContainers`: List of containers which will be set to PRIVATE by default
 
-    (remove or comment out items in the list to make them set to public by default).
+    (remove items in the list to make them set to public by default).
 
 ### Additional permissions
 
