@@ -79,11 +79,13 @@ Toggles no message mode, which hides non-command messages like automatic protect
 Permission node: `htm.command.quiet`
 
 ### Config
-`canTrustedPlayersBreakChests`: Toggles whether players trusted to a locked container can break the container, set to false by default meaning only the owner can break a locked container.
+`canTrustedPlayersBreakChests`: Toggles whether players trusted to a locked container can break the container
+(set to false by default meaning only the owner can break a locked container).
 
 `defaultFlags`:
     - `hoppers`: Toggles whether hoppers can pull from locked containers by default, true by default meaning hoppers can pull from locked containers.
-`autolockingContainers`: List of containers which will be set to PRIVATE by default, remove or comment out items in the list to make them set to public by default.
+`autolockingContainers`: List of containers which will be set to PRIVATE by default
+(remove or comment out items in the list to make them set to public by default).
 
 ### Additional permissions
 
