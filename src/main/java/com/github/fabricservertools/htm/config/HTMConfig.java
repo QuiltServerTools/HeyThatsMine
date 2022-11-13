@@ -22,6 +22,8 @@ public class HTMConfig {
             .setPrettyPrinting()
             .create();
 
+    public boolean canTrustedPlayersBreakChests = false;
+
     public final Map<String, Boolean> defaultFlags = new HashMap<>();
 
     public final ArrayList<Identifier> autolockingContainers = new ArrayList<>(Arrays.asList(
@@ -55,7 +57,6 @@ public class HTMConfig {
     public HTMConfig() {
         defaultFlags.put("hoppers", true);
     }
-
 
     public static HTMConfig loadConfig(File file) {
         HTMConfig config;
