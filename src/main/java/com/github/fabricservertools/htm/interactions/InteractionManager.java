@@ -4,21 +4,26 @@ import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableChestBlock;
 import com.github.fabricservertools.htm.api.LockableObject;
+import com.mojang.authlib.GameProfile;
+import eu.pb4.common.protection.api.ProtectionProvider;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class InteractionManager {
+public class InteractionManager implements ProtectionProvider {
     public static final Object2ObjectMap<ServerPlayerEntity, LockInteraction> pendingActions = new Object2ObjectOpenHashMap<>();
     public static final ObjectSet<UUID> persisting = new ObjectOpenHashSet<>();
     public static final ObjectSet<UUID> noMessage = new ObjectOpenHashSet<>();
@@ -79,5 +84,26 @@ public class InteractionManager {
         } else {
             noMessage.add(player.getUuid());
         }
+    }
+
+    @Override
+    public boolean isProtected(World world, BlockPos pos) {
+        var lock = InteractionManager.getLock((ServerWorld) world, pos);
+        return lock != null && lock.isLocked();
+    }
+
+    @Override
+    public boolean canBreakBlock(World world, BlockPos pos, GameProfile profile, @Nullable PlayerEntity player) {
+        var lock = InteractionManager.getLock((ServerWorld) world, pos);
+        if (lock != null && lock.isLocked()) {
+            return lock.getOwner().equals(profile.getId());
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean isAreaProtected(World world, Box area) {
+        return false;
     }
 }

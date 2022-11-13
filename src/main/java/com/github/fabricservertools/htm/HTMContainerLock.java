@@ -141,6 +141,10 @@ public class HTMContainerLock {
 		return trusted.remove(id);
 	}
 
+	public boolean isTrusted(UUID id) {
+		return trusted.contains(id);
+	}
+
 	public void transfer(UUID id) {
 		owner = id;
 	}

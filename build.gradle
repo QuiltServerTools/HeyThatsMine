@@ -6,6 +6,7 @@ plugins {
 repositories {
     maven { url = "https://maven.nucleoid.xyz/" }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url "https://maven.nucleoid.xyz/" }
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -27,11 +28,11 @@ dependencies {
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
 
-    modImplementation "fr.catcore:server-translations-api:${project.translation_version}"
-    include "fr.catcore:server-translations-api:${project.translation_version}"
+    modImplementation include("fr.catcore:server-translations-api:${project.translation_version}")
 
-    modImplementation 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
-    include 'me.lucko:fabric-permissions-api:0.1-SNAPSHOT'
+    modImplementation include("me.lucko:fabric-permissions-api:0.1-SNAPSHOT")
+
+    modImplementation include("eu.pb4:common-protection-api:1.0.0")
 }
 
 processResources {

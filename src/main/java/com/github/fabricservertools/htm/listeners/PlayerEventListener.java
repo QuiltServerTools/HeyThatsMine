@@ -55,7 +55,7 @@ public class PlayerEventListener {
 
             if (!lock.isLocked()) return true;
 
-            if (lock.isOwner((ServerPlayerEntity) player) || (HTM.config.canTrustedPlayersBreakChests && lock.getTrusted().contains(player.getUuid()))) {
+            if (lock.isOwner((ServerPlayerEntity) player) || (HTM.config.canTrustedPlayersBreakChests && lock.isTrusted(player.getUuid()))) {
                 if (state.getBlock() instanceof LockableChestBlock) {
                     Optional<BlockEntity> unlocked = ((LockableChestBlock) state.getBlock()).getUnlockedPart(state, world, pos);
                     if (unlocked.isPresent()) {

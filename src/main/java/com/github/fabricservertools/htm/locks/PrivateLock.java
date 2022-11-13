@@ -10,7 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class PrivateLock implements Lock {
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
-		if (lock.getTrusted().contains(player.getUuid())) return true;
+		if (lock.isTrusted(player.getUuid())) return true;
 		return Utility.getGlobalTrustState(player.server).isTrusted(lock.getOwner(), player.getUuid());
 	}
 
