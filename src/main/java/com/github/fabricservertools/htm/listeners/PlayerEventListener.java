@@ -14,6 +14,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -21,7 +22,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.Optional;
@@ -89,7 +89,7 @@ public class PlayerEventListener {
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
-                if (HTM.config.autolockingContainers.contains(Registry.BLOCK.getId(state.getBlock()))) {
+                if (HTM.config.autolockingContainers.contains(Registries.BLOCK.getId(state.getBlock()))) {
                     if (InteractionManager.getLock((ServerWorld) world, blockEntity).isLocked())
                         return ActionResult.PASS;
 
