@@ -19,7 +19,7 @@ public abstract class HopperBlockEntityMixin {
 	@Inject(method = "extract(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/Hopper;)Z", at = @At(value = "FIELD", target = "Lnet/minecraft/util/math/Direction;DOWN:Lnet/minecraft/util/math/Direction;", shift = At.Shift.AFTER), cancellable = true)
     private static void extractHTMCheck(World world, Hopper hopper, CallbackInfoReturnable<Boolean> cir) {
         // only checks extraction, so only needs to check block above hopper
-        if (!isBlockContainerHopperable(world, new BlockPos(hopper.getHopperX(), hopper.getHopperY(), hopper.getHopperZ()).offset(Direction.UP)))
+        if (!isBlockContainerHopperable(world, BlockPos.ofFloored(hopper.getHopperX(), hopper.getHopperY(), hopper.getHopperZ()).offset(Direction.UP)))
             cir.setReturnValue(true); // if block is not hopperable, cancel the extract method call
         // otherwise continue the extract method as normal
     }
