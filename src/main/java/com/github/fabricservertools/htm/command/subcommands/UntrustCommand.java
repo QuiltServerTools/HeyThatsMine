@@ -48,14 +48,14 @@ public class UntrustCommand implements SubCommand {
 			for (GameProfile gameProfile : gameProfiles) {
 				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
 				if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
-					source.sendFeedback(Text.translatable("text.htm.untrust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
+					source.sendFeedback(() -> Text.translatable("text.htm.untrust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
 				} else {
-					source.sendFeedback(Text.translatable("text.htm.error.not_trusted", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
+					source.sendFeedback(() -> Text.translatable("text.htm.error.not_trusted", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(gameProfiles, true));
-			source.sendFeedback(Text.translatable("text.htm.select"), false);
+			source.sendFeedback(() -> Text.translatable("text.htm.select"), false);
 		}
 
 		return 1;

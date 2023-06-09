@@ -32,7 +32,7 @@ public class TransferCommand implements SubCommand {
 		GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
 
 		InteractionManager.pendingActions.put(player, new TransferAction(gameProfile));
-		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
+		context.getSource().sendFeedback(() -> Text.translatable("text.htm.select"), false);
 		return 1;
 	}
 }

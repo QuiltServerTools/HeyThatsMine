@@ -40,7 +40,7 @@ public class InteractionManager implements ProtectionProvider {
     }
 
     public static HTMContainerLock getLock(ServerPlayerEntity player, BlockPos pos) {
-        HTMContainerLock lock = getLock(player.getWorld(), pos);
+        HTMContainerLock lock = getLock(player.getServerWorld(), pos);
         if (lock == null) {
             player.sendMessage(Text.translatable("text.htm.error.unlockable"), false);
         }

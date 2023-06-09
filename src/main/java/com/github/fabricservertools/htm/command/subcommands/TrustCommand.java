@@ -64,14 +64,14 @@ public class TrustCommand implements SubCommand {
 				}
 
 				if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
-					source.sendFeedback(Text.translatable("text.htm.trust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
+					source.sendFeedback(() -> Text.translatable("text.htm.trust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
 				} else {
-					source.sendFeedback(Text.translatable("text.htm.error.already_trusted", gameProfile.getName()), false);
+					source.sendFeedback(() -> Text.translatable("text.htm.error.already_trusted", gameProfile.getName()), false);
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(gameProfiles, false));
-			source.sendFeedback(Text.translatable("text.htm.select"), false);
+			source.sendFeedback(() -> Text.translatable("text.htm.select"), false);
 		}
 
 

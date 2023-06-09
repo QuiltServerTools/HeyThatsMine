@@ -27,9 +27,9 @@ public class PersistCommand implements SubCommand {
 
 		InteractionManager.togglePersist(player);
 		if (InteractionManager.persisting.contains(player.getUuid())) {
-			context.getSource().sendFeedback(Text.translatable("text.htm.persist").append(Text.translatable("text.htm.on")), false);
+			context.getSource().sendFeedback(() -> Text.translatable("text.htm.persist").append(Text.translatable("text.htm.on")), false);
 		} else {
-			context.getSource().sendFeedback(Text.translatable("text.htm.persist").append(Text.translatable("text.htm.off")), false);
+			context.getSource().sendFeedback(() -> Text.translatable("text.htm.persist").append(Text.translatable("text.htm.off")), false);
 		}
 		return 1;
 	}
