@@ -19,7 +19,7 @@ public class KeyLock implements Lock {
 			return true;
 
 		ItemStack itemStack = player.getMainHandStack();
-		return itemStack.getItem() == key.getItem() && ItemStack.areNbtEqual(itemStack, key);
+		return ItemStack.canCombine(itemStack, key);
 	}
 
 	@Override

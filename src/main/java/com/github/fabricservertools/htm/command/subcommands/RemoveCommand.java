@@ -27,7 +27,7 @@ public class RemoveCommand implements SubCommand {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
 		InteractionManager.pendingActions.put(player, new RemoveAction());
-		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
+		context.getSource().sendFeedback(() -> Text.translatable("text.htm.select"), false);
 		return 1;
 	}
 }

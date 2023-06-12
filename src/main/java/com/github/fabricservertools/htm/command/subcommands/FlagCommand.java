@@ -38,7 +38,7 @@ public class FlagCommand implements SubCommand {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
 		InteractionManager.pendingActions.put(player, new FlagAction(Optional.empty()));
-		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
+		context.getSource().sendFeedback(() -> Text.translatable("text.htm.select"), false);
 
 		return 1;
 	}
@@ -51,12 +51,12 @@ public class FlagCommand implements SubCommand {
 		try {
 			type = StringArgumentType.getString(context, "type".toLowerCase());
 		} catch (IllegalArgumentException e) {
-			context.getSource().sendFeedback(Text.translatable("text.htm.error.flag_type"), false);
+			context.getSource().sendFeedback(() -> Text.translatable("text.htm.error.flag_type"), false);
 			return -3;
 		}
 
 		InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Pair<>(type, value))));
-		context.getSource().sendFeedback(Text.translatable("text.htm.select"), false);
+		context.getSource().sendFeedback(() -> Text.translatable("text.htm.select"), false);
 		return 1;
 	}
 }
