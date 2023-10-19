@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public abstract class PistonBlockMixin {
 			),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			cancellable = true)
-	private void HTMPistonMoveCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, PistonHandler pistonHandler, Map<BlockPos, BlockState> map, List<BlockPos> list, List<BlockState> list2, int i, BlockPos blockPos2, BlockState blockState) {
+	private void HTMPistonMoveCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, PistonHandler pistonHandler, Map<BlockPos, BlockState> map, List<BlockPos> list, List<BlockState> list2, Iterator var10, BlockPos blockPos2, BlockState blockState) {
 		if (world.isClient) return;
 
 		if (blockState.hasBlockEntity()) {
