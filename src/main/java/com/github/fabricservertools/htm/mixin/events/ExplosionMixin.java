@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Mixin(Explosion.class)
 public abstract class ExplosionMixin {
 	@Mutable
@@ -29,11 +26,10 @@ public abstract class ExplosionMixin {
 
 	@Shadow @Final private float power;
 
-	@Inject(method = "affectWorld", at = @At(value = "NEW", target = "it/unimi/dsi/fastutil/objects/ObjectArrayList"))
+	@Inject(method = "affectWorld", at = @At("HEAD"))
 	private void HTMExplosionProtectionCheck(boolean bl, CallbackInfo ci) {
-		this.affectedBlocks.removeIf(pos -> {
-			return BlockExplodeCallback.EVENT.invoker().explode(this.behavior, (Explosion) (Object) this, this.world, pos, this.world.getBlockState(pos), this.power) != ActionResult.PASS;
-		});
-
+		this.affectedBlocks.removeIf(pos ->
+				BlockExplodeCallback.EVENT.invoker().explode(this.behavior, (Explosion) (Object) this, this.world, pos, this.world.getBlockState(pos), this.power) != ActionResult.PASS
+		);
 	}
 }
