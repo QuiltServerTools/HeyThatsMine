@@ -2,14 +2,12 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.api.Lock;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
@@ -79,13 +77,13 @@ public class HTMContainerLock {
 			type.fromTag(tag.getCompound("TypeData"), registryLookup);
 			owner = tag.getUuid("Owner");
 
-			NbtList trustedTag = tag.getList("Trusted", NbtType.INT_ARRAY);
+			NbtList trustedTag = tag.getList("Trusted", NbtElement.INT_ARRAY_TYPE);
 
 			for (NbtElement value : trustedTag) {
 				trusted.add(NbtHelper.toUuid(value));
 			}
 
-			NbtList flagTags = tag.getList("Flags", NbtType.COMPOUND);
+			NbtList flagTags = tag.getList("Flags", NbtElement.COMPOUND_TYPE);
 			for (NbtElement flagTag : flagTags) {
 				NbtCompound compoundTag = (NbtCompound) flagTag;
 				flags.put(compoundTag.getString("type"), compoundTag.getBoolean("value"));

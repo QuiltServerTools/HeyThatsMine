@@ -4,13 +4,21 @@ import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
+import com.mojang.serialization.Dynamic;
+import net.minecraft.MinecraftVersion;
+import net.minecraft.SharedConstants;
+import net.minecraft.datafixer.Schemas;
+import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 public class KeyLock implements Lock {
+	private static final String ITEM_TAG = "Item";
 	private ItemStack key;
 
 	@Override
@@ -36,12 +44,32 @@ public class KeyLock implements Lock {
 
 	@Override
 	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
-		return (NbtCompound) key.encodeAllowEmpty(registryLookup);
+		NbtCompound saveTag = new NbtCompound();
+		saveTag.putInt(SharedConstants.DATA_VERSION_KEY, MinecraftVersion.CURRENT.getSaveVersion().getId());
+		saveTag.put(ITEM_TAG, key.encodeAllowEmpty(registryLookup));
+		return saveTag;
 	}
 
 	@Override
 	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		key = ItemStack.fromNbtOrEmpty(registryLookup, tag);
+		NbtCompound itemTag;
+		int dataVersion;
+		if (!tag.contains(SharedConstants.DATA_VERSION_KEY, NbtElement.INT_TYPE)) {
+			// 1.20.4 or older, assuming 1.20.4 data version
+			itemTag = tag;
+			dataVersion = 3700;
+			Schemas.getFixer().update(TypeReferences.ITEM_STACK,
+					new Dynamic<>(NbtOps.INSTANCE, tag), 3700,
+					MinecraftVersion.CURRENT.getSaveVersion().getId());
+		} else {
+			dataVersion = tag.getInt(SharedConstants.DATA_VERSION_KEY);
+			itemTag = tag.getCompound(ITEM_TAG);
+		}
+
+		itemTag = (NbtCompound) Schemas.getFixer().update(TypeReferences.ITEM_STACK,
+				new Dynamic<>(NbtOps.INSTANCE, itemTag), dataVersion,
+				MinecraftVersion.CURRENT.getSaveVersion().getId()).cast(NbtOps.INSTANCE);
+		key = ItemStack.fromNbtOrEmpty(registryLookup, itemTag);
 	}
 
 	@Override
