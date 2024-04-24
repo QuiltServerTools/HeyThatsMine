@@ -58,9 +58,6 @@ public class KeyLock implements Lock {
 			// 1.20.4 or older, assuming 1.20.4 data version
 			itemTag = tag;
 			dataVersion = 3700;
-			Schemas.getFixer().update(TypeReferences.ITEM_STACK,
-					new Dynamic<>(NbtOps.INSTANCE, tag), 3700,
-					MinecraftVersion.CURRENT.getSaveVersion().getId());
 		} else {
 			dataVersion = tag.getInt(SharedConstants.DATA_VERSION_KEY);
 			itemTag = tag.getCompound(ITEM_TAG);
