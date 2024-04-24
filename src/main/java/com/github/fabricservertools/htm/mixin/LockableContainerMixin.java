@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,13 +26,14 @@ public abstract class LockableContainerMixin implements LockableObject {
 	}
 
 	@Inject(method = "writeNbt", at = @At("HEAD"))
-	private void toTag(NbtCompound nbt, CallbackInfo ci) {
-		htmContainerLock.toTag(nbt);
+	private void toTag(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
+		htmContainerLock.toTag(nbt, registryLookup);
 	}
 
 	@Inject(method = "readNbt", at = @At("HEAD"))
-	private void fromTag(NbtCompound nbt, CallbackInfo ci) {
-		htmContainerLock.fromTag(nbt);
+	private void fromTag(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup,
+			CallbackInfo ci) {
+		htmContainerLock.fromTag(nbt, registryLookup);
 	}
 
 	@Inject(method = "checkUnlocked(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)

@@ -4,6 +4,7 @@ import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PublicLock implements Lock {
@@ -22,12 +23,12 @@ public class PublicLock implements Lock {
 	}
 
 	@Override
-	public NbtCompound toTag() {
+	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
 		return new NbtCompound();
 	}
 
 	@Override
-	public void fromTag(NbtCompound tag) {
+	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 
 	}
 

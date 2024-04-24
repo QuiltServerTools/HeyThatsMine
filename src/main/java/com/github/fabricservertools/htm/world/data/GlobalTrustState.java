@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.PersistentState;
 
 import java.util.UUID;
@@ -18,7 +19,8 @@ public class GlobalTrustState extends PersistentState {
 		globalTrust = HashMultimap.create();
 	}
 
-	public static GlobalTrustState fromNbt(NbtCompound tag) {
+	public static GlobalTrustState fromNbt(NbtCompound tag,
+			RegistryWrapper.WrapperLookup registryLookup) {
 		GlobalTrustState trustState = new GlobalTrustState();
 		NbtList trustList = tag.getList("GlobalTrusts", NbtType.COMPOUND);
 
@@ -37,7 +39,7 @@ public class GlobalTrustState extends PersistentState {
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag) {
+	public NbtCompound writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		NbtList trustList = new NbtList();
 
 		for (UUID trusterID : globalTrust.keySet()) {

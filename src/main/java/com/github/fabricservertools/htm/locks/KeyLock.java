@@ -6,6 +6,7 @@ import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
@@ -19,7 +20,7 @@ public class KeyLock implements Lock {
 			return true;
 
 		ItemStack itemStack = player.getMainHandStack();
-		return ItemStack.canCombine(itemStack, key);
+		return ItemStack.areItemsAndComponentsEqual(itemStack, key);
 	}
 
 	@Override
@@ -34,15 +35,13 @@ public class KeyLock implements Lock {
 	}
 
 	@Override
-	public NbtCompound toTag() {
-		NbtCompound tag = new NbtCompound();
-		key.writeNbt(tag);
-		return tag;
+	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
+		return (NbtCompound) key.encodeAllowEmpty(registryLookup);
 	}
 
 	@Override
-	public void fromTag(NbtCompound tag) {
-		key = ItemStack.fromNbt(tag);
+	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		key = ItemStack.fromNbtOrEmpty(registryLookup, tag);
 	}
 
 	@Override
