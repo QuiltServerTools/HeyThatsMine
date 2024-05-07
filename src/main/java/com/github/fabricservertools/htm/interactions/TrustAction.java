@@ -26,7 +26,8 @@ public class TrustAction implements LockInteraction {
 			return;
 		}
 
-		if (!lock.isOwner(player)) {
+		// Players and managers can manage trustees.
+		if (!lock.isOwner(player) && !lock.isManager(player.getUuid())) {
 			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
 			return;
 		}

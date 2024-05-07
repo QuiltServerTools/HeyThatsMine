@@ -21,12 +21,14 @@ public class HTMContainerLock {
 	private Lock type;
 	private UUID owner;
 	private HashSet<UUID> trusted;
+	private HashSet<UUID> managers;
 	private Map<String, Boolean> flags;
 
 	public HTMContainerLock() {
 		type = null;
 		owner = null;
 		trusted = new HashSet<>();
+		managers = new HashSet<>();
 		initFlags();
 	}
 
@@ -51,6 +53,12 @@ public class HTMContainerLock {
 			}
 
 			tag.put("Trusted", trustedTag);
+
+			NbtList managersTag = new NbtList();
+			for (UUID uuid : managers) {
+				managersTag.add(NbtHelper.fromUuid(uuid));
+			}
+			tag.put("Managers", managersTag);
 
 			NbtList flagsTag = new NbtList();
 			for (Map.Entry<String, Boolean> entry : flags.entrySet()) {
@@ -82,6 +90,12 @@ public class HTMContainerLock {
 
 			for (NbtElement value : trustedTag) {
 				trusted.add(NbtHelper.toUuid(value));
+			}
+
+			NbtList managersTag = tag.getList("Managers", NbtType.INT_ARRAY);
+
+			for (NbtElement value : managersTag) {
+				managers.add(NbtHelper.toUuid(value));
 			}
 
 			NbtList flagTags = tag.getList("Flags", NbtType.COMPOUND);
@@ -120,6 +134,8 @@ public class HTMContainerLock {
 		return trusted;
 	}
 
+	public HashSet<UUID> getManagers() { return managers; }
+
 	public void setType(Lock type, ServerPlayerEntity owner) {
 		this.type = type;
 		this.owner = owner.getUuid();
@@ -130,6 +146,7 @@ public class HTMContainerLock {
 		type = null;
 		owner = null;
 		trusted = new HashSet<>();
+		managers = new HashSet<>();
 		initFlags();
 	}
 
@@ -144,6 +161,12 @@ public class HTMContainerLock {
 	public boolean isTrusted(UUID id) {
 		return trusted.contains(id);
 	}
+
+	public boolean addManager(UUID id) { return managers.add(id);}
+
+	public boolean removeManager(UUID id) { return managers.remove(id);}
+
+	public boolean isManager(UUID id) { return managers.contains(id); }
 
 	public void transfer(UUID id) {
 		owner = id;
