@@ -33,6 +33,13 @@ public class InfoAction implements LockInteraction {
 		player.sendMessage(Text.translatable("text.htm.type", HTMRegistry.getLockId(lock.getType().getType()).toUpperCase()), false);
 		player.sendMessage(Text.translatable("text.htm.owner", owner.get().getName()), false);
 		if (lock.isOwner(player)) {
+			String managersList = lock.getManagers()
+					.stream()
+					.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
+					.collect(Collectors.joining(", "));
+
+			player.sendMessage(Text.translatable("text.htm.managers", managersList), false);
+
 			String trustedList = lock.getTrusted()
 					.stream()
 					.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
