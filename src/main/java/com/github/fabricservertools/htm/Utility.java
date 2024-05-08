@@ -9,8 +9,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.world.PersistentState;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Utility {
 	public static String getNameFromUUID (UUID uuid, MinecraftServer server) {
@@ -33,5 +36,36 @@ public class Utility {
 		if (!InteractionManager.noMessage.contains(player.getUuid())) {
 			player.sendMessage(message, actionBar);
 		}
+	}
+
+	/**
+	 * Accepts a collection of user ids and renders them as a list of usernames.
+	 * @param userIds The unique collection of user ids.
+	 * @param minecraftServer The Minecraft server to query for names.
+	 * @return A comma-delimited string containing a list of names.
+	 */
+	public static String joinPlayerNames(
+			HashSet<UUID> userIds,
+			MinecraftServer minecraftServer
+	) {
+		return Utility.joinPlayerNames(userIds, minecraftServer, ", ");
+	}
+
+	/**
+	 * Accepts a collection of user ids and renders them as a list of usernames.
+	 * @param userIds The unique collection of user ids.
+	 * @param minecraftServer The Minecraft server to query for names.
+	 * @param delimiter The delimiter to use when separating names.
+	 * @return A string containing a list of names separated by {@code delimiter}.
+	 */
+	public static String joinPlayerNames(
+			HashSet<UUID> userIds,
+			MinecraftServer minecraftServer,
+			String delimiter
+	) {
+		return userIds
+				.stream()
+				.map(uuid -> Utility.getNameFromUUID(uuid, minecraftServer))
+				.collect(Collectors.joining(delimiter));
 	}
 }

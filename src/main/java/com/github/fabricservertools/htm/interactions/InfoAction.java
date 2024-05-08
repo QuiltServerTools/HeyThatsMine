@@ -6,12 +6,15 @@ import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class InfoAction implements LockInteraction {
@@ -33,19 +36,12 @@ public class InfoAction implements LockInteraction {
 		player.sendMessage(Text.translatable("text.htm.type", HTMRegistry.getLockId(lock.getType().getType()).toUpperCase()), false);
 		player.sendMessage(Text.translatable("text.htm.owner", owner.get().getName()), false);
 		if (lock.isOwner(player)) {
-			String managersList = lock.getManagers()
-					.stream()
-					.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
-					.collect(Collectors.joining(", "));
-
+			String managersList = Utility.joinPlayerNames(lock.getManagers(), player.server);
 			player.sendMessage(Text.translatable("text.htm.managers", managersList), false);
 
-			String trustedList = lock.getTrusted()
-					.stream()
-					.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
-					.collect(Collectors.joining(", "));
-
+			String trustedList = Utility.joinPlayerNames(lock.getTrusted(), player.server);
 			player.sendMessage(Text.translatable("text.htm.trusted", trustedList), false);
+
 			lock.getType().onInfo(player, lock);
 		}
 		player.sendMessage(Text.translatable("text.htm.divider"), false);
