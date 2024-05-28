@@ -5,6 +5,7 @@ import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PrivateLock implements Lock {
@@ -25,12 +26,12 @@ public class PrivateLock implements Lock {
 	}
 
 	@Override
-	public NbtCompound toTag() {
+	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
 		return new NbtCompound();
 	}
 
 	@Override
-	public void fromTag(NbtCompound tag) {
+	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 
 	}
 
