@@ -30,5 +30,11 @@
   "text.htm.persist": "§bToggled persist ",
   "text.htm.no_msg": "§bToggled no messages ",
   "text.htm.on": "§a§lOn",
-  "text.htm.off": "§c§lOff"
+  "text.htm.off": "§c§lOff",
+
+  "text.htm.trust_manager": "§bAdded Manager: §a%s",
+  "text.htm.untrust_manager": "§bRemoved Manager: §a%s",
+  "text.htm.error.manager_not_trusted": "§r§a%s §cisn't a manager",
+  "text.htm.error.manager_already_trusted": "§r§a%s §cis already a manager",
+  "text.htm.managers": "§b§lManagers: §r§a%s"
 }
