@@ -1,6 +1,5 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.LockGroup;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
 import com.github.fabricservertools.htm.world.data.LockGroupState;

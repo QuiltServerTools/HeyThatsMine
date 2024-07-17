@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.Group;
+import com.github.fabricservertools.htm.api.ProtectionGroup;
 import com.github.fabricservertools.htm.api.Lock;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -12,22 +12,20 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.*;
 
 public class HTMContainerLock {
-	private final HashSet<UUID> groups;
-
 	private Lock type;
 	private UUID owner;
+	private HashSet<UUID> groups;
 	private HashSet<UUID> trusted;
 	private Map<String, Boolean> flags;
 
 	public HTMContainerLock() {
-		groups = new HashSet<>();
 		type = null;
 		owner = null;
+		groups = new HashSet<>();
 		trusted = new HashSet<>();
 		initFlags();
 	}
@@ -156,14 +154,12 @@ public class HTMContainerLock {
 		return trusted.remove(id);
 	}
 
-	public boolean addGroup(Group group) {
-		// Todo: Check if group exists in group state first!!!
-		return groups.add(group.getId());
+	public boolean addGroup(ProtectionGroup protectionGroup) {
+		return groups.add(protectionGroup.getId());
 	}
 
-	public boolean removeGroup(Group group) {
-		// Todo: Check if group exists in group state first!!!
-		return groups.remove(group.getId());
+	public boolean removeGroup(ProtectionGroup protectionGroup) {
+		return groups.remove(protectionGroup.getId());
 	}
 
 	public boolean isTrusted(UUID id) {

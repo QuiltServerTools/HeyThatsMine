@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.command.suggestors;
 
 import com.github.fabricservertools.htm.Utility;
-import com.github.fabricservertools.htm.api.Group;
+import com.github.fabricservertools.htm.api.ProtectionGroup;
 import com.github.fabricservertools.htm.world.data.LockGroupState;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -10,7 +10,6 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.Optional;
 import java.util.Set;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 public class LockGroupSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
 
     private final boolean suggestManagedGroups;
-    private Set<Group> groupsForOwner;
+    private Set<ProtectionGroup> groupsForOwner;
     private boolean initialized = false;
     private Optional<ServerPlayerEntity> suggestedOwner;
 
@@ -48,9 +47,9 @@ public class LockGroupSuggestionProvider implements SuggestionProvider<ServerCom
         init(context.getSource());
         String current = builder.getRemaining();
 
-        for (Group group : groupsForOwner) {
-            if (group.getName().contains(current)) {
-                builder.suggest(group.getName());
+        for (ProtectionGroup protectionGroup : groupsForOwner) {
+            if (protectionGroup.getName().contains(current)) {
+                builder.suggest(protectionGroup.getName());
             }
         }
 

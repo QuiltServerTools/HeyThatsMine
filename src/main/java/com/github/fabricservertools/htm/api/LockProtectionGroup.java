@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Describes a group which provides permissions globally.
  */
-public class LockGroup implements Group {
+public class LockProtectionGroup implements ProtectionGroup {
     private final UUID id;
     private final UUID owner;
     private final HashSet<UUID> players;
@@ -19,7 +19,7 @@ public class LockGroup implements Group {
      * Creates a new instance of @see LockGroup.
      * @param name The non-unique display name of the group.
      */
-    public LockGroup(String name, ServerPlayerEntity owner) {
+    public LockProtectionGroup(String name, ServerPlayerEntity owner) {
         this.id = UUID.randomUUID();
         this.owner = owner.getUuid();
         this.players = new HashSet<>();
@@ -27,7 +27,7 @@ public class LockGroup implements Group {
         this.name = name;
     }
 
-    public LockGroup(UUID id, UUID owner, HashSet<UUID> players, HashSet<UUID> managers, String name) {
+    public LockProtectionGroup(UUID id, UUID owner, HashSet<UUID> players, HashSet<UUID> managers, String name) {
         this.id = id;
         this.owner = owner;
         this.players = players;
@@ -162,7 +162,7 @@ public class LockGroup implements Group {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof LockGroup lockGroup)) {
+        if (!(o instanceof LockProtectionGroup lockGroup)) {
             return false;
         }
         return Objects.equals(id, lockGroup.id);

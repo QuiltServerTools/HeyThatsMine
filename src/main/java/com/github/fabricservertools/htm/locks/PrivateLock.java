@@ -12,7 +12,7 @@ public class PrivateLock implements Lock {
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
 		if (lock.isTrusted(player.getUuid())) return true;
 
-		if (Utility.getLockGroupState(player.server).isTrusted(lock.getGroups(), player.getUuid())) {
+		if (Utility.getLockGroupState(player.server).isTrusted(lock.getGroupIds(), player.getUuid())) {
 			return true;
 		}
 

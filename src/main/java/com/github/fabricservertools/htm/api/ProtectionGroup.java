@@ -1,14 +1,12 @@
 package com.github.fabricservertools.htm.api;
 
-import net.minecraft.server.network.ServerPlayerEntity;
-
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * Describes a group which is able to be applied to protection and holds users.
  */
-public interface Group {
+public interface ProtectionGroup {
     /**
      * Gets the unique id of this group.
      * @return The group id.

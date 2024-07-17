@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.world.data;
 
-import com.github.fabricservertools.htm.api.Group;
-import com.github.fabricservertools.htm.api.LockGroup;
+import com.github.fabricservertools.htm.api.ProtectionGroup;
+import com.github.fabricservertools.htm.api.LockProtectionGroup;
 import com.google.common.collect.*;
 import net.minecraft.nbt.*;
 import net.minecraft.world.PersistentState;
@@ -15,7 +15,7 @@ import java.util.UUID;
  * Describes a persistent state which stores groups.
  */
 public class LockGroupState extends PersistentState {
-    private final HashMap<UUID, Group> groups;
+    private final HashMap<UUID, ProtectionGroup> groups;
 
     private static final String LockGroups = "LockGroups";
     private static final String LockGroupId = "LockGroupId";
@@ -32,20 +32,20 @@ public class LockGroupState extends PersistentState {
     public NbtCompound writeNbt(NbtCompound nbt) {
         NbtList trustList = new NbtList();
 
-        for (Group group : groups.values()) {
+        for (ProtectionGroup protectionGroup : groups.values()) {
             NbtCompound groupTag = new NbtCompound();
-            groupTag.putUuid(LockGroupId, group.getId());
-            groupTag.putUuid(LockGroupOwner, group.getOwner());
-            groupTag.putString(LockGroupName, group.getName());
+            groupTag.putUuid(LockGroupId, protectionGroup.getId());
+            groupTag.putUuid(LockGroupOwner, protectionGroup.getOwner());
+            groupTag.putString(LockGroupName, protectionGroup.getName());
 
             NbtList trustedUsers = new NbtList();
-            for (UUID userId : group.getMembers()) {
+            for (UUID userId : protectionGroup.getMembers()) {
                 trustedUsers.add(NbtHelper.fromUuid(userId));
             }
             groupTag.put(LockGroupList, trustedUsers);
 
             NbtList managers = new NbtList();
-            for (UUID userId : group.getManagers()) {
+            for (UUID userId : protectionGroup.getManagers()) {
                 managers.add(NbtHelper.fromUuid(userId));
             }
             groupTag.put(LockGroupManagers, managers);
@@ -79,7 +79,7 @@ public class LockGroupState extends PersistentState {
                 managers.add(NbtHelper.toUuid(value));
             }
 
-            lockGroupState.groups.put(groupId, new LockGroup(groupId, ownerId, trusted, managers, groupName));
+            lockGroupState.groups.put(groupId, new LockProtectionGroup(groupId, ownerId, trusted, managers, groupName));
         });
 
         return lockGroupState;
@@ -87,13 +87,13 @@ public class LockGroupState extends PersistentState {
 
     public boolean isTrusted(Set<UUID> groupIds, UUID playerId) {
         return groupIds.stream().anyMatch(it -> {
-            Group group = groups.get(it);
-            if (group == null) {
+            ProtectionGroup protectionGroup = groups.get(it);
+            if (protectionGroup == null) {
                 return false;
             }
 
-            if (group.getMembers().contains(playerId)) return true;
-            if (group.getManagers().contains(playerId)) return true;
+            if (protectionGroup.getMembers().contains(playerId)) return true;
+            if (protectionGroup.getManagers().contains(playerId)) return true;
             return false;
         });
     }
@@ -107,12 +107,12 @@ public class LockGroupState extends PersistentState {
     }
 
     public boolean addToGroup(UUID groupId, UUID trusted) {
-        Group group = groups.get(groupId);
-        if (group == null) {
+        ProtectionGroup protectionGroup = groups.get(groupId);
+        if (protectionGroup == null) {
             return false;
         }
 
-        if (group.addMember(trusted)) {
+        if (protectionGroup.addMember(trusted)) {
             markDirty();
             return true;
         }
@@ -128,26 +128,26 @@ public class LockGroupState extends PersistentState {
         return false;
     }
 
-    public boolean addGroup(Group group) {
-        if (groups.containsKey(group.getId())) {
+    public boolean addGroup(ProtectionGroup protectionGroup) {
+        if (groups.containsKey(protectionGroup.getId())) {
             return false;
         }
 
-        groups.put(group.getId(), group);
+        groups.put(protectionGroup.getId(), protectionGroup);
         markDirty();
         return true;
     }
 
-    public boolean removeGroup(Group group) {
-        if (groups.containsKey(group.getId())) {
-            groups.remove(group.getId());
+    public boolean removeGroup(ProtectionGroup protectionGroup) {
+        if (groups.containsKey(protectionGroup.getId())) {
+            groups.remove(protectionGroup.getId());
             markDirty();
             return true;
         }
         return false;
     }
 
-    public ImmutableMap<UUID, Group> getGroups() {
+    public ImmutableMap<UUID, ProtectionGroup> getGroups() {
         return ImmutableMap.copyOf(groups);
     }
 }
