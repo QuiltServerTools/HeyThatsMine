@@ -27,31 +27,31 @@ public class HTMConfig {
     public final Map<String, Boolean> defaultFlags = new HashMap<>();
 
     public final ArrayList<Identifier> autolockingContainers = new ArrayList<>(Arrays.asList(
-            new Identifier("chest"),
-            new Identifier("trapped_chest"),
-            new Identifier("barrel"),
+            Identifier.of("chest"),
+            Identifier.of("trapped_chest"),
+            Identifier.of("barrel"),
 
-            new Identifier("furnace"),
-            new Identifier("blast_furnace"),
-            new Identifier("smoker"),
+            Identifier.of("furnace"),
+            Identifier.of("blast_furnace"),
+            Identifier.of("smoker"),
 
-            new Identifier("shulker_box"),
-            new Identifier("white_shulker_box"),
-            new Identifier("orange_shulker_box"),
-            new Identifier("magenta_shulker_box"),
-            new Identifier("light_blue_shulker_box"),
-            new Identifier("yellow_shulker_box"),
-            new Identifier("lime_shulker_box"),
-            new Identifier("pink_shulker_box"),
-            new Identifier("gray_shulker_box"),
-            new Identifier("light_gray_shulker_box"),
-            new Identifier("cyan_shulker_box"),
-            new Identifier("purple_shulker_box"),
-            new Identifier("blue_shulker_box"),
-            new Identifier("brown_shulker_box"),
-            new Identifier("green_shulker_box"),
-            new Identifier("red_shulker_box"),
-            new Identifier("black_shulker_box")
+            Identifier.of("shulker_box"),
+            Identifier.of("white_shulker_box"),
+            Identifier.of("orange_shulker_box"),
+            Identifier.of("magenta_shulker_box"),
+            Identifier.of("light_blue_shulker_box"),
+            Identifier.of("yellow_shulker_box"),
+            Identifier.of("lime_shulker_box"),
+            Identifier.of("pink_shulker_box"),
+            Identifier.of("gray_shulker_box"),
+            Identifier.of("light_gray_shulker_box"),
+            Identifier.of("cyan_shulker_box"),
+            Identifier.of("purple_shulker_box"),
+            Identifier.of("blue_shulker_box"),
+            Identifier.of("brown_shulker_box"),
+            Identifier.of("green_shulker_box"),
+            Identifier.of("red_shulker_box"),
+            Identifier.of("black_shulker_box")
     ));
 
     public HTMConfig() {
