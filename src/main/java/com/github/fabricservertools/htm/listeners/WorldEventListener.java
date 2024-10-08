@@ -25,9 +25,7 @@ public class WorldEventListener {
 		EnderDragonBreakBlockCallback.EVENT.register(WorldEventListener::enderDragonBreakBlock);
 	}
 
-	private static ActionResult enderDragonBreakBlock(World world, BlockPos pos, boolean b) {
-		if (world.isClient) return ActionResult.PASS;
-
+	private static ActionResult enderDragonBreakBlock(ServerWorld world, BlockPos pos, boolean b) {
 		BlockState state = world.getBlockState(pos);
 		if (!state.hasBlockEntity()) return ActionResult.PASS;
 
@@ -36,7 +34,7 @@ public class WorldEventListener {
 
 		if (blockEntity instanceof LockableObject) {
 			//noinspection ConstantConditions
-			if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return ActionResult.FAIL;
+			if (InteractionManager.getLock(world, pos).isLocked()) return ActionResult.FAIL;
 		}
 
 		return ActionResult.PASS;
