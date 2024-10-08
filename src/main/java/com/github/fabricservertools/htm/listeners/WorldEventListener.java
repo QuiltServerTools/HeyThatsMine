@@ -57,14 +57,13 @@ public class WorldEventListener {
 		return ActionResult.FAIL;
 	}
 
-	private static ActionResult onBlockExplode(ExplosionBehavior explosionBehavior, Explosion explosion, World world, BlockPos pos, BlockState state, float v) {
-		if (world.isClient) return ActionResult.PASS;
+	private static ActionResult onBlockExplode(ExplosionBehavior explosionBehavior, Explosion explosion, BlockPos pos, BlockState state) {
 		if (!state.hasBlockEntity()) return ActionResult.PASS;
 
-		BlockEntity blockEntity = world.getBlockEntity(pos);
+		BlockEntity blockEntity = explosion.getWorld().getBlockEntity(pos);
 		if (blockEntity instanceof LockableObject) {
 			//noinspection ConstantConditions
-			if (InteractionManager.getLock((ServerWorld) world, pos).isLocked()) return ActionResult.FAIL;
+			if (InteractionManager.getLock(explosion.getWorld(), pos).isLocked()) return ActionResult.FAIL;
 		}
 
 		return ActionResult.PASS;
