@@ -50,6 +50,17 @@ Permission node: `htm.command.trust`
 
 Permission node: `htm.command.trust`
 
+### Managers
+
+Managers are users authorized by the owner of a protected block to manage the protection
+on their behalf. Managers are able to add and remove trusted members, but cannot transfer,
+remove, or change the lock type, nor can they modify flags on the container. Only the owner
+can add or remove managers.
+
+`/htm managers add <player>`: Allows a player to trust or untrust players on behalf of the owner.
+
+`/htm managers remove <player>`: Revokes a player's access to trust or untrust players on behalf of the owner.
+
 ### Remove
 
 `/htm remove`: Removes all protections from a container
