@@ -10,7 +10,7 @@
     "PistonBlockMixin",
     "events.BlockItemMixin",
     "events.EnderDragonEntityMixin",
-    "events.ExplosionMixin",
+    "events.ExplosionImplMixin",
     "events.WorldMixin"
   ],
   "injectors": {

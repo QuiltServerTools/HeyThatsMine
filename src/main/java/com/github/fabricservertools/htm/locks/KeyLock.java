@@ -46,7 +46,7 @@ public class KeyLock implements Lock {
 	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound saveTag = new NbtCompound();
 		saveTag.putInt(SharedConstants.DATA_VERSION_KEY, MinecraftVersion.CURRENT.getSaveVersion().getId());
-		saveTag.put(ITEM_TAG, key.encodeAllowEmpty(registryLookup));
+		saveTag.put(ITEM_TAG, key.toNbtAllowEmpty(registryLookup));
 		return saveTag;
 	}
 

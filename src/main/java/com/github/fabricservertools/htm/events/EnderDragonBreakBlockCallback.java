@@ -2,9 +2,9 @@ package com.github.fabricservertools.htm.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public interface EnderDragonBreakBlockCallback {
 	Event<EnderDragonBreakBlockCallback> EVENT = EventFactory.createArrayBacked(EnderDragonBreakBlockCallback.class,
@@ -20,5 +20,5 @@ public interface EnderDragonBreakBlockCallback {
 				return ActionResult.PASS;
 			});
 
-	ActionResult blockBreak(World world, BlockPos pos, boolean move);
+	ActionResult blockBreak(ServerWorld world, BlockPos pos, boolean move);
 }
