@@ -30,7 +30,7 @@ dependencies {
 
     modImplementation include("xyz.nucleoid:server-translations-api:${project.translation_version}")
 
-    modImplementation include("me.lucko:fabric-permissions-api:0.2-SNAPSHOT")
+    modImplementation include("me.lucko:fabric-permissions-api:${project.permissions_api_version}")
 
     modImplementation include("eu.pb4:common-protection-api:1.0.0")
 }
