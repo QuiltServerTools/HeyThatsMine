@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
+import com.github.fabricservertools.htm.world.data.LockGroupState;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +24,13 @@ public class Utility {
 		return server.getOverworld().getPersistentStateManager().getOrCreate(
                 new PersistentState.Type<>(GlobalTrustState::new, GlobalTrustState::fromNbt, DataFixTypes.LEVEL),
 				"globalTrust");
+	}
+
+	public static LockGroupState getLockGroupState(MinecraftServer server) {
+		return server.getOverworld().getPersistentStateManager().getOrCreate(
+				new PersistentState.Type<>(LockGroupState::new, LockGroupState::fromNbt, DataFixTypes.PLAYER),
+				"lockGroups"
+		);
 	}
 
 	public static void sendMessage(PlayerEntity player, Text message) {

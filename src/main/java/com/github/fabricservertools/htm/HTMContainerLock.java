@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.ProtectionGroup;
 import com.github.fabricservertools.htm.api.Lock;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.NbtCompound;
@@ -11,20 +12,19 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class HTMContainerLock {
 	private Lock type;
 	private UUID owner;
+	private HashSet<UUID> groups;
 	private HashSet<UUID> trusted;
 	private Map<String, Boolean> flags;
 
 	public HTMContainerLock() {
 		type = null;
 		owner = null;
+		groups = new HashSet<>();
 		trusted = new HashSet<>();
 		initFlags();
 	}
@@ -48,8 +48,13 @@ public class HTMContainerLock {
 			for (UUID uuid : trusted) {
 				trustedTag.add(NbtHelper.fromUuid(uuid));
 			}
-
 			tag.put("Trusted", trustedTag);
+
+			NbtList groupsTag = new NbtList();
+			for (UUID groupId : groups) {
+				groupsTag.add(NbtHelper.fromUuid(groupId));
+			}
+			tag.put("Groups", groupsTag);
 
 			NbtList flagsTag = new NbtList();
 			for (Map.Entry<String, Boolean> entry : flags.entrySet()) {
@@ -76,11 +81,15 @@ public class HTMContainerLock {
 			}
 			type.fromTag(tag.getCompound("TypeData"), registryLookup);
 			owner = tag.getUuid("Owner");
-
+      
 			NbtList trustedTag = tag.getList("Trusted", NbtElement.INT_ARRAY_TYPE);
-
 			for (NbtElement value : trustedTag) {
 				trusted.add(NbtHelper.toUuid(value));
+			}
+
+			NbtList groupsTag = tag.getList("Groups", NbtElement.INT_ARRAY_TYPE);
+			for (NbtElement value : groupsTag) {
+				groups.add(NbtHelper.toUuid(value));
 			}
 
 			NbtList flagTags = tag.getList("Flags", NbtElement.COMPOUND_TYPE);
@@ -119,6 +128,10 @@ public class HTMContainerLock {
 		return trusted;
 	}
 
+	public Set<UUID> getGroups() {
+		return groups;
+	}
+
 	public void setType(Lock type, ServerPlayerEntity owner) {
 		this.type = type;
 		this.owner = owner.getUuid();
@@ -138,6 +151,14 @@ public class HTMContainerLock {
 
 	public boolean removeTrust(UUID id) {
 		return trusted.remove(id);
+	}
+
+	public boolean addGroup(ProtectionGroup protectionGroup) {
+		return groups.add(protectionGroup.getId());
+	}
+
+	public boolean removeGroup(ProtectionGroup protectionGroup) {
+		return groups.remove(protectionGroup.getId());
 	}
 
 	public boolean isTrusted(UUID id) {
