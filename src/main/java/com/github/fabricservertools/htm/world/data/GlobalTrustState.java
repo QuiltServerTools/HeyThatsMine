@@ -2,61 +2,40 @@ package com.github.fabricservertools.htm.world.data;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.RegistryWrapper;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.util.Uuids;
 import net.minecraft.world.PersistentState;
+import net.minecraft.world.PersistentStateType;
 
+import java.util.List;
 import java.util.UUID;
 
 public class GlobalTrustState extends PersistentState {
-	private final Multimap<UUID, UUID> globalTrust;
+	private static final Codec<Pair<UUID, List<UUID>>> TRUSTER_CODEC = RecordCodecBuilder.create(instance ->
+			instance.group(
+					Uuids.INT_STREAM_CODEC.fieldOf("Truster").forGetter(Pair::getFirst),
+					Uuids.INT_STREAM_CODEC.listOf().fieldOf("Trusted").forGetter(Pair::getSecond)
+			).apply(instance, Pair::of)
+	);
 
-	public GlobalTrustState() {
-		globalTrust = HashMultimap.create();
-	}
+	public static final Codec<GlobalTrustState> CODEC = RecordCodecBuilder.create(instance ->
+			instance.group(
+					TRUSTER_CODEC.listOf().fieldOf("GlobalTrusts").forGetter(GlobalTrustState::globalTrusts)
+			).apply(instance, GlobalTrustState::new)
+	);
 
-	public static GlobalTrustState fromNbt(NbtCompound tag,
-			RegistryWrapper.WrapperLookup registryLookup) {
-		GlobalTrustState trustState = new GlobalTrustState();
-		NbtList trustList = tag.getList("GlobalTrusts", NbtElement.COMPOUND_TYPE);
+	public static final PersistentStateType<GlobalTrustState> TYPE = new PersistentStateType<>("globalTrust", GlobalTrustState::new, CODEC, null);
 
-		trustList.forEach(tag1 -> {
-			NbtCompound compoundTag = (NbtCompound) tag1;
-			UUID truster = compoundTag.getUuid("Truster");
+	private final Multimap<UUID, UUID> globalTrust = HashMultimap.create();
 
-			NbtList trustedTag = compoundTag.getList("Trusted", NbtElement.INT_ARRAY_TYPE);
+	private GlobalTrustState() {}
 
-			for (NbtElement value : trustedTag) {
-				trustState.globalTrust.put(truster, NbtHelper.toUuid(value));
-			}
-		});
-
-		return trustState;
-	}
-
-	@Override
-	public NbtCompound writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		NbtList trustList = new NbtList();
-
-		for (UUID trusterID : globalTrust.keySet()) {
-			NbtCompound trustTag = new NbtCompound();
-			trustTag.putUuid("Truster", trusterID);
-
-			NbtList trustedTag = new NbtList();
-			for (UUID trustedID : globalTrust.get(trusterID)) {
-				trustedTag.add(NbtHelper.fromUuid(trustedID));
-			}
-
-			trustTag.put("Trusted", trustedTag);
-
-			trustList.add(trustTag);
+	private GlobalTrustState(List<Pair<UUID, List<UUID>>> globalTrusts) {
+		for (Pair<UUID, List<UUID>> truster : globalTrusts) {
+			globalTrust.putAll(truster.getFirst(), truster.getSecond());
 		}
-
-		tag.put("GlobalTrusts", trustList);
-		return tag;
 	}
 
 	public boolean isTrusted(UUID truster, UUID trusted) {
@@ -75,5 +54,11 @@ public class GlobalTrustState extends PersistentState {
 
 	public Multimap<UUID, UUID> getTrusted() {
 		return globalTrust;
+	}
+
+	private List<Pair<UUID, List<UUID>>> globalTrusts() {
+		return globalTrust.asMap().entrySet().stream()
+				.map(entry -> Pair.of(entry.getKey(), List.copyOf(entry.getValue())))
+				.toList();
 	}
 }
