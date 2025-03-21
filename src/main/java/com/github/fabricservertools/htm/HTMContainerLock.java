@@ -4,12 +4,14 @@ import com.github.fabricservertools.htm.api.Lock;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.Util;
+import net.minecraft.util.Uuids;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,11 +44,11 @@ public class HTMContainerLock {
 		if (type != null) {
 			tag.putString("Type", HTMRegistry.getLockId(type.getType()));
 			tag.put("TypeData", type.toTag(registryLookup));
-			tag.putUuid("Owner", owner);
+			tag.put("Owner", Uuids.INT_STREAM_CODEC, owner);
 
 			NbtList trustedTag = new NbtList();
 			for (UUID uuid : trusted) {
-				trustedTag.add(NbtHelper.fromUuid(uuid));
+				trustedTag.add(Uuids.INT_STREAM_CODEC.encodeStart(NbtOps.INSTANCE, uuid).getOrThrow());
 			}
 
 			tag.put("Trusted", trustedTag);
@@ -68,25 +70,25 @@ public class HTMContainerLock {
 	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		if (tag.contains("Type")) {
 			try {
-				type = HTMRegistry.getLock(tag.getString("Type")).orElseThrow(RuntimeException::new);
+				type = HTMRegistry.getLock(tag.getString("Type", "")).orElseThrow(RuntimeException::new);
 			} catch (Exception e) {
 				HTM.LOGGER.error("Failed to create lock type: " + tag.getString("Type"));
 				type = null;
 				return;
 			}
-			type.fromTag(tag.getCompound("TypeData"), registryLookup);
-			owner = tag.getUuid("Owner");
+			type.fromTag(tag.getCompoundOrEmpty("TypeData"), registryLookup);
+			owner = tag.get("Owner", Uuids.INT_STREAM_CODEC).orElse(Util.NIL_UUID);
 
-			NbtList trustedTag = tag.getList("Trusted", NbtElement.INT_ARRAY_TYPE);
+			NbtList trustedTag = tag.getListOrEmpty("Trusted");
 
 			for (NbtElement value : trustedTag) {
-				trusted.add(NbtHelper.toUuid(value));
+				trusted.add(Uuids.INT_STREAM_CODEC.parse(NbtOps.INSTANCE, value).getOrThrow());
 			}
 
-			NbtList flagTags = tag.getList("Flags", NbtElement.COMPOUND_TYPE);
+			NbtList flagTags = tag.getListOrEmpty("Flags");
 			for (NbtElement flagTag : flagTags) {
 				NbtCompound compoundTag = (NbtCompound) flagTag;
-				flags.put(compoundTag.getString("type"), compoundTag.getBoolean("value"));
+				flags.put(compoundTag.getString("type", ""), compoundTag.getBoolean("value", false));
 			}
 		}
 	}

@@ -11,7 +11,6 @@ import net.minecraft.datafixer.Schemas;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -46,27 +45,23 @@ public class KeyLock implements Lock {
 	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound saveTag = new NbtCompound();
 		saveTag.putInt(SharedConstants.DATA_VERSION_KEY, MinecraftVersion.CURRENT.getSaveVersion().getId());
-		saveTag.put(ITEM_TAG, key.toNbtAllowEmpty(registryLookup));
+		saveTag.put(ITEM_TAG, ItemStack.OPTIONAL_CODEC, key);
 		return saveTag;
 	}
 
 	@Override
 	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		NbtCompound itemTag;
-		int dataVersion;
-		if (!tag.contains(SharedConstants.DATA_VERSION_KEY, NbtElement.INT_TYPE)) {
-			// 1.20.4 or older, assuming 1.20.4 data version
+		NbtCompound itemTag = tag.getCompoundOrEmpty(ITEM_TAG);
+		int dataVersion = tag.getInt(SharedConstants.DATA_VERSION_KEY, 3700);
+		if (dataVersion <= 3700) {
+			// 1.20.4 or older
 			itemTag = tag;
-			dataVersion = 3700;
-		} else {
-			dataVersion = tag.getInt(SharedConstants.DATA_VERSION_KEY);
-			itemTag = tag.getCompound(ITEM_TAG);
 		}
 
 		itemTag = (NbtCompound) Schemas.getFixer().update(TypeReferences.ITEM_STACK,
 				new Dynamic<>(NbtOps.INSTANCE, itemTag), dataVersion,
 				MinecraftVersion.CURRENT.getSaveVersion().getId()).cast(NbtOps.INSTANCE);
-		key = ItemStack.fromNbtOrEmpty(registryLookup, itemTag);
+		key = ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, itemTag).getOrThrow();
 	}
 
 	@Override
