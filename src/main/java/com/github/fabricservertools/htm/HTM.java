@@ -26,7 +26,6 @@ public class HTM implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LockType.init();
-		registerFlags();
 
 		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
 
@@ -35,10 +34,6 @@ public class HTM implements ModInitializer {
 
 		PlayerEventListener.init();
 		WorldEventListener.init();
-	}
-
-	private void registerFlags() {
-		HTMRegistry.registerFlagType("hoppers");
 	}
 
 	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {

@@ -2,39 +2,19 @@ package com.github.fabricservertools.htm.locks;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.Lock;
-import com.github.fabricservertools.htm.api.LockType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
+import com.mojang.serialization.Codec;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PublicLock implements Lock {
+	public static final Codec<PublicLock> CODEC = Codec.unit(PublicLock::new);
+
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
 		return true;
 	}
 
 	@Override
-	public void onLockSet(ServerPlayerEntity player, HTMContainerLock lock) {
+	public Codec<PublicLock> codec() {
+		return CODEC;
 	}
-
-	@Override
-	public void onInfo(ServerPlayerEntity player, HTMContainerLock lock) {
-
-	}
-
-	@Override
-	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
-		return new NbtCompound();
-	}
-
-	@Override
-	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-
-	}
-
-	@Override
-	public LockType<?> getType() {
-		return LockType.PUBLIC_LOCK;
-	}
-
 }

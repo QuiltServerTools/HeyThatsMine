@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockInteraction;
+import com.github.fabricservertools.htm.api.LockableObject;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -16,23 +17,18 @@ public class TransferAction implements LockInteraction {
 	}
 
 	@Override
-	public void execute(ServerPlayerEntity player, World world, BlockPos pos, HTMContainerLock lock) {
-		if (!lock.isLocked()) {
-			player.sendMessage(Text.translatable("text.htm.error.no_lock"), false);
-			return;
-		}
-
+	public void execute(ServerPlayerEntity player, World world, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
 			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
 			return;
 		}
 
-		if (lock.getOwner() == transferPlayer.getId()) {
+		if (lock.owner().equals(transferPlayer.getId())) {
 			player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
 			return;
 		}
 
-		lock.transfer(transferPlayer.getId());
+		object.setLock(lock.transfer(transferPlayer.getId()));
 		player.sendMessage(Text.translatable("text.htm.transfer", transferPlayer.getName()), false);
 	}
 }

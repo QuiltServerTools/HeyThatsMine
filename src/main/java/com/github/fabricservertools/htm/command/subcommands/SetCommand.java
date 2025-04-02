@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.api.Lock;
+import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.command.suggestors.LockTypeSuggestionProvider;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -9,6 +9,7 @@ import com.github.fabricservertools.htm.interactions.SetAction;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.ServerCommandSource;
@@ -33,11 +34,9 @@ public class SetCommand implements SubCommand {
 		Lock type;
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
-		try {
-			type = HTMRegistry.getLock(StringArgumentType.getString(context, "type").toLowerCase()).orElseThrow(RuntimeException::new);
-		} catch (Exception e) {
-			context.getSource().sendFeedback(() -> Text.translatable("text.htm.error.lock_type"), false);
-			return -3;
+		type = LockType.lock(StringArgumentType.getString(context, "type").toLowerCase(), player);
+		if (type == null) {
+			throw new SimpleCommandExceptionType(Text.translatable("text.htm.error.lock_type")).create();
 		}
 
 		InteractionManager.pendingActions.put(player, new SetAction(type));

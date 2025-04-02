@@ -3,27 +3,43 @@ package com.github.fabricservertools.htm.locks;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
-import com.github.fabricservertools.htm.api.LockType;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Decoder;
 import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.MinecraftVersion;
 import net.minecraft.SharedConstants;
 import net.minecraft.datafixer.Schemas;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-public class KeyLock implements Lock {
-	private static final String ITEM_TAG = "Item";
-	private ItemStack key;
+public record KeyLock(ItemStack key) implements Lock {
+	// You're really not supposed to do it like this... but it works
+	private static final Codec<ItemStack> VERSIONED_ITEM_STACK = Codec.INT.dispatch(SharedConstants.DATA_VERSION_KEY,
+			stack -> MinecraftVersion.CURRENT.getSaveVersion().getId(), KeyLock::itemStackCodec);
+
+	public static final Codec<KeyLock> CODEC = VERSIONED_ITEM_STACK.xmap(KeyLock::new, KeyLock::key);
+
+	private static MapCodec<ItemStack> itemStackCodec(int dataVersion) {
+		return Codec.of(ItemStack.OPTIONAL_CODEC,
+                new Decoder<>() {
+                    @Override
+                    public <T> DataResult<Pair<ItemStack, T>> decode(DynamicOps<T> ops, T input) {
+                        Dynamic<T> dynamic = new Dynamic<>(ops, input);
+                        return ItemStack.OPTIONAL_CODEC.decode(Schemas.getFixer().update(TypeReferences.ITEM_STACK, dynamic, dataVersion, MinecraftVersion.CURRENT.getSaveVersion().getId()));
+                    }
+                }).fieldOf("Item");
+	}
 
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
 		if (lock.isTrusted(player.getUuid())) return true;
-		if (Utility.getGlobalTrustState(player.server).isTrusted(lock.getOwner(), player.getUuid()))
+		if (Utility.getGlobalTrustState(player.server).isTrusted(lock.owner(), player.getUuid()))
 			return true;
 
 		ItemStack itemStack = player.getMainHandStack();
@@ -31,9 +47,10 @@ public class KeyLock implements Lock {
 	}
 
 	@Override
-	public void onLockSet(ServerPlayerEntity player, HTMContainerLock lock) {
-		key = player.getMainHandStack().copy();
+	public Lock withOwner(ServerPlayerEntity player) {
+		ItemStack key = player.getMainHandStack().copy();
 		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
+		return new KeyLock(key);
 	}
 
 	@Override
@@ -42,30 +59,7 @@ public class KeyLock implements Lock {
 	}
 
 	@Override
-	public NbtCompound toTag(RegistryWrapper.WrapperLookup registryLookup) {
-		NbtCompound saveTag = new NbtCompound();
-		saveTag.putInt(SharedConstants.DATA_VERSION_KEY, MinecraftVersion.CURRENT.getSaveVersion().getId());
-		saveTag.put(ITEM_TAG, ItemStack.OPTIONAL_CODEC, key);
-		return saveTag;
-	}
-
-	@Override
-	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		NbtCompound itemTag = tag.getCompoundOrEmpty(ITEM_TAG);
-		int dataVersion = tag.getInt(SharedConstants.DATA_VERSION_KEY, 3700);
-		if (dataVersion <= 3700) {
-			// 1.20.4 or older
-			itemTag = tag;
-		}
-
-		itemTag = (NbtCompound) Schemas.getFixer().update(TypeReferences.ITEM_STACK,
-				new Dynamic<>(NbtOps.INSTANCE, itemTag), dataVersion,
-				MinecraftVersion.CURRENT.getSaveVersion().getId()).cast(NbtOps.INSTANCE);
-		key = ItemStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, itemTag).getOrThrow();
-	}
-
-	@Override
-	public LockType<?> getType() {
-		return LockType.KEY_LOCK;
+	public Codec<KeyLock> codec() {
+		return CODEC;
 	}
 }

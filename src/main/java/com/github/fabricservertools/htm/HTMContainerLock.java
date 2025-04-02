@@ -1,101 +1,59 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.Lock;
+import com.github.fabricservertools.htm.api.LockType;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Util;
 import net.minecraft.util.Uuids;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
-public class HTMContainerLock {
-	private Lock type;
-	private UUID owner;
-	private HashSet<UUID> trusted;
-	private Map<String, Boolean> flags;
+public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<FlagType, Boolean> flags) {
+	private static final Codec<Map.Entry<FlagType, Boolean>> FLAG_CODEC = RecordCodecBuilder.create(instance ->
+			instance.group(
+					FlagType.CODEC.fieldOf("type").forGetter(Map.Entry::getKey),
+					Codec.BOOL.fieldOf("value").forGetter(Map.Entry::getValue)
+			).apply(instance, Map::entry)
+	);
+	private static final Codec<Map<FlagType, Boolean>> FLAGS_CODEC = setOf(FLAG_CODEC.listOf()).xmap(set -> Map.ofEntries(set.toArray(new Map.Entry[0])), Map::entrySet);
 
-	public HTMContainerLock() {
-		type = null;
-		owner = null;
-		trusted = new HashSet<>();
-		initFlags();
+	public static final Codec<HTMContainerLock> CODEC = RecordCodecBuilder.create(instance ->
+			instance.group(
+					LockType.CODEC.forGetter(HTMContainerLock::type),
+					Uuids.INT_STREAM_CODEC.fieldOf("Owner").forGetter(HTMContainerLock::owner),
+					setOf(Uuids.INT_STREAM_CODEC.listOf()).fieldOf("Trusted").forGetter(HTMContainerLock::trusted),
+					FLAGS_CODEC.fieldOf("Flags").forGetter(HTMContainerLock::flags)
+			).apply(instance, HTMContainerLock::new)
+	);
+
+	public HTMContainerLock(Lock type, ServerPlayerEntity owner) {
+		this(type, owner.getUuid(), Set.of(), defaultFlags());
 	}
 
-	private void initFlags() {
-		HashMap<String, Boolean> hashMap = new HashMap<>();
-		for (String flagType : HTMRegistry.getFlagTypes()) {
-			hashMap.put(flagType, HTM.config.defaultFlags.getOrDefault(flagType, false));
-		}
-
-		flags = hashMap;
+	private static <T> Codec<Set<T>> setOf(Codec<List<T>> listCodec) {
+		return listCodec.xmap(Set::copyOf, List::copyOf);
 	}
 
-	public void toTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		if (type != null) {
-			tag.putString("Type", HTMRegistry.getLockId(type.getType()));
-			tag.put("TypeData", type.toTag(registryLookup));
-			tag.put("Owner", Uuids.INT_STREAM_CODEC, owner);
-
-			NbtList trustedTag = new NbtList();
-			for (UUID uuid : trusted) {
-				trustedTag.add(Uuids.INT_STREAM_CODEC.encodeStart(NbtOps.INSTANCE, uuid).getOrThrow());
-			}
-
-			tag.put("Trusted", trustedTag);
-
-			NbtList flagsTag = new NbtList();
-			for (Map.Entry<String, Boolean> entry : flags.entrySet()) {
-				NbtCompound flagTag = new NbtCompound();
-				flagTag.putString("type", entry.getKey());
-				flagTag.putBoolean("value", entry.getValue());
-
-				flagsTag.add(flagTag);
-			}
-
-			tag.put("Flags", flagsTag);
+	private static Map<FlagType, Boolean> defaultFlags() {
+		Map<FlagType, Boolean> flags = new HashMap<>();
+		for (FlagType flag : FlagType.values()) {
+			flags.put(flag, HTM.config.defaultFlags.getOrDefault(flag.asString(), false));
 		}
-
-	}
-
-	public void fromTag(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		if (tag.contains("Type")) {
-			try {
-				type = HTMRegistry.getLock(tag.getString("Type", "")).orElseThrow(RuntimeException::new);
-			} catch (Exception e) {
-				HTM.LOGGER.error("Failed to create lock type: " + tag.getString("Type"));
-				type = null;
-				return;
-			}
-			type.fromTag(tag.getCompoundOrEmpty("TypeData"), registryLookup);
-			owner = tag.get("Owner", Uuids.INT_STREAM_CODEC).orElse(Util.NIL_UUID);
-
-			NbtList trustedTag = tag.getListOrEmpty("Trusted");
-
-			for (NbtElement value : trustedTag) {
-				trusted.add(Uuids.INT_STREAM_CODEC.parse(NbtOps.INSTANCE, value).getOrThrow());
-			}
-
-			NbtList flagTags = tag.getListOrEmpty("Flags");
-			for (NbtElement flagTag : flagTags) {
-				NbtCompound compoundTag = (NbtCompound) flagTag;
-				flags.put(compoundTag.getString("type", ""), compoundTag.getBoolean("value", false));
-			}
-		}
+		return Map.copyOf(flags);
 	}
 
 	public boolean canOpen(ServerPlayerEntity player) {
-		if (type == null) return true;
-
 		if (type.canOpen(player, this)) return true;
 
 		if (isOwner(player)) return true;
@@ -105,49 +63,36 @@ public class HTMContainerLock {
 		return false;
 	}
 
-	public Lock getType() {
-		return type;
+	public HTMContainerLock withType(Lock type) {
+		return new HTMContainerLock(type, owner, trusted, flags);
 	}
 
-	public UUID getOwner() {
-		return owner;
+	public HTMContainerLock transfer(UUID id) {
+		return new HTMContainerLock(type, id, trusted, flags);
 	}
 
-	public Map<String, Boolean> getFlags() {
-		return flags;
+	public Optional<HTMContainerLock> withTrusted(UUID id) {
+		Set<UUID> newTrusted = new HashSet<>(trusted);
+		boolean added = newTrusted.add(id);
+		if (added) {
+			return Optional.of(new HTMContainerLock(type, owner, Set.copyOf(newTrusted), flags));
+		}
+		return Optional.empty();
 	}
 
-	public HashSet<UUID> getTrusted() {
-		return trusted;
+	public Optional<HTMContainerLock> withoutTrusted(UUID id) {
+		Set<UUID> newTrusted = new HashSet<>(trusted);
+		boolean removed = newTrusted.remove(id);
+		if (removed) {
+			return Optional.of(new HTMContainerLock(type, owner, Set.copyOf(newTrusted), flags));
+		}
+		return Optional.empty();
 	}
 
-	public void setType(Lock type, ServerPlayerEntity owner) {
-		this.type = type;
-		this.owner = owner.getUuid();
-		type.onLockSet(owner, this);
-	}
-
-	public void remove() {
-		type = null;
-		owner = null;
-		trusted = new HashSet<>();
-		initFlags();
-	}
-
-	public boolean addTrust(UUID id) {
-		return trusted.add(id);
-	}
-
-	public boolean removeTrust(UUID id) {
-		return trusted.remove(id);
-	}
-
-	public boolean isTrusted(UUID id) {
-		return trusted.contains(id);
-	}
-
-	public void transfer(UUID id) {
-		owner = id;
+	public HTMContainerLock withFlag(FlagType flag, boolean value) {
+		Map<FlagType, Boolean> newFlags = new HashMap<>(flags);
+		newFlags.put(flag, value);
+		return new HTMContainerLock(type, owner, trusted, Map.copyOf(newFlags));
 	}
 
 	public boolean isOwner(ServerPlayerEntity player) {
@@ -165,11 +110,11 @@ public class HTMContainerLock {
 		return true;
 	}
 
-	public boolean isLocked() {
-		return owner != null;
+	public boolean isTrusted(UUID id) {
+		return trusted.contains(id);
 	}
 
-	public void setFlag(String flagType, boolean value) {
-		flags.put(flagType, value);
+	public boolean flag(FlagType flag) {
+		return flags.get(flag);
 	}
 }

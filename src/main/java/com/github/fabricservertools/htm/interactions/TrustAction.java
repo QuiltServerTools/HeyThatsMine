@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockInteraction;
+import com.github.fabricservertools.htm.api.LockableObject;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -20,37 +21,28 @@ public class TrustAction implements LockInteraction {
 	}
 
 	@Override
-	public void execute(ServerPlayerEntity player, World world, BlockPos pos, HTMContainerLock lock) {
-		if (!lock.isLocked()) {
-			player.sendMessage(Text.translatable("text.htm.error.no_lock"), false);
-			return;
-		}
-
+	public void execute(ServerPlayerEntity player, World world, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
 			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
 			return;
 		}
 
 		for (GameProfile trustPlayer : trustPlayers) {
-			if (lock.getOwner() == trustPlayer.getId()) {
+			if (lock.owner().equals(trustPlayer.getId())) {
 				player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
 				continue;
 			}
 
 			if (untrust) {
-				//untrust
-				if (lock.removeTrust(trustPlayer.getId())) {
+				lock.withoutTrusted(trustPlayer.getId()).ifPresentOrElse(newLock -> {
 					player.sendMessage(Text.translatable("text.htm.untrust", trustPlayer.getName()), false);
-				} else {
-					player.sendMessage(Text.translatable("text.htm.error.not_trusted", trustPlayer.getName()), false);
-				}
+					object.setLock(newLock);
+				}, () -> player.sendMessage(Text.translatable("text.htm.error.not_trusted", trustPlayer.getName()), false));
 			} else {
-				//trust
-				if (lock.addTrust(trustPlayer.getId())) {
+				lock.withTrusted(trustPlayer.getId()).ifPresentOrElse(newLock -> {
 					player.sendMessage(Text.translatable("text.htm.trust", trustPlayer.getName()), false);
-				} else {
-					player.sendMessage(Text.translatable("text.htm.error.already_trusted", trustPlayer.getName()), false);
-				}
+					object.setLock(newLock);
+				}, () -> player.sendMessage(Text.translatable("text.htm.error.already_trusted", trustPlayer.getName()), false));
 			}
 		}
 	}

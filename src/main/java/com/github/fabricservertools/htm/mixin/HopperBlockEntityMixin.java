@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.mixin;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.Hopper;
@@ -10,9 +11,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Optional;
 
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin {
@@ -25,6 +29,7 @@ public abstract class HopperBlockEntityMixin {
     }
 
 	//TODO optimize better
+    @Unique
     private static boolean isBlockContainerHopperable(World world, BlockPos pos) {
         if (world.isClient) return true;
 
@@ -32,7 +37,7 @@ public abstract class HopperBlockEntityMixin {
         if (blockEntity == null) // no block entity above
             return true;
 
-        HTMContainerLock lock = InteractionManager.getLock((ServerWorld) world, blockEntity);
-        return lock == null || !lock.isLocked() || lock.getFlags().get("hoppers");
+        Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, pos, blockEntity);
+        return lock.map(l -> l.flag(FlagType.HOPPERS)).orElse(true);
     }
 }
