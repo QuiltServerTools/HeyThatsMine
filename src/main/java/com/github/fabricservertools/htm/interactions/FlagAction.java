@@ -54,7 +54,7 @@ public class FlagAction implements LockInteraction {
 			//flag set
 			FlagType flagType = flagSet.get().getLeft();
 			boolean value = flagSet.get().getRight();
-			lock.withFlag(flagType, value);
+			object.setLock(lock.withFlag(flagType, value));
 			player.sendMessage(Text.translatable(
 					"text.htm.set_flag",
 					flagType.asString().toUpperCase(),
