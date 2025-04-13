@@ -1,34 +1,49 @@
 package com.github.fabricservertools.htm.api;
 
-import com.github.fabricservertools.htm.HTMRegistry;
 import com.github.fabricservertools.htm.locks.KeyLock;
 import com.github.fabricservertools.htm.locks.PrivateLock;
 import com.github.fabricservertools.htm.locks.PublicLock;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.server.network.ServerPlayerEntity;
 
-import java.util.function.Supplier;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LockType<T extends Lock> {
-	public static LockType<PrivateLock> PRIVATE_LOCK;
-	public static LockType<PublicLock> PUBLIC_LOCK;
-	public static LockType<KeyLock> KEY_LOCK;
+	private static final BiMap<String, Codec<? extends Lock>> TYPES = HashBiMap.create();
+	private static final Map<String, Lock> INSTANCES = new HashMap<>();
 
-	private final Supplier<T> supplier;
+	public static final MapCodec<Lock> CODEC = Codec.STRING.dispatchMap("Type",
+			LockType::id, type -> TYPES.get(type).fieldOf("TypeData"));
 
-	private static <T extends Lock> LockType<T> register(String id, LockType<T> lockType) {
-		return HTMRegistry.registerLockType(id, lockType);
+	public static String id(Lock lock) {
+		return TYPES.inverse().get(lock.codec());
 	}
 
-	public LockType(Supplier<T> supplier) {
-		this.supplier = supplier;
+	public static Collection<String> types() {
+		return TYPES.keySet();
 	}
 
-	public Lock build() {
-		return supplier.get();
+	public static Lock lock(String id, ServerPlayerEntity owner) {
+		Lock lock = INSTANCES.get(id);
+		if (lock == null) {
+			return null;
+		}
+		return lock.withOwner(owner);
+	}
+
+	private static void register(String id, Codec<? extends Lock> codec, Lock instance) {
+		TYPES.put(id, codec);
+		INSTANCES.put(id, instance);
 	}
 
 	public static void init() {
-		PRIVATE_LOCK = register("private", new LockType<>(PrivateLock::new));
-		PUBLIC_LOCK = register("public", new LockType<>(PublicLock::new));
-		KEY_LOCK = register("key", new LockType<>(KeyLock::new));
+		register("private", PrivateLock.CODEC, new PrivateLock());
+		register("public", PublicLock.CODEC, new PublicLock());
+		register("key", KeyLock.CODEC, new KeyLock(null));
 	}
 }

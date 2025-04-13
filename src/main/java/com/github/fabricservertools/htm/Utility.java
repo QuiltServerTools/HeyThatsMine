@@ -3,11 +3,9 @@ package com.github.fabricservertools.htm;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
-import net.minecraft.world.PersistentState;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -20,9 +18,7 @@ public class Utility {
 	}
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {
-		return server.getOverworld().getPersistentStateManager().getOrCreate(
-                new PersistentState.Type<>(GlobalTrustState::new, GlobalTrustState::fromNbt, DataFixTypes.LEVEL),
-				"globalTrust");
+		return server.getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState.TYPE);
 	}
 
 	public static void sendMessage(PlayerEntity player, Text message) {

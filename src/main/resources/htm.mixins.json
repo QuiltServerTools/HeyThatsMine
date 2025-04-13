@@ -4,7 +4,6 @@
   "package": "com.github.fabricservertools.htm.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "ChestBlockMixin",
     "HopperBlockEntityMixin",
     "LockableContainerMixin",
     "PistonBlockMixin",
