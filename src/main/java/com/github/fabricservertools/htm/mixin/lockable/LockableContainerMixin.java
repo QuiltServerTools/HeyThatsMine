@@ -1,6 +1,5 @@
-package com.github.fabricservertools.htm.mixin;
+package com.github.fabricservertools.htm.mixin.lockable;
 
-import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.block.BlockState;
@@ -32,29 +31,18 @@ public abstract class LockableContainerMixin extends BlockEntity implements Lock
 
 	@Inject(method = "writeData", at = @At("HEAD"))
 	private void toTag(WriteView view, CallbackInfo ci) {
-		view.putNullable("container_lock", HTMContainerLock.CODEC, htmContainerLock);
+		writeLock(view);
 	}
 
 	@Inject(method = "readData", at = @At("HEAD"))
 	private void fromTag(ReadView view, CallbackInfo ci) {
-		view.getOptionalString("Type").ifPresentOrElse(
-				legacy -> {
-					// Legacy, lock data was stored in the root NBT object before 1.21.5
-					// Even Mojang thinks this shouldn't be done anymore and marked the method as deprecated, will probably end up removing this functionality
-					// once this method is removed too
-					view.read(HTMContainerLock.MAP_CODEC).ifPresentOrElse(
-							lock -> htmContainerLock = lock,
-							() -> HTM.LOGGER.warn("Failed to read legacy container lock data!") // Can't really do much here
-					);
-				},
-				() -> view.read("container_lock", HTMContainerLock.CODEC).ifPresent(lock -> htmContainerLock = lock)
-		);
+		readLock(view, lock -> htmContainerLock = lock);
 	}
 
 	@Inject(method = "checkUnlocked(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)
 	private void checkUnlocked(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-		if (htmContainerLock != null) {
-			cir.setReturnValue(htmContainerLock.canOpen((ServerPlayerEntity) player));
+		if (player instanceof ServerPlayerEntity serverPlayer) {
+			canOpen(serverPlayer).ifPresent(cir::setReturnValue);
 		}
 	}
 
