@@ -47,13 +47,6 @@ public record KeyLock(ItemStack key) implements Lock {
 	}
 
 	@Override
-	public Lock withOwner(ServerPlayerEntity player) {
-		ItemStack key = player.getMainHandStack().copy();
-		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
-		return new KeyLock(key);
-	}
-
-	@Override
 	public void onInfo(ServerPlayerEntity player, HTMContainerLock lock) {
 		player.sendMessage(Text.translatable("text.htm.key", key.toHoverableText()), false);
 	}
@@ -61,5 +54,11 @@ public record KeyLock(ItemStack key) implements Lock {
 	@Override
 	public Codec<KeyLock> codec() {
 		return CODEC;
+	}
+
+	public static KeyLock fromMainHandItem(ServerPlayerEntity player) {
+		ItemStack key = player.getMainHandStack().copy();
+		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
+		return new KeyLock(key);
 	}
 }

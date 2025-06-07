@@ -6,7 +6,10 @@ import com.mojang.serialization.Codec;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PublicLock implements Lock {
-	public static final Codec<PublicLock> CODEC = Codec.unit(PublicLock::new);
+	public static final PublicLock INSTANCE = new PublicLock();
+	public static final Codec<PublicLock> CODEC = Codec.unit(INSTANCE);
+
+	private PublicLock() {}
 
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
