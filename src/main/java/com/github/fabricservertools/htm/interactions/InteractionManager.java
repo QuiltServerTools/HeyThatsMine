@@ -14,6 +14,7 @@ import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -85,7 +86,7 @@ public class InteractionManager implements ProtectionProvider {
         }
     };
 
-    public static void execute(ServerPlayerEntity player, World world, BlockPos pos) {
+    public static void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos) {
         LockInteraction action = pendingActions.get(player);
 
         Optional<LockableObject> lockableObject = getLockable(player, pos);
@@ -93,10 +94,10 @@ public class InteractionManager implements ProtectionProvider {
             Optional<HTMContainerLock> containerLock = object.getLock();
             if (action.requiresLock()) {
                 containerLock.ifPresentOrElse(
-                        lock -> action.execute(player, world, pos, object, lock),
+                        lock -> action.execute(server, player, pos, object, lock),
                         () -> player.sendMessage(Text.translatable("text.htm.error.no_lock"), false));
             } else {
-                action.execute(player, world, pos, object, containerLock.orElse(null));
+                action.execute(server, player, pos, object, containerLock.orElse(null));
             }
         }, () -> player.sendMessage(Text.translatable("text.htm.error.unlockable"), false));
 

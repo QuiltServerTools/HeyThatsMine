@@ -22,6 +22,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class TrustCommand implements SubCommand {
+
 	@Override
 	public LiteralCommandNode<ServerCommandSource> build() {
 		return literal("trust")

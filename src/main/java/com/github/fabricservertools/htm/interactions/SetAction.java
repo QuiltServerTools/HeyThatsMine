@@ -5,10 +5,10 @@ import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.api.LockableObject;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class SetAction implements LockInteraction {
 	private final Lock setType;
@@ -18,7 +18,7 @@ public class SetAction implements LockInteraction {
 	}
 
 	@Override
-	public void execute(ServerPlayerEntity player, World world, BlockPos pos, LockableObject object, HTMContainerLock lock) {
+	public void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (lock != null && !lock.isOwner(player)) {
 			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
 			return;
