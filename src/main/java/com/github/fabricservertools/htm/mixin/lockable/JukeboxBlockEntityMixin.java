@@ -5,9 +5,9 @@ import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
+import net.minecraft.block.entity.JukeboxBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SingleStackInventory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -17,17 +17,16 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
-@Mixin(ChiseledBookshelfBlockEntity.class)
-public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity implements Inventory, LockableObject {
+@Mixin(JukeboxBlockEntity.class)
+public abstract class JukeboxBlockEntityMixin extends BlockEntity implements SingleStackInventory.SingleStackBlockEntityInventory, LockableObject {
 
     @Unique
     private HTMContainerLock lock = null;
 
-    public ChiseledBookshelfBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public JukeboxBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -41,11 +40,12 @@ public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity impl
         writeLock(view);
     }
 
-    @Inject(method = "canPlayerUse", at = @At("HEAD"), cancellable = true)
-    public void checkLock(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
         if (player instanceof ServerPlayerEntity serverPlayer && !canOpenUnchecked(serverPlayer)) {
-            cir.setReturnValue(false);
+            return false;
         }
+        return SingleStackBlockEntityInventory.super.canPlayerUse(player);
     }
 
     @Override

@@ -33,6 +33,10 @@ public interface LockableObject {
 		);
 	}
 
+	default boolean canOpenUnchecked(ServerPlayerEntity player) {
+		return canOpen(player).orElse(true);
+	}
+
 	default Optional<Boolean> canOpen(ServerPlayerEntity player) {
 		return getLock().map(lock -> lock.canOpen(player));
 	}
