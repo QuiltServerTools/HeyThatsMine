@@ -8,6 +8,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Uuids;
@@ -61,7 +62,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 		if (isOwner(player)) return true;
 
 		player.sendMessage(Text.translatable("text.htm.locked"), true);
-		player.playSound(SoundEvents.BLOCK_CHEST_LOCKED, 1.0F, 1.0F);
+		player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		return false;
 	}
 

@@ -9,7 +9,6 @@ import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.locks.PrivateLock;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +20,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -30,21 +28,9 @@ import java.util.Optional;
 
 public class PlayerEventListener {
     public static void init() {
-        UseBlockCallback.EVENT.register(PlayerEventListener::onBlockUse);
         PlayerPlaceBlockCallback.EVENT.register(PlayerEventListener::onPlace);
         PlayerBlockBreakEvents.BEFORE.register(PlayerEventListener::onBeforeBreak);
         AttackBlockCallback.EVENT.register(PlayerEventListener::onAttackBlock);
-    }
-
-    private static ActionResult onBlockUse(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
-        if (player instanceof ServerPlayerEntity serverPlayer) {
-            Optional<HTMContainerLock> lock = InteractionManager.getLock(serverPlayer, hitResult.getBlockPos());
-            if (lock.isEmpty() || lock.get().canOpen(serverPlayer)) {
-                return ActionResult.PASS;
-            }
-            return ActionResult.FAIL;
-        }
-        return ActionResult.PASS;
     }
 
     private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {

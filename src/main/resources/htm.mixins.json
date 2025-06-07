@@ -11,8 +11,13 @@
     "events.ExplosionImplMixin",
     "events.WorldMixin",
     "lockable.ChiseledBookshelfBlockEntityMixin",
+    "lockable.ChiseledBookshelfBlockMixin",
     "lockable.DecoratedPotBlockEntityMixin",
+    "lockable.DecoratedPotBlockMixin",
     "lockable.JukeboxBlockEntityMixin",
+    "lockable.JukeboxBlockMixin",
+    "lockable.LecternBlockEntityMixin",
+    "lockable.LecternBlockMixin",
     "lockable.LockableContainerMixin"
   ],
   "injectors": {

@@ -106,6 +106,10 @@ public class InteractionManager implements ProtectionProvider {
         }
     }
 
+    public static boolean canOpen(ServerPlayerEntity player, BlockPos pos) {
+        return getLock(player, pos).map(lock -> lock.canOpen(player)).orElse(true);
+    }
+
     public static Optional<HTMContainerLock> getLock(ServerPlayerEntity player, BlockPos pos) {
         return getLockable(player, pos).flatMap(LockableObject::getLock);
     }
