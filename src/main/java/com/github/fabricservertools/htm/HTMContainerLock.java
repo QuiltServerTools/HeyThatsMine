@@ -4,6 +4,7 @@ import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockType;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -28,7 +29,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	);
 	private static final Codec<Map<FlagType, Boolean>> FLAGS_CODEC = setOf(FLAG_CODEC.listOf()).xmap(set -> Map.ofEntries(set.toArray(new Map.Entry[0])), Map::entrySet);
 
-	public static final Codec<HTMContainerLock> CODEC = RecordCodecBuilder.create(instance ->
+	public static final MapCodec<HTMContainerLock> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
 			instance.group(
 					LockType.CODEC.forGetter(HTMContainerLock::type),
 					Uuids.INT_STREAM_CODEC.fieldOf("Owner").forGetter(HTMContainerLock::owner),
@@ -36,6 +37,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 					FLAGS_CODEC.fieldOf("Flags").forGetter(HTMContainerLock::flags)
 			).apply(instance, HTMContainerLock::new)
 	);
+	public static final Codec<HTMContainerLock> CODEC = MAP_CODEC.codec();
 
 	public HTMContainerLock(Lock type, ServerPlayerEntity owner) {
 		this(type, owner.getUuid(), Set.of(), defaultFlags());
@@ -98,7 +100,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	public boolean isOwner(ServerPlayerEntity player) {
 		if (!owner.equals(player.getUuid())) {
 			if (Permissions.check(player, "htm.admin", 2)) {
-				String name = Utility.getNameFromUUID(owner, player.server);
+				String name = Utility.getNameFromUUID(owner, player.getServer());
 
 				Utility.sendMessage(player, Text.translatable("text.htm.override", name));
 				return true;

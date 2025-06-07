@@ -17,8 +17,7 @@ public class LockType<T extends Lock> {
 	private static final BiMap<String, Codec<? extends Lock>> TYPES = HashBiMap.create();
 	private static final Map<String, Lock> INSTANCES = new HashMap<>();
 
-	public static final MapCodec<Lock> CODEC = Codec.STRING.dispatchMap("Type",
-			LockType::id, type -> TYPES.get(type).fieldOf("TypeData"));
+	public static final MapCodec<Lock> CODEC = Codec.STRING.dispatchMap("Type", LockType::id, type -> TYPES.get(type).fieldOf("TypeData"));
 
 	public static String id(Lock lock) {
 		return TYPES.inverse().get(lock.codec());

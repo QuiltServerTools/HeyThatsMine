@@ -19,7 +19,7 @@ public class InfoAction implements LockInteraction {
 
 	@Override
 	public void execute(ServerPlayerEntity player, World world, BlockPos pos, LockableObject object, HTMContainerLock lock) {
-		Optional<GameProfile> owner = player.server.getUserCache().getByUuid(lock.owner());
+		Optional<GameProfile> owner = player.getServer().getUserCache().getByUuid(lock.owner());
 
 		if (owner.isEmpty()) {
             HTM.LOGGER.error("Can't find lock owner: {}", lock.owner());
@@ -32,7 +32,7 @@ public class InfoAction implements LockInteraction {
 		if (lock.isOwner(player)) {
 			String trustedList = lock.trusted()
 					.stream()
-					.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
+					.map(uuid -> Utility.getNameFromUUID(uuid, player.getServer()))
 					.collect(Collectors.joining(", "));
 
 			player.sendMessage(Text.translatable("text.htm.trusted", trustedList), false);

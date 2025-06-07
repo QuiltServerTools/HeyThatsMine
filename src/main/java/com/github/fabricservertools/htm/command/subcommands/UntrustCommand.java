@@ -42,11 +42,11 @@ public class UntrustCommand implements SubCommand {
 
 	@SuppressWarnings("SameReturnValue")
 	private int untrust(ServerCommandSource source, Collection<GameProfile> gameProfiles, boolean global) throws CommandSyntaxException {
-		ServerPlayerEntity player = source.getPlayer();
+		ServerPlayerEntity player = source.getPlayerOrThrow();
 
 		if (global) {
 			for (GameProfile gameProfile : gameProfiles) {
-				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
+				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
 				if (globalTrustState.removeTrust(player.getUuid(), gameProfile.getId())) {
 					source.sendFeedback(() -> Text.translatable("text.htm.untrust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
 				} else {

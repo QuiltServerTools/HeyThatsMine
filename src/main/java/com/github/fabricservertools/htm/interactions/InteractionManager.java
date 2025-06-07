@@ -110,7 +110,7 @@ public class InteractionManager implements ProtectionProvider {
     }
 
     public static Optional<LockableObject> getLockable(ServerPlayerEntity player, BlockPos pos) {
-        return getLockable(player.getServerWorld(), pos);
+        return getLockable(player.getWorld(), pos);
     }
 
     public static Optional<HTMContainerLock> getLock(ServerWorld world, BlockPos pos) {
