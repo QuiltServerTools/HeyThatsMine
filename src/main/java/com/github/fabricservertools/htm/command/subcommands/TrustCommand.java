@@ -22,6 +22,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class TrustCommand implements SubCommand {
+
 	@Override
 	public LiteralCommandNode<ServerCommandSource> build() {
 		return literal("trust")
@@ -39,12 +40,12 @@ public class TrustCommand implements SubCommand {
 
 	@SuppressWarnings("SameReturnValue")
 	private int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
-		GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
+		ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+		GlobalTrustState globalTrustState = Utility.getGlobalTrustState(context.getSource().getServer());
 
 		String trustedList = globalTrustState.getTrusted().get(player.getUuid())
 				.stream()
-				.map(uuid -> Utility.getNameFromUUID(uuid, player.server))
+				.map(uuid -> Utility.getNameFromUUID(uuid, context.getSource().getServer()))
 				.collect(Collectors.joining(", "));
 
 		player.sendMessage(Text.translatable("text.htm.trusted.global", trustedList), false);
@@ -53,11 +54,11 @@ public class TrustCommand implements SubCommand {
 	}
 
 	private static int trust(ServerCommandSource source, Collection<GameProfile> gameProfiles, boolean global) throws CommandSyntaxException {
-		ServerPlayerEntity player = source.getPlayer();
+		ServerPlayerEntity player = source.getPlayerOrThrow();
 
 		if (global) {
 			for (GameProfile gameProfile : gameProfiles) {
-				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(player.server);
+				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
 				if (player.getUuid().equals(gameProfile.getId())) {
 					player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
 					return -1;

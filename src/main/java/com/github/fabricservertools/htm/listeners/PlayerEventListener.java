@@ -34,13 +34,13 @@ public class PlayerEventListener {
     }
 
     private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
-        if (world.isClient) return ActionResult.PASS;
+        if (player instanceof ServerPlayerEntity serverPlayer) {
+            if (InteractionManager.pendingActions.containsKey(serverPlayer)) {
+                InteractionManager.execute(serverPlayer.getServer(), serverPlayer, pos);
 
-        if (InteractionManager.pendingActions.containsKey((ServerPlayerEntity) player)) {
-            InteractionManager.execute((ServerPlayerEntity) player, world, pos);
-
-            world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock(), null);
-            return ActionResult.SUCCESS;
+                world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock(), null);
+                return ActionResult.SUCCESS;
+            }
         }
 
         return ActionResult.PASS;
@@ -92,7 +92,7 @@ public class PlayerEventListener {
                     if (InteractionManager.getLock((ServerWorld) world, pos, blockEntity).isPresent())
                         return ActionResult.PASS;
 
-                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(new PrivateLock(), (ServerPlayerEntity) playerEntity));
+                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayerEntity) playerEntity));
                     Utility.sendMessage(playerEntity, Text.translatable("text.htm.set", "PRIVATE"));
                 }
             }

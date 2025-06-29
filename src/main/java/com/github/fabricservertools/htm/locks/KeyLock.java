@@ -21,7 +21,7 @@ import net.minecraft.text.Text;
 public record KeyLock(ItemStack key) implements Lock {
 	// You're really not supposed to do it like this... but it works
 	private static final Codec<ItemStack> VERSIONED_ITEM_STACK = Codec.INT.dispatch(SharedConstants.DATA_VERSION_KEY,
-			stack -> MinecraftVersion.CURRENT.getSaveVersion().getId(), KeyLock::itemStackCodec);
+			stack -> MinecraftVersion.CURRENT.dataVersion().id(), KeyLock::itemStackCodec);
 
 	public static final Codec<KeyLock> CODEC = VERSIONED_ITEM_STACK.xmap(KeyLock::new, KeyLock::key);
 
@@ -31,7 +31,7 @@ public record KeyLock(ItemStack key) implements Lock {
                     @Override
                     public <T> DataResult<Pair<ItemStack, T>> decode(DynamicOps<T> ops, T input) {
                         Dynamic<T> dynamic = new Dynamic<>(ops, input);
-                        return ItemStack.OPTIONAL_CODEC.decode(Schemas.getFixer().update(TypeReferences.ITEM_STACK, dynamic, dataVersion, MinecraftVersion.CURRENT.getSaveVersion().getId()));
+                        return ItemStack.OPTIONAL_CODEC.decode(Schemas.getFixer().update(TypeReferences.ITEM_STACK, dynamic, dataVersion, MinecraftVersion.CURRENT.dataVersion().id()));
                     }
                 }).fieldOf("Item");
 	}
@@ -39,18 +39,11 @@ public record KeyLock(ItemStack key) implements Lock {
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
 		if (lock.isTrusted(player.getUuid())) return true;
-		if (Utility.getGlobalTrustState(player.server).isTrusted(lock.owner(), player.getUuid()))
+		if (Utility.getGlobalTrustState(player.getServer()).isTrusted(lock.owner(), player.getUuid()))
 			return true;
 
 		ItemStack itemStack = player.getMainHandStack();
 		return ItemStack.areItemsAndComponentsEqual(itemStack, key);
-	}
-
-	@Override
-	public Lock withOwner(ServerPlayerEntity player) {
-		ItemStack key = player.getMainHandStack().copy();
-		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
-		return new KeyLock(key);
 	}
 
 	@Override
@@ -61,5 +54,11 @@ public record KeyLock(ItemStack key) implements Lock {
 	@Override
 	public Codec<KeyLock> codec() {
 		return CODEC;
+	}
+
+	public static KeyLock fromMainHandItem(ServerPlayerEntity player) {
+		ItemStack key = player.getMainHandStack().copy();
+		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
+		return new KeyLock(key);
 	}
 }
