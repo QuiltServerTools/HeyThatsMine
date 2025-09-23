@@ -1,34 +1,35 @@
 package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 public class TransferAction implements LockInteraction {
-	private final GameProfile transferPlayer;
+	private final PlayerConfigEntry transferPlayer;
 
-	public TransferAction(GameProfile transferPlayer) {
+	public TransferAction(PlayerConfigEntry transferPlayer) {
 		this.transferPlayer = transferPlayer;
 	}
 
 	@Override
 	public void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
-			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
+			player.sendMessage(HTMTexts.NOT_OWNER, false);
 			return;
 		}
 
 		if (lock.owner().equals(transferPlayer.id())) {
-			player.sendMessage(Text.translatable("text.htm.error.trust_self"), false); // TODO
+			player.sendMessage(HTMTexts.CANNOT_TRUST_SELF, false); // TODO
 			return;
 		}
 
 		object.setLock(lock.transfer(transferPlayer.id()));
-		player.sendMessage(Text.translatable("text.htm.transfer", transferPlayer.name()), false);
+		player.sendMessage(HTMTexts.CONTAINER_TRANSFER.apply(transferPlayer.name()), false);
 	}
 }

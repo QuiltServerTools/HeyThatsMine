@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.locks;
 
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.mojang.datafixers.util.Pair;
@@ -16,7 +17,6 @@ import net.minecraft.datafixer.Schemas;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 
 public record KeyLock(ItemStack key) implements Lock {
 	// You're really not supposed to do it like this... but it works
@@ -49,7 +49,7 @@ public record KeyLock(ItemStack key) implements Lock {
 
 	@Override
 	public void onInfo(ServerPlayerEntity player, HTMContainerLock lock) {
-		player.sendMessage(Text.translatable("text.htm.key", key.toHoverableText()), false);
+		player.sendMessage(HTMTexts.CONTAINER_KEY.apply(key.toHoverableText()), false);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public record KeyLock(ItemStack key) implements Lock {
 
 	public static KeyLock fromMainHandItem(ServerPlayerEntity player) {
 		ItemStack key = player.getMainHandStack().copy();
-		player.sendMessage(Text.translatable("text.htm.key_set", key.toHoverableText()), false);
+		player.sendMessage(HTMTexts.CONTAINER_KEY_SET.apply(key.toHoverableText()), false);
 		return new KeyLock(key);
 	}
 }

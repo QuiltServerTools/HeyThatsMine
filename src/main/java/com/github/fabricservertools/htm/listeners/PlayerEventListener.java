@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm.listeners;
 
 import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.github.fabricservertools.htm.events.PlayerPlaceBlockCallback;
@@ -17,7 +18,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -67,11 +67,11 @@ public class PlayerEventListener {
                     }
                 }
 
-                Utility.sendMessage(playerEntity, Text.translatable("text.htm.unlocked"));
+                Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_UNLOCKED);
                 return true;
             }
 
-            Utility.sendMessage(playerEntity, Text.translatable("text.htm.error.not_owner"));
+            Utility.sendMessage(playerEntity, HTMTexts.NOT_OWNER);
             return false;
         }
 
@@ -97,7 +97,7 @@ public class PlayerEventListener {
                     }
 
                     ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayerEntity) playerEntity));
-                    Utility.sendMessage(playerEntity, Text.translatable("text.htm.set", "PRIVATE"));
+                    Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_SET.apply("PRIVATE"));
                 }
             }
         } catch (Exception e) {

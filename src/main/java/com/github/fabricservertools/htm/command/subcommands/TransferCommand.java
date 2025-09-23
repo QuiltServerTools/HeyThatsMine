@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TransferAction;
@@ -9,14 +10,18 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.GameProfileArgumentType;
+import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+
+import java.util.Collection;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class TransferCommand implements SubCommand {
+
 	@Override
 	public LiteralCommandNode<ServerCommandSource> build() {
 		return literal("transfer")
@@ -29,10 +34,14 @@ public class TransferCommand implements SubCommand {
 	@SuppressWarnings("SameReturnValue")
 	private int transfer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
-		GameProfile gameProfile = GameProfileArgumentType.getProfileArgument(context, "target").iterator().next();
+        Collection<PlayerConfigEntry> targets = GameProfileArgumentType.getProfileArgument(context, "target");
 
-		InteractionManager.pendingActions.put(player, new TransferAction(gameProfile));
-		context.getSource().sendFeedback(() -> Text.translatable("text.htm.select"), false);
+        if (targets.size() > 1) {
+            context.getSource().sendError(Text.literal("REPLACE ME WITH A TRANSLATION MESSAGE")); // TODO
+        }
+
+		InteractionManager.pendingActions.put(player, new TransferAction(targets.iterator().next()));
+		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
 		return 1;
 	}
 }

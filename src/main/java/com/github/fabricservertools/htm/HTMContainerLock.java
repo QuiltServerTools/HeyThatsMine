@@ -61,7 +61,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 
 		if (isOwner(player)) return true;
 
-		player.sendMessage(Text.translatable("text.htm.locked"), true);
+		player.sendMessage(HTMTexts.CONTAINER_LOCKED, true);
 		player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		return false;
 	}
@@ -103,7 +103,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 			if (Permissions.check(player, "htm.admin", 2)) {
 				String name = Utility.getNameFromUUID(owner, player.getEntityWorld().getServer());
 
-				Utility.sendMessage(player, Text.translatable("text.htm.override", name));
+				Utility.sendMessage(player, HTMTexts.CONTAINER_OVERRIDE.apply(name));
 				return true;
 			}
 
