@@ -14,7 +14,7 @@ public class Utility {
 	public static String getNameFromUUID (UUID uuid, MinecraftServer server) {
 		Optional<GameProfile> ownerProfile = server.getUserCache().getByUuid(uuid);
 
-		return ownerProfile.isPresent() ? ownerProfile.get().getName() : "unknown";
+		return ownerProfile.isPresent() ? ownerProfile.get().name() : "unknown";
 	}
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {

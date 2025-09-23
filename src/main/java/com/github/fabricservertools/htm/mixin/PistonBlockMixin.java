@@ -24,7 +24,9 @@ public abstract class PistonBlockMixin {
 			at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"),
 			cancellable = true)
 	private void HTMPistonMoveCheck(World world, BlockPos pos, Direction dir, boolean extend, CallbackInfoReturnable<Boolean> cir, @Local BlockState state, @Local(ordinal = 2) BlockPos blockPos) {
-		if (world.isClient) return;
+		if (world.isClient()) {
+            return;
+        }
 
 		if (state.hasBlockEntity()) {
 			Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, blockPos);
@@ -40,7 +42,9 @@ public abstract class PistonBlockMixin {
 			cancellable = true)
 	private void HTMPistonDestroyCheck(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir,
 									   @Local BlockState state, @Local(ordinal = 2) BlockPos blockPos) {
-		if (world.isClient) return;
+		if (world.isClient()) {
+            return;
+        }
 
 		if (state.hasBlockEntity()) {
 			Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, blockPos);

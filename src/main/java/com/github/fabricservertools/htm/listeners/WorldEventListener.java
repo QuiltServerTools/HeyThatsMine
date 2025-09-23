@@ -35,14 +35,19 @@ public class WorldEventListener {
 	}
 
 	private static ActionResult onBlockBreak(World world, BlockPos pos, boolean drop, @Nullable Entity entity) {
-		if (world.isClient) return ActionResult.PASS;
+		if (world.isClient()) {
+            return ActionResult.PASS;
+        }
 
 		Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, pos);
-
-		if (lock.isEmpty()) return ActionResult.PASS;
+		if (lock.isEmpty()) {
+            return ActionResult.PASS;
+        }
 
 		if (entity instanceof ServerPlayerEntity) {
-			if (lock.get().isOwner((ServerPlayerEntity) entity)) return ActionResult.PASS;
+			if (lock.get().isOwner((ServerPlayerEntity) entity)) {
+                return ActionResult.PASS;
+            }
 		}
 
 		return ActionResult.FAIL;

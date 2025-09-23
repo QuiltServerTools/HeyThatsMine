@@ -36,7 +36,7 @@ public class PlayerEventListener {
     private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
         if (player instanceof ServerPlayerEntity serverPlayer) {
             if (InteractionManager.pendingActions.containsKey(serverPlayer)) {
-                InteractionManager.execute(serverPlayer.getServer(), serverPlayer, pos);
+                InteractionManager.execute(serverPlayer.getEntityWorld().getServer(), serverPlayer, pos);
 
                 world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock(), null);
                 return ActionResult.SUCCESS;
@@ -47,13 +47,16 @@ public class PlayerEventListener {
     }
 
     private static boolean onBeforeBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        if (world.isClient) return true;
-        ServerPlayerEntity playerEntity = (ServerPlayerEntity) player;
+        if (world.isClient()) {
+            return true;
+        }
 
+        ServerPlayerEntity playerEntity = (ServerPlayerEntity) player;
         if (blockEntity instanceof LockableObject) {
             Optional<HTMContainerLock> lock = InteractionManager.getLock(playerEntity, pos);
-
-            if (lock.isEmpty()) return true;
+            if (lock.isEmpty()) {
+                return true;
+            }
 
             if (lock.get().isOwner(playerEntity) || (HTM.config.canTrustedPlayersBreakChests && lock.get().canOpen(playerEntity))) {
                 if (state.getBlock() instanceof ChestBlock) {
@@ -65,7 +68,6 @@ public class PlayerEventListener {
                 }
 
                 Utility.sendMessage(playerEntity, Text.translatable("text.htm.unlocked"));
-
                 return true;
             }
 
@@ -83,14 +85,16 @@ public class PlayerEventListener {
             World world = context.getWorld();
             BlockState state = world.getBlockState(pos);
 
-            if (world.isClient) return ActionResult.PASS;
-            if (!state.hasBlockEntity()) return ActionResult.PASS;
+            if (world.isClient() || !state.hasBlockEntity()) {
+                return ActionResult.PASS;
+            }
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
                 if (HTM.config.autolockingContainers.contains(Registries.BLOCK.getId(state.getBlock()))) {
-                    if (InteractionManager.getLock((ServerWorld) world, pos, blockEntity).isPresent())
+                    if (InteractionManager.getLock((ServerWorld) world, pos, blockEntity).isPresent()) {
                         return ActionResult.PASS;
+                    }
 
                     ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayerEntity) playerEntity));
                     Utility.sendMessage(playerEntity, Text.translatable("text.htm.set", "PRIVATE"));

@@ -115,7 +115,7 @@ public class InteractionManager implements ProtectionProvider {
     }
 
     public static Optional<LockableObject> getLockable(ServerPlayerEntity player, BlockPos pos) {
-        return getLockable(player.getWorld(), pos);
+        return getLockable(player.getEntityWorld(), pos);
     }
 
     public static Optional<HTMContainerLock> getLock(ServerWorld world, BlockPos pos) {
@@ -182,7 +182,7 @@ public class InteractionManager implements ProtectionProvider {
     @Override
     public boolean canBreakBlock(World world, BlockPos pos, GameProfile profile, @Nullable PlayerEntity player) {
         var lockable = InteractionManager.getLockable((ServerWorld) world, pos);
-        return lockable.flatMap(LockableObject::getLock).map(htmContainerLock -> htmContainerLock.owner().equals(profile.getId())).orElse(true);
+        return lockable.flatMap(LockableObject::getLock).map(lock -> lock.owner().equals(profile.id())).orElse(true);
     }
 
     @Override

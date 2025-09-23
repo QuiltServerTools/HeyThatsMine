@@ -31,11 +31,14 @@ public abstract class HopperBlockEntityMixin {
 	//TODO optimize better
     @Unique
     private static boolean isBlockContainerHopperable(World world, BlockPos pos) {
-        if (world.isClient) return true;
+        if (world.isClient()) {
+            return true;
+        }
 
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity == null) // no block entity above
+        if (blockEntity == null) { // no block entity above
             return true;
+        }
 
         Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, pos, blockEntity);
         return lock.map(l -> l.flag(FlagType.HOPPERS)).orElse(true);

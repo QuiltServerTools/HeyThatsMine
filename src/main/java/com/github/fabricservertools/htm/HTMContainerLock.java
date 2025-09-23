@@ -101,7 +101,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	public boolean isOwner(ServerPlayerEntity player) {
 		if (!owner.equals(player.getUuid())) {
 			if (Permissions.check(player, "htm.admin", 2)) {
-				String name = Utility.getNameFromUUID(owner, player.getServer());
+				String name = Utility.getNameFromUUID(owner, player.getEntityWorld().getServer());
 
 				Utility.sendMessage(player, Text.translatable("text.htm.override", name));
 				return true;

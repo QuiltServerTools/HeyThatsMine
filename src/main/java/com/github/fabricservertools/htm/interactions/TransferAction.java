@@ -23,12 +23,12 @@ public class TransferAction implements LockInteraction {
 			return;
 		}
 
-		if (lock.owner().equals(transferPlayer.getId())) {
+		if (lock.owner().equals(transferPlayer.id())) {
 			player.sendMessage(Text.translatable("text.htm.error.trust_self"), false); // TODO
 			return;
 		}
 
-		object.setLock(lock.transfer(transferPlayer.getId()));
-		player.sendMessage(Text.translatable("text.htm.transfer", transferPlayer.getName()), false);
+		object.setLock(lock.transfer(transferPlayer.id()));
+		player.sendMessage(Text.translatable("text.htm.transfer", transferPlayer.name()), false);
 	}
 }

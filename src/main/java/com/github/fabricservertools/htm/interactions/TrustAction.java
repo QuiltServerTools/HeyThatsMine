@@ -28,21 +28,21 @@ public class TrustAction implements LockInteraction {
 		}
 
 		for (GameProfile trustPlayer : trustPlayers) {
-			if (lock.owner().equals(trustPlayer.getId())) {
+			if (lock.owner().equals(trustPlayer.id())) {
 				player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
 				continue;
 			}
 
 			if (untrust) {
-				lock.withoutTrusted(trustPlayer.getId()).ifPresentOrElse(newLock -> {
-					player.sendMessage(Text.translatable("text.htm.untrust", trustPlayer.getName()), false);
+				lock.withoutTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
+					player.sendMessage(Text.translatable("text.htm.untrust", trustPlayer.name()), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(Text.translatable("text.htm.error.not_trusted", trustPlayer.getName()), false));
+				}, () -> player.sendMessage(Text.translatable("text.htm.error.not_trusted", trustPlayer.name()), false));
 			} else {
-				lock.withTrusted(trustPlayer.getId()).ifPresentOrElse(newLock -> {
-					player.sendMessage(Text.translatable("text.htm.trust", trustPlayer.getName()), false);
+				lock.withTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
+					player.sendMessage(Text.translatable("text.htm.trust", trustPlayer.name()), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(Text.translatable("text.htm.error.already_trusted", trustPlayer.getName()), false));
+				}, () -> player.sendMessage(Text.translatable("text.htm.error.already_trusted", trustPlayer.name()), false));
 			}
 		}
 	}

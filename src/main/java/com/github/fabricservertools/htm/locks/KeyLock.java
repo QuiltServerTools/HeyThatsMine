@@ -38,9 +38,10 @@ public record KeyLock(ItemStack key) implements Lock {
 
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
-		if (lock.isTrusted(player.getUuid())) return true;
-		if (Utility.getGlobalTrustState(player.getServer()).isTrusted(lock.owner(), player.getUuid()))
-			return true;
+		if (Utility.getGlobalTrustState(player.getEntityWorld().getServer()).isTrusted(lock.owner(), player.getUuid())
+                || lock.isTrusted(player.getUuid())) {
+            return true;
+        }
 
 		ItemStack itemStack = player.getMainHandStack();
 		return ItemStack.areItemsAndComponentsEqual(itemStack, key);
