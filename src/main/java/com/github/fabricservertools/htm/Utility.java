@@ -6,13 +6,20 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.UUID;
 
 public class Utility {
 
-	public static String getNameFromUUID (UUID uuid, MinecraftServer server) {
-        return server.getApiServices().nameToIdCache().getByUuid(uuid).map(PlayerConfigEntry::name).orElse("unknown");
+    public static String getNameFromUUID(UUID uuid, MinecraftServer server) {
+        return server.getApiServices().nameToIdCache().getByUuid(uuid)
+                .map(PlayerConfigEntry::name)
+                .orElse("unknown");
+    }
+
+	public static Text getFormattedNameFromUUID(UUID uuid, MinecraftServer server) {
+        return Text.literal(getNameFromUUID(uuid, server)).formatted(Formatting.WHITE);
 	}
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {

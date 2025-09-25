@@ -10,7 +10,6 @@ import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.Uuids;
 
 import java.util.HashMap;
@@ -101,9 +100,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	public boolean isOwner(ServerPlayerEntity player) {
 		if (!owner.equals(player.getUuid())) {
 			if (Permissions.check(player, "htm.admin", 2)) {
-				String name = Utility.getNameFromUUID(owner, player.getEntityWorld().getServer());
-
-				Utility.sendMessage(player, HTMTexts.CONTAINER_OVERRIDE.apply(name));
+				Utility.sendMessage(player, HTMTexts.CONTAINER_OVERRIDE.apply(Utility.getFormattedNameFromUUID(owner, player.getEntityWorld().getServer())));
 				return true;
 			}
 

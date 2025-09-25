@@ -20,9 +20,10 @@ public final class HTMTexts {
     public static final Text CANNOT_TRUST_SELF = error("error.trust_self");
     public static final TranslatableTextBuilder ALREADY_TRUSTED = errorBuilder("error.already_trusted");
     public static final TranslatableTextBuilder PLAYER_NOT_TRUSTED = errorBuilder("error.not_trusted");
-    
+    public static final Text CONTAINER_LOCKED = error("locked");
+    public static final Text OVERRIDING = error("overriding");
+
     public static final Text CLICK_TO_SELECT = info("select");
-    public static final Text CONTAINER_LOCKED = info("locked");
     public static final Text DIVIDER = info("divider");
     public static final TranslatableTextBuilder CONTAINER_LOCK_TYPE = infoBuilder("type");
     public static final TranslatableTextBuilder CONTAINER_OWNER = infoBuilder("owner");
@@ -30,13 +31,13 @@ public final class HTMTexts {
     public static final TranslatableTextBuilder TRUSTED_GLOBALLY = infoBuilder("trusted.global");
     public static final TranslatableTextBuilder TRUST = infoBuilder("trust");
     public static final TranslatableTextBuilder UNTRUST = infoBuilder("untrust");
-    public static final Text GLOBAL = info("global");
+    public static final Text GLOBAL = info("global").formatted(Formatting.BOLD);
     public static final TranslatableTextBuilder CONTAINER_TRANSFER = infoBuilder("transfer");
     public static final Text CONTAINER_UNLOCKED = info("unlocked");
     public static final TranslatableTextBuilder CONTAINER_KEY = infoBuilder("key");
     public static final TranslatableTextBuilder CONTAINER_SET = infoBuilder("set");
     public static final TranslatableTextBuilder CONTAINER_KEY_SET = infoBuilder("key_set");
-    public static final TranslatableTextBuilder CONTAINER_OVERRIDE = infoBuilder("override");
+    public static final TranslatableTextBuilder CONTAINER_OVERRIDE = infoBuilder("override").andThen(text -> text.append(ScreenTexts.space()).append(OVERRIDING));
     public static final TranslatableTextBuilder CONTAINER_FLAG_SET = infoBuilder("set_flag");
     public static final TranslatableTextBuilder CONTAINER_FLAG = infoBuilder("flag");
     public static final Text ON = translatable("on")
@@ -76,6 +77,10 @@ public final class HTMTexts {
     public interface TranslatableTextBuilder {
 
         MutableText apply(Object... arg);
+
+        default TranslatableTextBuilder andThen(UnaryOperator<MutableText> operator) {
+            return args -> operator.apply(apply(args));
+        }
     }
 
     private HTMTexts() {}

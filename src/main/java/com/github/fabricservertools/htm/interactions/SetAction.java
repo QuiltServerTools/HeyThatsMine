@@ -26,7 +26,7 @@ public class SetAction implements LockInteraction {
 
 		HTMContainerLock newLock = lock != null ? lock.withType(setType) : new HTMContainerLock(setType, player);
 		object.setLock(newLock);
-		player.sendMessage(HTMTexts.CONTAINER_SET.apply(LockType.id(setType).toUpperCase()), false);
+		player.sendMessage(HTMTexts.CONTAINER_SET.apply(LockType.name(setType)), false);
 	}
 
 	@Override

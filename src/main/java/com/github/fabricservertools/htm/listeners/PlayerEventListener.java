@@ -4,6 +4,7 @@ import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
+import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.github.fabricservertools.htm.events.PlayerPlaceBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -97,7 +98,7 @@ public class PlayerEventListener {
                     }
 
                     ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayerEntity) playerEntity));
-                    Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_SET.apply("PRIVATE"));
+                    Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_SET.apply(LockType.name(PrivateLock.INSTANCE)));
                 }
             }
         } catch (Exception e) {

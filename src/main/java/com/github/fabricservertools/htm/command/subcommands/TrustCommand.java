@@ -15,6 +15,8 @@ import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -49,7 +51,7 @@ public class TrustCommand implements SubCommand {
 				.map(uuid -> Utility.getNameFromUUID(uuid, context.getSource().getServer()))
 				.collect(Collectors.joining(", "));
 
-		player.sendMessage(HTMTexts.TRUSTED_GLOBALLY.apply(trustedList), false);
+		player.sendMessage(HTMTexts.TRUSTED_GLOBALLY.apply(Text.literal(trustedList).formatted(Formatting.WHITE)), false);
 
 		return 1;
 	}
@@ -65,10 +67,11 @@ public class TrustCommand implements SubCommand {
 					return -1;
 				}
 
+                Text playerName = Text.literal(target.name()).formatted(Formatting.WHITE);
 				if (globalTrustState.addTrust(player.getUuid(), target.id())) {
-                    source.sendFeedback(() -> HTMTexts.TRUST.apply(target.name()).append(ScreenTexts.SPACE).append(HTMTexts.GLOBAL), false);
+                    source.sendFeedback(() -> HTMTexts.TRUST.apply(playerName).append(ScreenTexts.SPACE).append(HTMTexts.GLOBAL), false);
 				} else {
-					source.sendFeedback(() -> HTMTexts.ALREADY_TRUSTED.apply(target.name()), false);
+					source.sendFeedback(() -> HTMTexts.ALREADY_TRUSTED.apply(playerName), false);
 				}
 			}
 		} else {

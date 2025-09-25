@@ -8,12 +8,15 @@ import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+// TODO to enum?
 public final class LockType {
 	private static final BiMap<String, Codec<? extends Lock>> TYPES = HashBiMap.create();
 	private static final Map<String, Function<ServerPlayerEntity, Lock>> FACTORIES = new HashMap<>();
@@ -26,6 +29,10 @@ public final class LockType {
 	public static String id(Lock lock) {
 		return TYPES.inverse().get(lock.codec());
 	}
+
+    public static Text name(Lock lock) {
+        return Text.literal(id(lock).toUpperCase()).formatted(Formatting.WHITE);
+    }
 
 	public static Collection<String> types() {
 		return TYPES.keySet();

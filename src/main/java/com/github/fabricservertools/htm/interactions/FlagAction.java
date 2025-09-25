@@ -46,7 +46,7 @@ public class FlagAction implements LockInteraction {
 			player.sendMessage(HTMTexts.DIVIDER, false);
 			for (Map.Entry<FlagType, Boolean> entry : lock.flags().entrySet()) {
                 player.sendMessage(HTMTexts.CONTAINER_FLAG.apply(
-                        entry.getKey().asString().toUpperCase(),
+                        entry.getKey().displayName(),
                         Text.literal(entry.getValue().toString().toUpperCase()).formatted(entry.getValue() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
                         false);
 			}
@@ -57,7 +57,7 @@ public class FlagAction implements LockInteraction {
 			boolean value = flagSet.get().getRight();
 			object.setLock(lock.withFlag(flagType, value));
 			player.sendMessage(HTMTexts.CONTAINER_FLAG_SET.apply(
-					flagType.asString().toUpperCase(),
+					flagType.displayName(),
 					Text.literal(String.valueOf(value).toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
                     false);
 		}

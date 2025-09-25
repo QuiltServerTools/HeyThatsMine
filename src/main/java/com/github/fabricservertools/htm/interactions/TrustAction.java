@@ -7,6 +7,8 @@ import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Collection;
@@ -33,16 +35,17 @@ public class TrustAction implements LockInteraction {
 				continue;
 			}
 
+            Text playerName = Text.literal(trustPlayer.name()).formatted(Formatting.WHITE);
 			if (untrust) {
 				lock.withoutTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
-					player.sendMessage(HTMTexts.UNTRUST.apply(trustPlayer.name()), false);
+					player.sendMessage(HTMTexts.UNTRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(HTMTexts.PLAYER_NOT_TRUSTED.apply(trustPlayer.name()), false));
+				}, () -> player.sendMessage(HTMTexts.PLAYER_NOT_TRUSTED.apply(playerName), false));
 			} else {
 				lock.withTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
-					player.sendMessage(HTMTexts.TRUST.apply(trustPlayer.name()), false);
+					player.sendMessage(HTMTexts.TRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(HTMTexts.ALREADY_TRUSTED.apply(trustPlayer.name()), false));
+				}, () -> player.sendMessage(HTMTexts.ALREADY_TRUSTED.apply(playerName), false));
 			}
 		}
 	}

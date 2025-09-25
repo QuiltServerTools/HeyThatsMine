@@ -1,6 +1,8 @@
 package com.github.fabricservertools.htm.api;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.StringIdentifiable;
 
 public enum FlagType implements StringIdentifiable {
@@ -17,6 +19,10 @@ public enum FlagType implements StringIdentifiable {
     @Override
     public String asString() {
         return id;
+    }
+
+    public Text displayName() {
+        return Text.literal(id.toUpperCase()).formatted(Formatting.WHITE);
     }
 
     public static FlagType fromString(String flag) {
