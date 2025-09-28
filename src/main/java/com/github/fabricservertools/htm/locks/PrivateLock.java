@@ -19,7 +19,7 @@ public class PrivateLock implements Lock {
 	}
 
 	@Override
-	public Codec<PrivateLock> codec() {
-		return CODEC;
+	public Type type() {
+		return Type.PRIVATE;
 	}
 }

@@ -17,7 +17,7 @@ public class PublicLock implements Lock {
 	}
 
 	@Override
-	public Codec<PublicLock> codec() {
-		return CODEC;
+	public Type type() {
+		return Type.PUBLIC;
 	}
 }

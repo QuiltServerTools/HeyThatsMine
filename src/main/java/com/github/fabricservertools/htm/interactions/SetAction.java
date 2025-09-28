@@ -4,7 +4,6 @@ import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.api.LockInteraction;
-import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -26,7 +25,7 @@ public class SetAction implements LockInteraction {
 
 		HTMContainerLock newLock = lock != null ? lock.withType(setType) : new HTMContainerLock(setType, player);
 		object.setLock(newLock);
-		player.sendMessage(HTMTexts.CONTAINER_SET.apply(LockType.name(setType)), false);
+		player.sendMessage(HTMTexts.CONTAINER_SET.apply(setType.displayName()), false);
 	}
 
 	@Override

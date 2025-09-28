@@ -5,7 +5,6 @@ import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockInteraction;
-import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerConfigEntry;
@@ -29,7 +28,7 @@ public class InfoAction implements LockInteraction {
 		}
 
 		player.sendMessage(HTMTexts.DIVIDER, false);
-		player.sendMessage(HTMTexts.CONTAINER_LOCK_TYPE.apply(LockType.name(lock.type())), false);
+		player.sendMessage(HTMTexts.CONTAINER_LOCK_TYPE.apply(lock.lockData().displayName()), false);
 		player.sendMessage(HTMTexts.CONTAINER_OWNER.apply(Text.literal(owner.get().name()).formatted(Formatting.WHITE)), false);
 		if (lock.isOwner(player)) {
 			String trustedList = lock.trusted()
@@ -38,7 +37,7 @@ public class InfoAction implements LockInteraction {
 					.collect(Collectors.joining(", "));
 
 			player.sendMessage(HTMTexts.CONTAINER_TRUSTED.apply(Text.literal(trustedList).formatted(Formatting.WHITE)), false);
-			lock.type().onInfo(player, lock);
+			lock.lockData().onInfo(player, lock);
 		}
 		player.sendMessage(HTMTexts.DIVIDER, false);
 	}

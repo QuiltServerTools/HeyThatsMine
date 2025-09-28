@@ -53,8 +53,8 @@ public record KeyLock(ItemStack key) implements Lock {
 	}
 
 	@Override
-	public Codec<KeyLock> codec() {
-		return CODEC;
+	public Type type() {
+		return Type.KEY;
 	}
 
 	public static KeyLock fromMainHandItem(ServerPlayerEntity player) {

@@ -2,7 +2,6 @@ package com.github.fabricservertools.htm.command.subcommands;
 
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.Lock;
-import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.command.suggestors.LockTypeSuggestionProvider;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -31,15 +30,13 @@ public class SetCommand implements SubCommand {
 	}
 
 	private int set(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		Lock type;
-		ServerPlayerEntity player = context.getSource().getPlayer();
-
-		type = LockType.lock(StringArgumentType.getString(context, "type").toLowerCase(), player);
+		Lock.Type type = Lock.Type.fromUiName(StringArgumentType.getString(context, "type"));
 		if (type == null) {
 			throw new SimpleCommandExceptionType(HTMTexts.INVALID_LOCK_TYPE).create();
 		}
 
-		InteractionManager.pendingActions.put(player, new SetAction(type));
+        ServerPlayerEntity player = context.getSource().getPlayer();
+		InteractionManager.pendingActions.put(player, new SetAction(type.create(player)));
 		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
 		return 1;
 	}

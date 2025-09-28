@@ -1,6 +1,5 @@
 package com.github.fabricservertools.htm;
 
-import com.github.fabricservertools.htm.api.LockType;
 import com.github.fabricservertools.htm.command.HTMCommand;
 import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
@@ -25,8 +24,6 @@ public class HTM implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LockType.init();
-
 		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
 
 		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));

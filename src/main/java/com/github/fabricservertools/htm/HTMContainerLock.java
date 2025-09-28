@@ -2,7 +2,6 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.Lock;
-import com.github.fabricservertools.htm.api.LockType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -20,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<FlagType, Boolean> flags) {
+public record HTMContainerLock(Lock lockData, UUID owner, Set<UUID> trusted, Map<FlagType, Boolean> flags) {
 	private static final Codec<Map.Entry<FlagType, Boolean>> FLAG_CODEC = RecordCodecBuilder.create(instance ->
 			instance.group(
 					FlagType.CODEC.fieldOf("type").forGetter(Map.Entry::getKey),
@@ -31,7 +30,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 
 	public static final MapCodec<HTMContainerLock> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
 			instance.group(
-					LockType.CODEC.forGetter(HTMContainerLock::type),
+					Lock.CODEC.forGetter(HTMContainerLock::lockData),
 					Uuids.INT_STREAM_CODEC.fieldOf("Owner").forGetter(HTMContainerLock::owner),
 					setOf(Uuids.INT_STREAM_CODEC.listOf()).fieldOf("Trusted").forGetter(HTMContainerLock::trusted),
 					FLAGS_CODEC.fieldOf("Flags").forGetter(HTMContainerLock::flags)
@@ -56,7 +55,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	}
 
 	public boolean canOpen(ServerPlayerEntity player) {
-		if (type.canOpen(player, this)) return true;
+		if (lockData.canOpen(player, this)) return true;
 
 		if (isOwner(player)) return true;
 
@@ -70,14 +69,14 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	}
 
 	public HTMContainerLock transfer(UUID id) {
-		return new HTMContainerLock(type, id, trusted, flags);
+		return new HTMContainerLock(lockData, id, trusted, flags);
 	}
 
 	public Optional<HTMContainerLock> withTrusted(UUID id) {
 		Set<UUID> newTrusted = new HashSet<>(trusted);
 		boolean added = newTrusted.add(id);
 		if (added) {
-			return Optional.of(new HTMContainerLock(type, owner, Set.copyOf(newTrusted), flags));
+			return Optional.of(new HTMContainerLock(lockData, owner, Set.copyOf(newTrusted), flags));
 		}
 		return Optional.empty();
 	}
@@ -86,7 +85,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 		Set<UUID> newTrusted = new HashSet<>(trusted);
 		boolean removed = newTrusted.remove(id);
 		if (removed) {
-			return Optional.of(new HTMContainerLock(type, owner, Set.copyOf(newTrusted), flags));
+			return Optional.of(new HTMContainerLock(lockData, owner, Set.copyOf(newTrusted), flags));
 		}
 		return Optional.empty();
 	}
@@ -94,7 +93,7 @@ public record HTMContainerLock(Lock type, UUID owner, Set<UUID> trusted, Map<Fla
 	public HTMContainerLock withFlag(FlagType flag, boolean value) {
 		Map<FlagType, Boolean> newFlags = new HashMap<>(flags);
 		newFlags.put(flag, value);
-		return new HTMContainerLock(type, owner, trusted, Map.copyOf(newFlags));
+		return new HTMContainerLock(lockData, owner, trusted, Map.copyOf(newFlags));
 	}
 
 	public boolean isOwner(ServerPlayerEntity player) {
