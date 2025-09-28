@@ -1,12 +1,11 @@
 package com.github.fabricservertools.htm.interactions;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 public class RemoveAction implements LockInteraction {

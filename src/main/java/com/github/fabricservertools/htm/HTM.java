@@ -10,21 +10,17 @@ import com.mojang.brigadier.CommandDispatcher;
 import eu.pb4.common.protection.api.CommonProtection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-
 public class HTM implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("HTM");
-	public static HTMConfig config;
 
 	@Override
 	public void onInitialize() {
-		config = HTMConfig.loadConfig(new File(FabricLoader.getInstance().getConfigDir() + "/htm_config.json"));
+        HTMConfig.load();
 
 		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));
 		CommonProtection.register(Identifier.of("htm", "containers"), new InteractionManager());

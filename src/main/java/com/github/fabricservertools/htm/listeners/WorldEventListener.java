@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.listeners;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.events.BlockExplodeCallback;
 import com.github.fabricservertools.htm.events.EnderDragonBreakBlockCallback;
 import com.github.fabricservertools.htm.events.WorldBreakBlockCallback;

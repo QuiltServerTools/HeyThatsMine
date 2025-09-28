@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.mixin;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;

@@ -1,8 +1,8 @@
-package com.github.fabricservertools.htm.locks;
+package com.github.fabricservertools.htm.lock.type;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.mojang.serialization.Codec;
 import net.minecraft.server.network.ServerPlayerEntity;
 

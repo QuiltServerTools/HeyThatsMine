@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.mixin.lockable;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

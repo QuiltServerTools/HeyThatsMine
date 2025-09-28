@@ -1,13 +1,14 @@
 package com.github.fabricservertools.htm.listeners;
 
 import com.github.fabricservertools.htm.HTM;
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.config.HTMConfig;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.github.fabricservertools.htm.events.PlayerPlaceBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
-import com.github.fabricservertools.htm.locks.PrivateLock;
+import com.github.fabricservertools.htm.lock.type.PrivateLock;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
@@ -15,7 +16,6 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
@@ -58,7 +58,7 @@ public class PlayerEventListener {
                 return true;
             }
 
-            if (lock.get().isOwner(playerEntity) || (HTM.config.canTrustedPlayersBreakChests && lock.get().canOpen(playerEntity))) {
+            if (lock.get().isOwner(playerEntity) || (HTMConfig.get().canTrustedPlayersBreakChests() && lock.get().canOpen(playerEntity))) {
                 if (state.getBlock() instanceof ChestBlock) {
                     Optional<LockableObject> unlocked = InteractionManager.getUnlockedLockable((ServerWorld) world, pos, blockEntity);
                     if (unlocked.isPresent()) {
@@ -91,7 +91,7 @@ public class PlayerEventListener {
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
-                if (HTM.config.autolockingContainers.contains(Registries.BLOCK.getId(state.getBlock()))) {
+                if (HTMConfig.get().isAutoLocking(state.getBlock())) {
                     if (InteractionManager.getLock((ServerWorld) world, pos, blockEntity).isPresent()) {
                         return ActionResult.PASS;
                     }

@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.interactions;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.LockInteraction;
@@ -12,7 +12,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.Map;
 import java.util.Optional;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -44,12 +43,12 @@ public class FlagAction implements LockInteraction {
 		if (flagSet.isEmpty()) {
 			//flag info
 			player.sendMessage(HTMTexts.DIVIDER, false);
-			for (Map.Entry<FlagType, Boolean> entry : lock.flags().entrySet()) {
+            lock.flags().forEach((flag, value) -> {
                 player.sendMessage(HTMTexts.CONTAINER_FLAG.apply(
-                        entry.getKey().displayName(),
-                        Text.literal(entry.getValue().toString().toUpperCase()).formatted(entry.getValue() ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
+                                flag.displayName(),
+                                Text.literal(value.toString().toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
                         false);
-			}
+            });
 			player.sendMessage(HTMTexts.DIVIDER, false);
 		} else {
 			//flag set

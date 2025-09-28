@@ -1,9 +1,9 @@
 package com.github.fabricservertools.htm.api;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
-import com.github.fabricservertools.htm.locks.KeyLock;
-import com.github.fabricservertools.htm.locks.PrivateLock;
-import com.github.fabricservertools.htm.locks.PublicLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.type.KeyLock;
+import com.github.fabricservertools.htm.lock.type.PrivateLock;
+import com.github.fabricservertools.htm.lock.type.PublicLock;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.server.network.ServerPlayerEntity;

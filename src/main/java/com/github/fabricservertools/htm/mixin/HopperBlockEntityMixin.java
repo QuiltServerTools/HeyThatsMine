@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.mixin;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import net.minecraft.block.entity.BlockEntity;

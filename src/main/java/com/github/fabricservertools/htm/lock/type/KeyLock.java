@@ -1,9 +1,9 @@
-package com.github.fabricservertools.htm.locks;
+package com.github.fabricservertools.htm.lock.type;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -11,7 +11,6 @@ import com.mojang.serialization.Decoder;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.MinecraftVersion;
 import net.minecraft.SharedConstants;
 import net.minecraft.datafixer.Schemas;
 import net.minecraft.datafixer.TypeReferences;
@@ -21,7 +20,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public record KeyLock(ItemStack key) implements Lock {
 	// You're really not supposed to do it like this... but it works
 	private static final Codec<ItemStack> VERSIONED_ITEM_STACK = Codec.INT.dispatch(SharedConstants.DATA_VERSION_KEY,
-			stack -> MinecraftVersion.CURRENT.dataVersion().id(), KeyLock::itemStackCodec);
+			stack -> SharedConstants.getGameVersion().dataVersion().id(), KeyLock::itemStackCodec);
 
 	public static final Codec<KeyLock> CODEC = VERSIONED_ITEM_STACK.xmap(KeyLock::new, KeyLock::key);
 
@@ -31,7 +30,7 @@ public record KeyLock(ItemStack key) implements Lock {
                     @Override
                     public <T> DataResult<Pair<ItemStack, T>> decode(DynamicOps<T> ops, T input) {
                         Dynamic<T> dynamic = new Dynamic<>(ops, input);
-                        return ItemStack.OPTIONAL_CODEC.decode(Schemas.getFixer().update(TypeReferences.ITEM_STACK, dynamic, dataVersion, MinecraftVersion.CURRENT.dataVersion().id()));
+                        return ItemStack.OPTIONAL_CODEC.decode(Schemas.getFixer().update(TypeReferences.ITEM_STACK, dynamic, dataVersion, SharedConstants.getGameVersion().dataVersion().id()));
                     }
                 }).fieldOf("Item");
 	}

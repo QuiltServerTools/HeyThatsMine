@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.HTM;
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockInteraction;
