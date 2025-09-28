@@ -6,13 +6,16 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class FlagSet {
-    public static final FlagSet DEFAULT_FLAGS = new FlagSet(Map.of(FlagType.HOPPERS, true));
+    public static final FlagSet DEFAULT_FLAGS = new FlagSet(Arrays.stream(FlagType.values())
+            .collect(Collectors.toMap(Function.identity(), FlagType::defaultValue)));
     public static final FlagSet EMPTY = new FlagSet(Map.of());
 
     private static final Codec<Pair<FlagType, Boolean>> SINGLE_FLAG_CODEC = RecordCodecBuilder.create(instance ->
@@ -44,6 +47,12 @@ public final class FlagSet {
             this.flags = new EnumMap<>(flags);
         }
         this.isBase = isBase;
+
+        if (isBase) {
+            for (FlagType flag : FlagType.values()) {
+                this.flags.putIfAbsent(flag, flag.defaultValue());
+            }
+        }
     }
 
     private FlagSet(EnumMap<FlagType, Boolean> flags) {
@@ -53,7 +62,7 @@ public final class FlagSet {
 
     public boolean get(FlagType flag) {
         Boolean override = flags.get(flag);
-        return override != null ? override : !isBase && HTMConfig.get().defaultFlags().get(flag);
+        return override != null ? override : !isBase ? HTMConfig.get().defaultFlags().get(flag) : flag.defaultValue();
     }
 
     public FlagSet with(FlagType flag, boolean set) {

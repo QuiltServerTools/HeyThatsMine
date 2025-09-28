@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "HopperBlockEntityMixin",
+    "MoveItemsTaskMixin",
     "PistonBlockMixin",
     "events.BlockItemMixin",
     "events.EnderDragonEntityMixin",

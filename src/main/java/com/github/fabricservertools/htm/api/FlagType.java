@@ -6,19 +6,26 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.StringIdentifiable;
 
 public enum FlagType implements StringIdentifiable {
-    HOPPERS("hoppers");
+    HOPPERS("hoppers", true),
+    COPPER_GOLEMS("copper_golems", true);
 
     public static final Codec<FlagType> CODEC = StringIdentifiable.createCodec(FlagType::values);
 
     private final String id;
+    private final boolean defaultValue;
 
-    FlagType(String id) {
+    FlagType(String id, boolean defaultValue) {
         this.id = id;
+        this.defaultValue = defaultValue;
     }
 
     @Override
     public String asString() {
         return id;
+    }
+
+    public boolean defaultValue() {
+        return defaultValue;
     }
 
     public Text displayName() {
