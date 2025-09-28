@@ -32,7 +32,8 @@ public class FlagCommand implements SubCommand {
 				.then(argument("type", StringArgumentType.word())
 						.suggests(new FlagTypeSuggestionProvider())
 						.then(argument("value", BoolArgumentType.bool())
-								.executes(this::flag)))
+								.executes(context -> flag(context, false)))
+                        .executes(context -> flag(context, true)))
 				.build();
 	}
 
@@ -45,10 +46,10 @@ public class FlagCommand implements SubCommand {
 		return 1;
 	}
 
-	private int flag(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+	private int flag(CommandContext<ServerCommandSource> context, boolean unset) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 		FlagType type = FlagType.fromString(StringArgumentType.getString(context, "type"));
-		boolean value = BoolArgumentType.getBool(context, "value");
+		Boolean value = unset ? null : BoolArgumentType.getBool(context, "value");
 
 		if (type == null) {
 			throw new SimpleCommandExceptionType(HTMTexts.INVALID_FLAG_TYPE).create();

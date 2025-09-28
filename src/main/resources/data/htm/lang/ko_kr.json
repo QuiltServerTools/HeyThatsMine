@@ -27,6 +27,7 @@
   "text.htm.override": "%s 의 잠금 설정을",
   "text.htm.overriding": "우회합니다.",
   "text.htm.set_flag": "%s 을 %s 로 변경하였습니다.",
+  "text.htm.reset_flag": "Reset %s to default value of: %s",
   "text.htm.flag": "%s: %s",
   "text.htm.persist": "동일 작업 지속모드",
   "text.htm.no_msg": "메세지 보지 않기",

@@ -101,8 +101,7 @@ public class PlayerEventListener {
                 }
             }
         } catch (Exception e) {
-            HTM.LOGGER.warn("Something went wrong auto locking");
-            e.printStackTrace();
+            HTM.LOGGER.warn("Something went wrong auto locking", e);
         }
 
         return ActionResult.PASS;

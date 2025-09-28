@@ -27,6 +27,7 @@
   "text.htm.override": "Container is van: %s",
   "text.htm.overriding": "Wordt genegeerd",
   "text.htm.set_flag": "%s ingesteld op: %s",
+  "text.htm.reset_flag": "%s gereset naar standaard waarde (%s)",
   "text.htm.flag": "%s: %s",
   "text.htm.persist": "Aanhouden omgeschakeld",
   "text.htm.no_msg": "Stille modus omgeschakeld",

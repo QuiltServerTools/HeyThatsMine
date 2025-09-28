@@ -27,6 +27,7 @@
   "text.htm.override": "Dieser Behälter gehört: %s",
   "text.htm.overriding": "Wird ignoriert",
   "text.htm.set_flag": "%s wurde auf %s gesetzt",
+  "text.htm.reset_flag": "Reset %s to default value of: %s",
   "text.htm.flag": "%s: %s",
   "text.htm.persist": "Langlebig:",
   "text.htm.no_msg": "Toggled no messages",

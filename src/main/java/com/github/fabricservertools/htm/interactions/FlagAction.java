@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm.interactions;
 
+import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.FlagType;
@@ -53,12 +54,23 @@ public class FlagAction implements LockInteraction {
 		} else {
 			//flag set
 			FlagType flagType = flagSet.get().getLeft();
-			boolean value = flagSet.get().getRight();
-			object.setLock(lock.withFlag(flagType, value));
-			player.sendMessage(HTMTexts.CONTAINER_FLAG_SET.apply(
-					flagType.displayName(),
-					Text.literal(String.valueOf(value).toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
+			Boolean value = flagSet.get().getRight();
+
+            HTMTexts.TranslatableTextBuilder feedback;
+            boolean feedbackValue;
+            if (value == null) {
+                object.setLock(lock.withoutFlag(flagType));
+                feedback = HTMTexts.CONTAINER_FLAG_RESET;
+                feedbackValue = HTMConfig.get().defaultFlags().get(flagType);
+            } else {
+                object.setLock(lock.withFlag(flagType, value));
+                feedback = HTMTexts.CONTAINER_FLAG_SET;
+                feedbackValue = value;
+            }
+            player.sendMessage(feedback.apply(
+                            flagType.displayName(),
+                            Text.literal(String.valueOf(feedbackValue).toUpperCase()).formatted(feedbackValue ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
                     false);
-		}
+        }
 	}
 }

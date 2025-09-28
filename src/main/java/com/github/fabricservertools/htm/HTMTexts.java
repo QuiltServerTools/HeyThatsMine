@@ -39,6 +39,7 @@ public final class HTMTexts {
     public static final TranslatableTextBuilder CONTAINER_KEY_SET = infoBuilder("key_set");
     public static final TranslatableTextBuilder CONTAINER_OVERRIDE = infoBuilder("override").andThen(text -> text.append(ScreenTexts.space()).append(OVERRIDING));
     public static final TranslatableTextBuilder CONTAINER_FLAG_SET = infoBuilder("set_flag");
+    public static final TranslatableTextBuilder CONTAINER_FLAG_RESET = infoBuilder("reset_flag");
     public static final TranslatableTextBuilder CONTAINER_FLAG = infoBuilder("flag");
     public static final Text ON = translatable("on")
             .formatted(Formatting.GREEN, Formatting.BOLD);

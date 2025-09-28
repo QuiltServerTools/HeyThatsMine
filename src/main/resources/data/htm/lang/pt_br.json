@@ -27,6 +27,7 @@
   "text.htm.override": "Container pertence a: %s",
   "text.htm.overriding": "Sobrescrevendo",
   "text.htm.set_flag": "Definiu %s para: %s",
+  "text.htm.reset_flag": "Reset %s to default value of: %s",
   "text.htm.flag": "%s: %s",
   "text.htm.persist": "Persistência alternada",
   "text.htm.no_msg": "Mensagens desativadas",

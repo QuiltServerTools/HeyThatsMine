@@ -27,6 +27,7 @@
   "text.htm.override": "Container owned by: %s",
   "text.htm.overriding": "Overriding",
   "text.htm.set_flag": "Set %s to: %s",
+  "text.htm.reset_flag": "Reset %s to default value of: %s",
   "text.htm.flag": "%s: %s",
   "text.htm.persist": "Toggled persist",
   "text.htm.no_msg": "Toggled no messages",

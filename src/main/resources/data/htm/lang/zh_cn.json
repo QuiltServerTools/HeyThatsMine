@@ -27,6 +27,7 @@
   "text.htm.override": "此容器所有者为: %s",
   "text.htm.overriding": "他人转移",
   "text.htm.set_flag": "设置 %s 为: %s",
+  "text.htm.reset_flag": "Reset %s to default value of: %s",
   "text.htm.flag": "%s: %s",
   "text.htm.persist": "持续执行模式",
   "text.htm.no_msg": "无消息模式",
