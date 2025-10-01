@@ -26,7 +26,7 @@ public class TransferAction implements LockInteraction {
 		}
 
 		if (lock.owner().equals(transferPlayer.id())) {
-			player.sendMessage(HTMTexts.CANNOT_TRUST_SELF, false); // TODO
+			player.sendMessage(HTMTexts.CANNOT_TRUST_SELF, false);
 			return;
 		}
 

@@ -4,16 +4,15 @@ import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TransferAction;
-import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 
 import java.util.Collection;
 
@@ -37,7 +36,7 @@ public class TransferCommand implements SubCommand {
         Collection<PlayerConfigEntry> targets = GameProfileArgumentType.getProfileArgument(context, "target");
 
         if (targets.size() > 1) {
-            context.getSource().sendError(Text.literal("REPLACE ME WITH A TRANSLATION MESSAGE")); // TODO
+            throw EntityArgumentType.TOO_MANY_PLAYERS_EXCEPTION.create();
         }
 
 		InteractionManager.pendingActions.put(player, new TransferAction(targets.iterator().next()));
