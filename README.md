@@ -90,16 +90,58 @@ The config file can be found in `<server>/config/htm_config.json`.
 
 `default_flags`:
    
-   - `hoppers`: Toggles whether hoppers can pull from locked containers by default 
+   - `overrides`: Overrides for default flags for containers.
 
-         (is set to true by default, meaning hoppers can pull from locked containers).
-   - `copper_golems`: Toggles whether copper golems can take items from or put items into locked containers by default
+         (a map of blocks or block tags to a map of flag overrides, overrides do not need to contain all flags. Empty by default)
 
-         (is set to true by default, meaning copper golems can take items from or put items into locked contaienrs)
+   - `defaults`: The default flags, applicable to all blocks when no overrides are present. 
+
+       - `hoppers`: Toggles whether hoppers can pull from locked containers by default 
+
+             (is set to true by default, meaning hoppers can pull from locked containers).
+       - `copper_golems`: Toggles whether copper golems can take items from or put items into locked containers by default
+
+             (is set to true by default, meaning copper golems can take items from or put items into locked containers)
 
 `auto_locking_containers`: List of containers which will be set to PRIVATE by default
 
     (add or remove blocks to the list to lock them by default, or not, block tags can also be used).
+
+An example config file, with custom flag overrides for copper golems:
+
+```json
+{
+  "can_trusted_players_break_chests": false,
+  "default_flags": {
+    "overrides": {
+      "chest": {
+        "copper_golems": true
+      },
+      "#copper_chests": {
+        "copper_golems": true
+      }
+    },
+    "default": {
+      "hoppers": true,
+      "copper_golems": false
+    }
+  },
+  "auto_locking_containers": [
+    "minecraft:chest",
+    "minecraft:trapped_chest",
+    "minecraft:barrel",
+    "minecraft:furnace",
+    "minecraft:blast_furnace",
+    "minecraft:smoker",
+    "#minecraft:shulker_boxes",
+    "#minecraft:copper_chests"
+  ]
+}
+```
+
+The file above disables copper golem access to all locked containers except copper chests and normal chests. Flag overrides
+can also be used to only have a specific set of locked containers allow hoppers by default. Flags can always be overridden
+by players on a per-locked container instance basis.
 
 ### Additional permissions
 
