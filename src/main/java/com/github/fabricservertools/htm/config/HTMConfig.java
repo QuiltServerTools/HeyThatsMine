@@ -1,73 +1,61 @@
 package com.github.fabricservertools.htm.config;
 
 import com.github.fabricservertools.htm.HTM;
-import com.github.fabricservertools.htm.lock.FlagSet;
+import com.github.fabricservertools.htm.lock.BlockFlagSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
 
-public record HTMConfig(boolean canTrustedPlayersBreakChests, FlagSet defaultFlags, List<Either<RegistryKey<Block>, TagKey<Block>>> autoLockingContainers) {
+public record HTMConfig(boolean canTrustedPlayersBreakChests, BlockFlagSet defaultFlags, List<SingleBlockSelector> autoLockingContainers) {
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .create();
     private static final Path CONFIG_PATH = Path.of("htm_config.json");
 
-    private static final Codec<Either<RegistryKey<Block>, TagKey<Block>>> AUTO_LOCKING_CODEC = Codec.either(RegistryKey.createCodec(RegistryKeys.BLOCK), TagKey.codec(RegistryKeys.BLOCK));
     public static final Codec<HTMConfig> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.BOOL.fieldOf("can_trusted_players_break_chests").forGetter(HTMConfig::canTrustedPlayersBreakChests),
-                    FlagSet.CONFIG_CODEC.fieldOf("default_flags").forGetter(HTMConfig::defaultFlags),
-                    AUTO_LOCKING_CODEC.listOf().fieldOf("auto_locking_containers").forGetter(HTMConfig::autoLockingContainers)
+                    BlockFlagSet.SAFE_CODEC.fieldOf("default_flags").forGetter(HTMConfig::defaultFlags),
+                    SingleBlockSelector.CODEC.listOf().fieldOf("auto_locking_containers").forGetter(HTMConfig::autoLockingContainers)
             ).apply(instance, HTMConfig::new)
     );
     public static final Codec<HTMConfig> LEGACY_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.BOOL.fieldOf("canTrustedPlayersBreakChests").forGetter(HTMConfig::canTrustedPlayersBreakChests),
-                    FlagSet.CONFIG_CODEC.fieldOf("defaultFlags").forGetter(HTMConfig::defaultFlags),
-                    AUTO_LOCKING_CODEC.listOf().fieldOf("autolockingContainers").forGetter(HTMConfig::autoLockingContainers)
+                    BlockFlagSet.SAFE_CODEC.fieldOf("defaultFlags").forGetter(HTMConfig::defaultFlags),
+                    SingleBlockSelector.CODEC.listOf().fieldOf("autolockingContainers").forGetter(HTMConfig::autoLockingContainers)
             ).apply(instance, HTMConfig::new)
     );
     public static final Codec<HTMConfig> SAFE_CODEC = Codec.withAlternative(CODEC, LEGACY_CODEC);
 
-    private static final List<Either<RegistryKey<Block>, TagKey<Block>>> DEFAULT_AUTO_LOCKING_CONTAINERS = Stream.<Either<Block, TagKey<Block>>>of(
-            Either.left(Blocks.CHEST),
-            Either.left(Blocks.TRAPPED_CHEST),
-            Either.left(Blocks.BARREL),
-            Either.left(Blocks.FURNACE),
-            Either.left(Blocks.BLAST_FURNACE),
-            Either.left(Blocks.SMOKER),
-            Either.right(BlockTags.SHULKER_BOXES),
-            Either.right(BlockTags.COPPER_CHESTS))
-            .map(either -> either.mapLeft(block -> block.getRegistryEntry().registryKey()))
-            .toList();
-    private static final HTMConfig DEFAULT_CONFIG = new HTMConfig(false, FlagSet.DEFAULT_FLAGS, DEFAULT_AUTO_LOCKING_CONTAINERS);
+    private static final List<SingleBlockSelector> DEFAULT_AUTO_LOCKING_CONTAINERS = List.of(
+            new SingleBlockSelector(Blocks.CHEST),
+            new SingleBlockSelector(Blocks.TRAPPED_CHEST),
+            new SingleBlockSelector(Blocks.BARREL),
+            new SingleBlockSelector(Blocks.FURNACE),
+            new SingleBlockSelector(Blocks.BLAST_FURNACE),
+            new SingleBlockSelector(Blocks.SMOKER),
+            new SingleBlockSelector(BlockTags.SHULKER_BOXES),
+            new SingleBlockSelector(BlockTags.COPPER_CHESTS));
+    private static final HTMConfig DEFAULT_CONFIG = new HTMConfig(false, BlockFlagSet.DEFAULT, DEFAULT_AUTO_LOCKING_CONTAINERS);
 
     private static HTMConfig loaded = null;
 
-    public boolean isAutoLocking(Block block) {
-        RegistryEntry<Block> entry = Registries.BLOCK.getEntry(block);
-        RegistryKey<Block> key = entry.getKey().orElseThrow();
-        for (Either<RegistryKey<Block>, TagKey<Block>> container : autoLockingContainers) {
-            if (container.map(key::equals, entry::isIn)) {
+    public boolean isAutoLocking(BlockState block) {
+        for (SingleBlockSelector container : autoLockingContainers) {
+            if (container.is(block)) {
                 return true;
             }
         }

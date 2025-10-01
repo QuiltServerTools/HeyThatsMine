@@ -6,6 +6,7 @@ import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
+import net.minecraft.block.BlockState;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -41,10 +42,11 @@ public class FlagAction implements LockInteraction {
 			return;
 		}
 
+        BlockState state = player.getEntityWorld().getBlockState(pos);
 		if (flagSet.isEmpty()) {
 			//flag info
 			player.sendMessage(HTMTexts.DIVIDER, false);
-            lock.flags().forEach((flag, value) -> {
+            lock.flags().forEach(state, (flag, value) -> {
                 player.sendMessage(HTMTexts.CONTAINER_FLAG.apply(
                                 flag.displayName(),
                                 Text.literal(value.toString().toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
@@ -61,7 +63,7 @@ public class FlagAction implements LockInteraction {
             if (value == null) {
                 object.setLock(lock.withoutFlag(flagType));
                 feedback = HTMTexts.CONTAINER_FLAG_RESET;
-                feedbackValue = HTMConfig.get().defaultFlags().get(flagType);
+                feedbackValue = HTMConfig.get().defaultFlags().get(flagType, state);
             } else {
                 object.setLock(lock.withFlag(flagType, value));
                 feedback = HTMTexts.CONTAINER_FLAG_SET;

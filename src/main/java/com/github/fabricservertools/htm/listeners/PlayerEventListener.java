@@ -91,7 +91,7 @@ public class PlayerEventListener {
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
-                if (HTMConfig.get().isAutoLocking(state.getBlock())) {
+                if (HTMConfig.get().isAutoLocking(state)) {
                     if (InteractionManager.getLock((ServerWorld) world, pos, blockEntity).isPresent()) {
                         return ActionResult.PASS;
                     }

@@ -8,6 +8,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.minecraft.block.BlockState;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -99,7 +100,7 @@ public record HTMContainerLock(Lock lockData, UUID owner, Set<UUID> trusted, Fla
 		return trusted.contains(id);
 	}
 
-	public boolean flag(FlagType flag) {
-		return flags.get(flag);
+	public boolean flag(FlagType flag, BlockState state) {
+		return flags.get(flag, state);
 	}
 }

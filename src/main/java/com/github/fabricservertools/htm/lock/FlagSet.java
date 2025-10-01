@@ -5,6 +5,7 @@ import com.github.fabricservertools.htm.config.HTMConfig;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.block.BlockState;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -31,38 +32,29 @@ public final class FlagSet {
                     .map(entry -> Pair.of(entry.getKey(), entry.getValue()))
                     .toList())
             .xmap(FlagSet::new, set -> set.flags);
-    public static final Codec<FlagSet> CONFIG_CODEC = Codec.unboundedMap(FlagType.CODEC, Codec.BOOL).xmap(map -> new FlagSet(map, true), set -> set.flags);
+    public static final Codec<FlagSet> CONFIG_CODEC = Codec.unboundedMap(FlagType.CODEC, Codec.BOOL).xmap(FlagSet::new, set -> set.flags);
 
     private final EnumMap<FlagType, Boolean> flags;
-    private final boolean isBase;
 
     public FlagSet(Map<FlagType, Boolean> flags) {
-        this(flags, false);
-    }
-
-    private FlagSet(Map<FlagType, Boolean> flags, boolean isBase) {
         if (flags.isEmpty()) {
             this.flags = new EnumMap<>(FlagType.class);
         } else {
             this.flags = new EnumMap<>(flags);
         }
-        this.isBase = isBase;
-
-        if (isBase) {
-            for (FlagType flag : FlagType.values()) {
-                this.flags.putIfAbsent(flag, flag.defaultValue());
-            }
-        }
     }
 
     private FlagSet(EnumMap<FlagType, Boolean> flags) {
         this.flags = flags;
-        isBase = false;
     }
 
-    public boolean get(FlagType flag) {
+    public boolean get(FlagType flag, BlockState state) {
         Boolean override = flags.get(flag);
-        return override != null ? override : !isBase ? HTMConfig.get().defaultFlags().get(flag) : flag.defaultValue();
+        return override != null ? override : HTMConfig.get().defaultFlags().get(flag, state);
+    }
+
+    public Boolean getNoFallback(FlagType flag) {
+        return flags.get(flag);
     }
 
     public FlagSet with(FlagType flag, boolean set) {
@@ -85,9 +77,17 @@ public final class FlagSet {
         return new FlagSet(copy);
     }
 
-    public void forEach(BiConsumer<FlagType, Boolean> consumer) {
+    public FlagSet expand() {
+        EnumMap<FlagType, Boolean> copy = new EnumMap<>(flags);
         for (FlagType flag : FlagType.values()) {
-            consumer.accept(flag, get(flag));
+            copy.putIfAbsent(flag, flag.defaultValue());
+        }
+        return new FlagSet(copy);
+    }
+
+    public void forEach(BlockState state, BiConsumer<FlagType, Boolean> consumer) {
+        for (FlagType flag : FlagType.values()) {
+            consumer.accept(flag, get(flag, state));
         }
     }
 }

@@ -28,7 +28,7 @@ public abstract class MoveItemsTaskMixin extends MultiTickTask<PathAwareEntity> 
     private void checkLockedContainerFlags(MoveItemsTask.Storage storage, CallbackInfoReturnable<Boolean> cir) {
         if (!cir.getReturnValueZ() && storage.blockEntity().getWorld() instanceof ServerWorld world) {
             Optional<HTMContainerLock> lock = InteractionManager.getLock(world, storage.pos(), storage.blockEntity());
-            cir.setReturnValue(lock.isPresent() && !lock.get().flag(FlagType.COPPER_GOLEMS));
+            cir.setReturnValue(lock.isPresent() && !lock.get().flag(FlagType.COPPER_GOLEMS, storage.state()));
         }
     }
 }

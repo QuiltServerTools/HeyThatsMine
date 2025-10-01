@@ -3,6 +3,7 @@ package com.github.fabricservertools.htm.mixin;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -40,7 +41,8 @@ public abstract class HopperBlockEntityMixin {
             return true;
         }
 
+        BlockState state = world.getBlockState(pos);
         Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, pos, blockEntity);
-        return lock.map(l -> l.flag(FlagType.HOPPERS)).orElse(true);
+        return lock.map(l -> l.flag(FlagType.HOPPERS, state)).orElse(true);
     }
 }
