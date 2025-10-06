@@ -1,9 +1,7 @@
 # HeyThatsMine
 
-[![build](https://img.shields.io/github/workflow/status/fabricservertools/HeyThatsMine/build)](https://github.com/fabricservertools/HeyThatsMine/actions)
-
+[![build]( https://img.shields.io/github/actions/workflow/status/QuiltServerTools/HeyThatsMine/main.yml?branch=master)](https://github.com/fabricservertools/HeyThatsMine/actions)
 [![discord](https://img.shields.io/discord/764543203772334100?label=Fabric%20Server%20Tools%20Discord)](https://discord.gg/jydqZzkyEa)
-
 [![discord](https://img.shields.io/discord/776126068024410135?label=Potatos%20Place)](https://discord.gg/ByaVuebAPb)
 
 HTM is a fabric mod for protecting your containers and trusting people with access to them

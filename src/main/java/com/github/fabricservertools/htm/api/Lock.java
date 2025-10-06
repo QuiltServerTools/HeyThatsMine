@@ -46,7 +46,6 @@ public interface Lock {
         }
 
         Type(String name, Codec<? extends Lock> codec, Lock instance) {
-            // Weird Java generics :(
             this(name, codec, player -> instance);
         }
 
