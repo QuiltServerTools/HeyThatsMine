@@ -3,7 +3,7 @@
   "id": "htm",
   "version": "${version}",
   "name": "Hey That's Mine",
-  "description": "Serverside chest locking mod for fabric",
+  "description": "Serverside container locking mod for fabric",
   "authors": [
     "Potatoboy9999"
   ],
@@ -23,8 +23,8 @@
     "htm.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.9",
+    "fabricloader": ">=0.17.2",
     "fabric": "*",
-    "minecraft": ">=1.21.6"
+    "minecraft": ">=1.21.9"
   }
 }

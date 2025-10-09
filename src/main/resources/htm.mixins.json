@@ -2,9 +2,10 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.github.fabricservertools.htm.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
     "HopperBlockEntityMixin",
+    "MoveItemsTaskMixin",
     "PistonBlockMixin",
     "events.BlockItemMixin",
     "events.EnderDragonEntityMixin",

@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.api;
 
 import com.github.fabricservertools.htm.HTM;
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;

@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.api;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;

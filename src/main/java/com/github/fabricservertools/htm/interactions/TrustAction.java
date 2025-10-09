@@ -1,21 +1,23 @@
 package com.github.fabricservertools.htm.interactions;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Collection;
 
 public class TrustAction implements LockInteraction {
-	private final Collection<GameProfile> trustPlayers;
+	private final Collection<PlayerConfigEntry> trustPlayers;
 	private final boolean untrust;
 
-	public TrustAction(Collection<GameProfile> trustPlayers, boolean untrust) {
+	public TrustAction(Collection<PlayerConfigEntry> trustPlayers, boolean untrust) {
 		this.trustPlayers = trustPlayers;
 		this.untrust = untrust;
 	}
@@ -23,26 +25,27 @@ public class TrustAction implements LockInteraction {
 	@Override
 	public void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
-			player.sendMessage(Text.translatable("text.htm.error.not_owner"), false);
+			player.sendMessage(HTMTexts.NOT_OWNER, false);
 			return;
 		}
 
-		for (GameProfile trustPlayer : trustPlayers) {
-			if (lock.owner().equals(trustPlayer.getId())) {
-				player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
+		for (PlayerConfigEntry trustPlayer : trustPlayers) {
+			if (lock.owner().equals(trustPlayer.id())) {
+				player.sendMessage(HTMTexts.CANNOT_TRUST_SELF, false);
 				continue;
 			}
 
+            Text playerName = Text.literal(trustPlayer.name()).formatted(Formatting.WHITE);
 			if (untrust) {
-				lock.withoutTrusted(trustPlayer.getId()).ifPresentOrElse(newLock -> {
-					player.sendMessage(Text.translatable("text.htm.untrust", trustPlayer.getName()), false);
+				lock.withoutTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
+					player.sendMessage(HTMTexts.UNTRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(Text.translatable("text.htm.error.not_trusted", trustPlayer.getName()), false));
+				}, () -> player.sendMessage(HTMTexts.PLAYER_NOT_TRUSTED.apply(playerName), false));
 			} else {
-				lock.withTrusted(trustPlayer.getId()).ifPresentOrElse(newLock -> {
-					player.sendMessage(Text.translatable("text.htm.trust", trustPlayer.getName()), false);
+				lock.withTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
+					player.sendMessage(HTMTexts.TRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(Text.translatable("text.htm.error.already_trusted", trustPlayer.getName()), false));
+				}, () -> player.sendMessage(HTMTexts.ALREADY_TRUSTED.apply(playerName), false));
 			}
 		}
 	}

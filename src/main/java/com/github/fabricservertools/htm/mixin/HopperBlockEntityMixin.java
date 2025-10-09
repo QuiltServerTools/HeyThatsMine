@@ -1,8 +1,9 @@
 package com.github.fabricservertools.htm.mixin;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -31,13 +32,17 @@ public abstract class HopperBlockEntityMixin {
 	//TODO optimize better
     @Unique
     private static boolean isBlockContainerHopperable(World world, BlockPos pos) {
-        if (world.isClient) return true;
+        if (world.isClient()) {
+            return true;
+        }
 
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity == null) // no block entity above
+        if (blockEntity == null) { // no block entity above
             return true;
+        }
 
+        BlockState state = world.getBlockState(pos);
         Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, pos, blockEntity);
-        return lock.map(l -> l.flag(FlagType.HOPPERS)).orElse(true);
+        return lock.map(l -> l.flag(FlagType.HOPPERS, state)).orElse(true);
     }
 }

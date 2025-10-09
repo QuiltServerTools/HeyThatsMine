@@ -1,8 +1,8 @@
-package com.github.fabricservertools.htm.locks;
+package com.github.fabricservertools.htm.lock.type;
 
-import com.github.fabricservertools.htm.HTMContainerLock;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
+import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.mojang.serialization.Codec;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -15,11 +15,11 @@ public class PrivateLock implements Lock {
 	@Override
 	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
 		if (lock.isTrusted(player.getUuid())) return true;
-		return Utility.getGlobalTrustState(player.getServer()).isTrusted(lock.owner(), player.getUuid());
+		return Utility.getGlobalTrustState(player.getEntityWorld().getServer()).isTrusted(lock.owner(), player.getUuid());
 	}
 
 	@Override
-	public Codec<PrivateLock> codec() {
-		return CODEC;
+	public Type type() {
+		return Type.PRIVATE;
 	}
 }

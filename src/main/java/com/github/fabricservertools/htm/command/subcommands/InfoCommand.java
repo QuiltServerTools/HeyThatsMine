@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InfoAction;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -9,11 +10,11 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class InfoCommand implements SubCommand {
+
 	@Override
 	public LiteralCommandNode<ServerCommandSource> build() {
 		return literal("info")
@@ -22,12 +23,11 @@ public class InfoCommand implements SubCommand {
 				.build();
 	}
 
-	@SuppressWarnings("SameReturnValue")
 	private int info(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity player = context.getSource().getPlayer();
 
 		InteractionManager.pendingActions.put(player, new InfoAction());
-		context.getSource().sendFeedback(() -> Text.translatable("text.htm.select"), false);
+		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
 		return 1;
 	}
 }

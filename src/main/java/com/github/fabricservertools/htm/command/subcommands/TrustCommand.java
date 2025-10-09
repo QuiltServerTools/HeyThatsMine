@@ -1,19 +1,22 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
+import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
-import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.GameProfileArgumentType;
+import net.minecraft.screen.ScreenTexts;
+import net.minecraft.server.PlayerConfigEntry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -48,31 +51,32 @@ public class TrustCommand implements SubCommand {
 				.map(uuid -> Utility.getNameFromUUID(uuid, context.getSource().getServer()))
 				.collect(Collectors.joining(", "));
 
-		player.sendMessage(Text.translatable("text.htm.trusted.global", trustedList), false);
+		player.sendMessage(HTMTexts.TRUSTED_GLOBALLY.apply(Text.literal(trustedList).formatted(Formatting.WHITE)), false);
 
 		return 1;
 	}
 
-	private static int trust(ServerCommandSource source, Collection<GameProfile> gameProfiles, boolean global) throws CommandSyntaxException {
+	private static int trust(ServerCommandSource source, Collection<PlayerConfigEntry> players, boolean global) throws CommandSyntaxException {
 		ServerPlayerEntity player = source.getPlayerOrThrow();
 
 		if (global) {
-			for (GameProfile gameProfile : gameProfiles) {
+			for (PlayerConfigEntry target : players) {
 				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
-				if (player.getUuid().equals(gameProfile.getId())) {
-					player.sendMessage(Text.translatable("text.htm.error.trust_self"), false);
+				if (player.getUuid().equals(target.id())) {
+                    source.sendError(HTMTexts.CANNOT_TRUST_SELF);
 					return -1;
 				}
 
-				if (globalTrustState.addTrust(player.getUuid(), gameProfile.getId())) {
-					source.sendFeedback(() -> Text.translatable("text.htm.trust", gameProfile.getName()).append(Text.translatable("text.htm.global")), false);
+                Text playerName = Text.literal(target.name()).formatted(Formatting.WHITE);
+				if (globalTrustState.addTrust(player.getUuid(), target.id())) {
+                    source.sendFeedback(() -> HTMTexts.TRUST.apply(playerName).append(ScreenTexts.SPACE).append(HTMTexts.GLOBAL), false);
 				} else {
-					source.sendFeedback(() -> Text.translatable("text.htm.error.already_trusted", gameProfile.getName()), false);
+					source.sendFeedback(() -> HTMTexts.ALREADY_TRUSTED.apply(playerName), false);
 				}
 			}
 		} else {
-			InteractionManager.pendingActions.put(player, new TrustAction(gameProfiles, false));
-			source.sendFeedback(() -> Text.translatable("text.htm.select"), false);
+			InteractionManager.pendingActions.put(player, new TrustAction(players, false));
+			source.sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
 		}
 
 
