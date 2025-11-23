@@ -7,28 +7,28 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.literal;
 
 public class QuietCommand implements SubCommand {
 	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
+	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("quiet")
 				.requires(Permissions.require("htm.command.quiet", true))
 				.executes(this::quiet)
 				.build();
 	}
 
-	private int quiet(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private int quiet(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		ServerPlayer player = context.getSource().getPlayer();
 
 		InteractionManager.toggleNoMessage(player);
-		if (InteractionManager.noMessage.contains(player.getUuid())) {
-			context.getSource().sendFeedback(() -> HTMTexts.TOGGLE_NO_MSG_ON, false);
+		if (InteractionManager.noMessage.contains(player.getUUID())) {
+			context.getSource().sendSuccess(() -> HTMTexts.TOGGLE_NO_MSG_ON, false);
 		} else {
-			context.getSource().sendFeedback(() -> HTMTexts.TOGGLE_NO_MSG_OFF, false);
+			context.getSource().sendSuccess(() -> HTMTexts.TOGGLE_NO_MSG_OFF, false);
 		}
 		return 1;
 	}

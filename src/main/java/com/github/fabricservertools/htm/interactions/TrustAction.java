@@ -4,48 +4,47 @@ import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.PlayerConfigEntry;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.NameAndId;
 import java.util.Collection;
 
 public class TrustAction implements LockInteraction {
-	private final Collection<PlayerConfigEntry> trustPlayers;
+	private final Collection<NameAndId> trustPlayers;
 	private final boolean untrust;
 
-	public TrustAction(Collection<PlayerConfigEntry> trustPlayers, boolean untrust) {
+	public TrustAction(Collection<NameAndId> trustPlayers, boolean untrust) {
 		this.trustPlayers = trustPlayers;
 		this.untrust = untrust;
 	}
 
 	@Override
-	public void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
+	public void execute(MinecraftServer server, ServerPlayer player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
-			player.sendMessage(HTMTexts.NOT_OWNER, false);
+			player.displayClientMessage(HTMTexts.NOT_OWNER, false);
 			return;
 		}
 
-		for (PlayerConfigEntry trustPlayer : trustPlayers) {
+		for (NameAndId trustPlayer : trustPlayers) {
 			if (lock.owner().equals(trustPlayer.id())) {
-				player.sendMessage(HTMTexts.CANNOT_TRUST_SELF, false);
+				player.displayClientMessage(HTMTexts.CANNOT_TRUST_SELF, false);
 				continue;
 			}
 
-            Text playerName = Text.literal(trustPlayer.name()).formatted(Formatting.WHITE);
+            Component playerName = Component.literal(trustPlayer.name()).withStyle(ChatFormatting.WHITE);
 			if (untrust) {
 				lock.withoutTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
-					player.sendMessage(HTMTexts.UNTRUST.apply(playerName), false);
+					player.displayClientMessage(HTMTexts.UNTRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(HTMTexts.PLAYER_NOT_TRUSTED.apply(playerName), false));
+				}, () -> player.displayClientMessage(HTMTexts.PLAYER_NOT_TRUSTED.apply(playerName), false));
 			} else {
 				lock.withTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
-					player.sendMessage(HTMTexts.TRUST.apply(playerName), false);
+					player.displayClientMessage(HTMTexts.TRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.sendMessage(HTMTexts.ALREADY_TRUSTED.apply(playerName), false));
+				}, () -> player.displayClientMessage(HTMTexts.ALREADY_TRUSTED.apply(playerName), false));
 			}
 		}
 	}

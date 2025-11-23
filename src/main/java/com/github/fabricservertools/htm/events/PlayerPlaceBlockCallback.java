@@ -2,9 +2,9 @@ package com.github.fabricservertools.htm.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.util.ActionResult;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
 
 /**
  * Callback for player placing a block
@@ -14,15 +14,15 @@ public interface PlayerPlaceBlockCallback {
 	Event<PlayerPlaceBlockCallback> EVENT = EventFactory.createArrayBacked(PlayerPlaceBlockCallback.class,
 			(listeners) -> (player, context) -> {
 				for (PlayerPlaceBlockCallback listener : listeners) {
-					ActionResult result = listener.place(player, context);
+					InteractionResult result = listener.place(player, context);
 
-					if (result != ActionResult.PASS) {
+					if (result != InteractionResult.PASS) {
 						return result;
 					}
 				}
 
-				return ActionResult.PASS;
+				return InteractionResult.PASS;
 			});
 
-	ActionResult place(PlayerEntity player, ItemPlacementContext context);
+	InteractionResult place(Player player, BlockPlaceContext context);
 }

@@ -5,18 +5,18 @@ import com.github.fabricservertools.htm.events.BlockExplodeCallback;
 import com.github.fabricservertools.htm.events.EnderDragonBreakBlockCallback;
 import com.github.fabricservertools.htm.events.WorldBreakBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionBehavior;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WorldEventListener {
 	public static void init() {
@@ -25,39 +25,39 @@ public class WorldEventListener {
 		EnderDragonBreakBlockCallback.EVENT.register(WorldEventListener::enderDragonBreakBlock);
 	}
 
-	private static ActionResult enderDragonBreakBlock(ServerWorld world, BlockPos pos, boolean b) {
+	private static InteractionResult enderDragonBreakBlock(ServerLevel world, BlockPos pos, boolean b) {
 		BlockState state = world.getBlockState(pos);
-		if (!state.hasBlockEntity()) return ActionResult.PASS;
+		if (!state.hasBlockEntity()) return InteractionResult.PASS;
 
-		if (InteractionManager.getLock(world, pos).isPresent()) return ActionResult.FAIL;
+		if (InteractionManager.getLock(world, pos).isPresent()) return InteractionResult.FAIL;
 
-		return ActionResult.PASS;
+		return InteractionResult.PASS;
 	}
 
-	private static ActionResult onBlockBreak(World world, BlockPos pos, boolean drop, @Nullable Entity entity) {
-		if (world.isClient()) {
-            return ActionResult.PASS;
+	private static InteractionResult onBlockBreak(Level world, BlockPos pos, boolean drop, @Nullable Entity entity) {
+		if (world.isClientSide()) {
+            return InteractionResult.PASS;
         }
 
-		Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerWorld) world, pos);
+		Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) world, pos);
 		if (lock.isEmpty()) {
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         }
 
-		if (entity instanceof ServerPlayerEntity) {
-			if (lock.get().isOwner((ServerPlayerEntity) entity)) {
-                return ActionResult.PASS;
+		if (entity instanceof ServerPlayer) {
+			if (lock.get().isOwner((ServerPlayer) entity)) {
+                return InteractionResult.PASS;
             }
 		}
 
-		return ActionResult.FAIL;
+		return InteractionResult.FAIL;
 	}
 
-	private static ActionResult onBlockExplode(ExplosionBehavior explosionBehavior, Explosion explosion, BlockPos pos, BlockState state) {
-		if (!state.hasBlockEntity()) return ActionResult.PASS;
+	private static InteractionResult onBlockExplode(ExplosionDamageCalculator explosionBehavior, Explosion explosion, BlockPos pos, BlockState state) {
+		if (!state.hasBlockEntity()) return InteractionResult.PASS;
 
-		if (InteractionManager.getLock(explosion.getWorld(), pos).isPresent()) return ActionResult.FAIL;
+		if (InteractionManager.getLock(explosion.level(), pos).isPresent()) return InteractionResult.FAIL;
 
-		return ActionResult.PASS;
+		return InteractionResult.PASS;
 	}
 }

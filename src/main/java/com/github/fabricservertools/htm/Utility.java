@@ -2,37 +2,36 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.world.data.GlobalTrustState;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.PlayerConfigEntry;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.server.players.NameAndId;
+import net.minecraft.world.entity.player.Player;
 import java.util.UUID;
 
 public class Utility {
 
     public static String getNameFromUUID(UUID uuid, MinecraftServer server) {
-        return server.getApiServices().nameToIdCache().getByUuid(uuid)
-                .map(PlayerConfigEntry::name)
+        return server.services().nameToIdCache().get(uuid)
+                .map(NameAndId::name)
                 .orElse("unknown");
     }
 
-	public static Text getFormattedNameFromUUID(UUID uuid, MinecraftServer server) {
-        return Text.literal(getNameFromUUID(uuid, server)).formatted(Formatting.WHITE);
+	public static Component getFormattedNameFromUUID(UUID uuid, MinecraftServer server) {
+        return Component.literal(getNameFromUUID(uuid, server)).withStyle(ChatFormatting.WHITE);
 	}
 
 	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {
-		return server.getOverworld().getPersistentStateManager().getOrCreate(GlobalTrustState.TYPE);
+		return server.overworld().getDataStorage().computeIfAbsent(GlobalTrustState.TYPE);
 	}
 
-	public static void sendMessage(PlayerEntity player, Text message) {
+	public static void sendMessage(Player player, Component message) {
 		sendMessage(player, message, false);
 	}
 
-	public static void sendMessage(PlayerEntity player, Text message, boolean actionBar) {
-		if (!InteractionManager.noMessage.contains(player.getUuid())) {
-			player.sendMessage(message, actionBar);
+	public static void sendMessage(Player player, Component message, boolean actionBar) {
+		if (!InteractionManager.noMessage.contains(player.getUUID())) {
+			player.displayClientMessage(message, actionBar);
 		}
 	}
 }

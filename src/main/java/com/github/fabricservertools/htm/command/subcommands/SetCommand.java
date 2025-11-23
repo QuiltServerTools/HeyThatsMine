@@ -12,15 +12,15 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class SetCommand implements SubCommand {
 	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
+	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("set")
 				.requires(Permissions.require("htm.command.set", true))
 				.then(argument("type", StringArgumentType.word())
@@ -29,15 +29,15 @@ public class SetCommand implements SubCommand {
 				.build();
 	}
 
-	private int set(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+	private int set(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 		Lock.Type type = Lock.Type.fromUiName(StringArgumentType.getString(context, "type"));
 		if (type == null) {
 			throw new SimpleCommandExceptionType(HTMTexts.INVALID_LOCK_TYPE).create();
 		}
 
-        ServerPlayerEntity player = context.getSource().getPlayer();
+        ServerPlayer player = context.getSource().getPlayer();
 		InteractionManager.pendingActions.put(player, new SetAction(type.create(player)));
-		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
+		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
 		return 1;
 	}
 }

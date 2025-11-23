@@ -1,15 +1,15 @@
 package com.github.fabricservertools.htm.api;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringRepresentable;
 
-public enum FlagType implements StringIdentifiable {
+public enum FlagType implements StringRepresentable {
     HOPPERS("hoppers", true),
     COPPER_GOLEMS("copper_golems", true);
 
-    public static final Codec<FlagType> CODEC = StringIdentifiable.createCodec(FlagType::values);
+    public static final Codec<FlagType> CODEC = StringRepresentable.fromEnum(FlagType::values);
 
     private final String id;
     private final boolean defaultValue;
@@ -20,7 +20,7 @@ public enum FlagType implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return id;
     }
 
@@ -28,8 +28,8 @@ public enum FlagType implements StringIdentifiable {
         return defaultValue;
     }
 
-    public Text displayName() {
-        return Text.literal(id.toUpperCase()).formatted(Formatting.WHITE);
+    public Component displayName() {
+        return Component.literal(id.toUpperCase()).withStyle(ChatFormatting.WHITE);
     }
 
     public static FlagType fromString(String flag) {

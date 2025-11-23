@@ -13,19 +13,18 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Pair;
-
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Tuple;
 import java.util.Optional;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class FlagCommand implements SubCommand {
 
 	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
+	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("flag")
 				.requires(Permissions.require("htm.command.flag", true))
 				.executes(this::flagInfo)
@@ -37,17 +36,17 @@ public class FlagCommand implements SubCommand {
 				.build();
 	}
 
-	private int flagInfo(CommandContext<ServerCommandSource> context) {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private int flagInfo(CommandContext<CommandSourceStack> context) {
+		ServerPlayer player = context.getSource().getPlayer();
 
 		InteractionManager.pendingActions.put(player, new FlagAction(Optional.empty()));
-		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
+		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
 
 		return 1;
 	}
 
-	private int flag(CommandContext<ServerCommandSource> context, boolean unset) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private int flag(CommandContext<CommandSourceStack> context, boolean unset) throws CommandSyntaxException {
+		ServerPlayer player = context.getSource().getPlayer();
 		FlagType type = FlagType.fromString(StringArgumentType.getString(context, "type"));
 		Boolean value = unset ? null : BoolArgumentType.getBool(context, "value");
 
@@ -55,8 +54,8 @@ public class FlagCommand implements SubCommand {
 			throw new SimpleCommandExceptionType(HTMTexts.INVALID_FLAG_TYPE).create();
 		}
 
-		InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Pair<>(type, value))));
-		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
+		InteractionManager.pendingActions.put(player, new FlagAction(Optional.of(new Tuple<>(type, value))));
+		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
 		return 1;
 	}
 }

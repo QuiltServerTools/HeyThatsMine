@@ -3,22 +3,22 @@ package com.github.fabricservertools.htm.mixin.events;
 import com.github.fabricservertools.htm.events.BlockExplodeCallback;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionBehavior;
-import net.minecraft.world.explosion.ExplosionImpl;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.ServerExplosion;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(ExplosionImpl.class)
+@Mixin(ServerExplosion.class)
 public abstract class ExplosionImplMixin implements Explosion{
 
-	@WrapOperation(method = "getBlocksToDestroy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/explosion/ExplosionBehavior;canDestroyBlock(Lnet/minecraft/world/explosion/Explosion;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;F)Z"))
-	private boolean HTMExplosionProtectionCheck(ExplosionBehavior behavior, Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power, Operation<Boolean> original) {
-		return BlockExplodeCallback.EVENT.invoker().explode(behavior, this, pos, state) == ActionResult.PASS
+	@WrapOperation(method = "calculateExplodedPositions", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ExplosionDamageCalculator;shouldBlockExplode(Lnet/minecraft/world/level/Explosion;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;F)Z"))
+	private boolean HTMExplosionProtectionCheck(ExplosionDamageCalculator behavior, Explosion explosion, BlockGetter world, BlockPos pos, BlockState state, float power, Operation<Boolean> original) {
+		return BlockExplodeCallback.EVENT.invoker().explode(behavior, this, pos, state) == InteractionResult.PASS
 				&& original.call(behavior, explosion, world, pos, state, power);
 	}
 }

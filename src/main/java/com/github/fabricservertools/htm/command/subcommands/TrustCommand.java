@@ -10,73 +10,72 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.command.argument.GameProfileArgumentType;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.server.PlayerConfigEntry;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.GameProfileArgument;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.NameAndId;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class TrustCommand implements SubCommand {
 
 	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
+	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("trust")
 				.requires(Permissions.require("htm.command.trust", true))
 				.executes(this::trustList)
-				.then(argument("target", GameProfileArgumentType.gameProfile())
-						.executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target"), false))
+				.then(argument("target", GameProfileArgument.gameProfile())
+						.executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), false))
 						.then(literal("global")
 								.executes(ctx -> trust(
-										ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target"), true)
+										ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), true)
 								)
 						))
 				.build();
 	}
 
 	@SuppressWarnings("SameReturnValue")
-	private int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+	private int trustList(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		ServerPlayer player = context.getSource().getPlayerOrException();
 		GlobalTrustState globalTrustState = Utility.getGlobalTrustState(context.getSource().getServer());
 
-		String trustedList = globalTrustState.getTrusted().get(player.getUuid())
+		String trustedList = globalTrustState.getTrusted().get(player.getUUID())
 				.stream()
 				.map(uuid -> Utility.getNameFromUUID(uuid, context.getSource().getServer()))
 				.collect(Collectors.joining(", "));
 
-		player.sendMessage(HTMTexts.TRUSTED_GLOBALLY.apply(Text.literal(trustedList).formatted(Formatting.WHITE)), false);
+		player.displayClientMessage(HTMTexts.TRUSTED_GLOBALLY.apply(Component.literal(trustedList).withStyle(ChatFormatting.WHITE)), false);
 
 		return 1;
 	}
 
-	private static int trust(ServerCommandSource source, Collection<PlayerConfigEntry> players, boolean global) throws CommandSyntaxException {
-		ServerPlayerEntity player = source.getPlayerOrThrow();
+	private static int trust(CommandSourceStack source, Collection<NameAndId> players, boolean global) throws CommandSyntaxException {
+		ServerPlayer player = source.getPlayerOrException();
 
 		if (global) {
-			for (PlayerConfigEntry target : players) {
+			for (NameAndId target : players) {
 				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
-				if (player.getUuid().equals(target.id())) {
-                    source.sendError(HTMTexts.CANNOT_TRUST_SELF);
+				if (player.getUUID().equals(target.id())) {
+                    source.sendFailure(HTMTexts.CANNOT_TRUST_SELF);
 					return -1;
 				}
 
-                Text playerName = Text.literal(target.name()).formatted(Formatting.WHITE);
-				if (globalTrustState.addTrust(player.getUuid(), target.id())) {
-                    source.sendFeedback(() -> HTMTexts.TRUST.apply(playerName).append(ScreenTexts.SPACE).append(HTMTexts.GLOBAL), false);
+                Component playerName = Component.literal(target.name()).withStyle(ChatFormatting.WHITE);
+				if (globalTrustState.addTrust(player.getUUID(), target.id())) {
+                    source.sendSuccess(() -> HTMTexts.TRUST.apply(playerName).append(CommonComponents.SPACE).append(HTMTexts.GLOBAL), false);
 				} else {
-					source.sendFeedback(() -> HTMTexts.ALREADY_TRUSTED.apply(playerName), false);
+					source.sendSuccess(() -> HTMTexts.ALREADY_TRUSTED.apply(playerName), false);
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(players, false));
-			source.sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
+			source.sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
 		}
 
 

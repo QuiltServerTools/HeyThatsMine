@@ -1,8 +1,8 @@
 package com.github.fabricservertools.htm.command;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.commands.CommandSourceStack;
 
 public interface SubCommand {
-	LiteralCommandNode<ServerCommandSource> build();
+	LiteralCommandNode<CommandSourceStack> build();
 }

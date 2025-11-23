@@ -2,16 +2,6 @@ package com.github.fabricservertools.htm.mixin.lockable;
 
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockableObject;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,9 +10,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-@Mixin(ChiseledBookshelfBlockEntity.class)
-public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity implements Inventory, LockableObject {
+@Mixin(ChiseledBookShelfBlockEntity.class)
+public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity implements Container, LockableObject {
 
     @Unique
     private HTMContainerLock lock = null;
@@ -31,19 +31,19 @@ public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity impl
         super(type, pos, state);
     }
 
-    @Inject(method = "readData", at = @At("TAIL"))
-    public void readLockData(ReadView view, CallbackInfo ci) {
+    @Inject(method = "loadAdditional", at = @At("TAIL"))
+    public void readLockData(ValueInput view, CallbackInfo ci) {
         readLock(view, lock -> this.lock = lock);
     }
 
-    @Inject(method = "writeData", at = @At("TAIL"))
-    public void writeLockData(WriteView view, CallbackInfo ci) {
+    @Inject(method = "saveAdditional", at = @At("TAIL"))
+    public void writeLockData(ValueOutput view, CallbackInfo ci) {
         writeLock(view);
     }
 
-    @Inject(method = "canPlayerUse", at = @At("HEAD"), cancellable = true)
-    public void checkLock(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        if (player instanceof ServerPlayerEntity serverPlayer && !canOpenUnchecked(serverPlayer)) {
+    @Inject(method = "stillValid", at = @At("HEAD"), cancellable = true)
+    public void checkLock(Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (player instanceof ServerPlayer serverPlayer && !canOpenUnchecked(serverPlayer)) {
             cir.setReturnValue(false);
         }
     }
@@ -56,6 +56,6 @@ public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity impl
     @Override
     public void setLock(HTMContainerLock lock) {
         this.lock = lock;
-        markDirty();
+        setChanged();
     }
 }

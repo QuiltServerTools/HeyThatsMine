@@ -10,8 +10,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import eu.pb4.common.protection.api.CommonProtection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.util.Identifier;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,13 +23,13 @@ public class HTM implements ModInitializer {
         HTMConfig.load();
 
 		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));
-		CommonProtection.register(Identifier.of("htm", "containers"), new InteractionManager());
+		CommonProtection.register(ResourceLocation.fromNamespaceAndPath("htm", "containers"), new InteractionManager());
 
 		PlayerEventListener.init();
 		WorldEventListener.init();
 	}
 
-	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
+	private void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
 		HTMCommand.register(dispatcher);
 		HTMCommand.registerSubCommand(new SetCommand().build());
 		HTMCommand.registerSubCommand(new RemoveCommand().build());

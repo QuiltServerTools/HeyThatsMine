@@ -2,20 +2,20 @@ package com.github.fabricservertools.htm.config;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
-public record SingleBlockSelector(Either<RegistryKey<Block>, TagKey<Block>> key) {
-    public static final Codec<SingleBlockSelector> CODEC = Codec.either(RegistryKey.createCodec(RegistryKeys.BLOCK), TagKey.codec(RegistryKeys.BLOCK))
+public record SingleBlockSelector(Either<ResourceKey<Block>, TagKey<Block>> key) {
+    public static final Codec<SingleBlockSelector> CODEC = Codec.either(ResourceKey.codec(Registries.BLOCK), TagKey.hashedCodec(Registries.BLOCK))
             .xmap(SingleBlockSelector::new, SingleBlockSelector::key);
 
     public SingleBlockSelector(Block block) {
-        this(Either.left(block.getRegistryEntry().registryKey()));
+        this(Either.left(block.builtInRegistryHolder().key()));
     }
 
     public SingleBlockSelector(TagKey<Block> tag) {
@@ -23,11 +23,11 @@ public record SingleBlockSelector(Either<RegistryKey<Block>, TagKey<Block>> key)
     }
 
     public boolean is(BlockState block) {
-        return is(Registries.BLOCK.getEntry(block.getBlock()));
+        return is(BuiltInRegistries.BLOCK.wrapAsHolder(block.getBlock()));
     }
 
-    public boolean is(RegistryEntry<Block> block) {
-        RegistryKey<Block> registryKey = block.getKey().orElseThrow();
-        return key.map(registryKey::equals, block::isIn);
+    public boolean is(Holder<Block> block) {
+        ResourceKey<Block> registryKey = block.unwrapKey().orElseThrow();
+        return key.map(registryKey::equals, block::is);
     }
 }

@@ -5,16 +5,15 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.minecraft.command.CommandSource;
-import net.minecraft.server.command.ServerCommandSource;
-
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.SharedSuggestionProvider;
 
-public class LockTypeSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
+public class LockTypeSuggestionProvider implements SuggestionProvider<CommandSourceStack> {
 
 	@Override
-	public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(Arrays.stream(Lock.Type.values()).map(Lock.Type::uiName), builder);
+	public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
+        return SharedSuggestionProvider.suggest(Arrays.stream(Lock.Type.values()).map(Lock.Type::uiName), builder);
 	}
 }

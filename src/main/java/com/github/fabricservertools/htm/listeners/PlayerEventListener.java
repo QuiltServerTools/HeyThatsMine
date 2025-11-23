@@ -11,19 +11,18 @@ import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.lock.type.PrivateLock;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import java.util.Optional;
 
 public class PlayerEventListener {
@@ -33,25 +32,25 @@ public class PlayerEventListener {
         AttackBlockCallback.EVENT.register(PlayerEventListener::onAttackBlock);
     }
 
-    private static ActionResult onAttackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
-        if (player instanceof ServerPlayerEntity serverPlayer) {
+    private static InteractionResult onAttackBlock(Player player, Level world, InteractionHand hand, BlockPos pos, Direction direction) {
+        if (player instanceof ServerPlayer serverPlayer) {
             if (InteractionManager.pendingActions.containsKey(serverPlayer)) {
-                InteractionManager.execute(serverPlayer.getEntityWorld().getServer(), serverPlayer, pos);
+                InteractionManager.execute(serverPlayer.level().getServer(), serverPlayer, pos);
 
-                world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock(), null);
-                return ActionResult.SUCCESS;
+                world.updateNeighborsAt(pos, world.getBlockState(pos).getBlock(), null);
+                return InteractionResult.SUCCESS;
             }
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
-    private static boolean onBeforeBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        if (world.isClient()) {
+    private static boolean onBeforeBreak(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        if (world.isClientSide()) {
             return true;
         }
 
-        ServerPlayerEntity playerEntity = (ServerPlayerEntity) player;
+        ServerPlayer playerEntity = (ServerPlayer) player;
         if (blockEntity instanceof LockableObject) {
             Optional<HTMContainerLock> lock = InteractionManager.getLock(playerEntity, pos);
             if (lock.isEmpty()) {
@@ -60,7 +59,7 @@ public class PlayerEventListener {
 
             if (lock.get().isOwner(playerEntity) || (HTMConfig.get().canTrustedPlayersBreakChests() && lock.get().canOpen(playerEntity))) {
                 if (state.getBlock() instanceof ChestBlock) {
-                    Optional<LockableObject> unlocked = InteractionManager.getUnlockedLockable((ServerWorld) world, pos, blockEntity);
+                    Optional<LockableObject> unlocked = InteractionManager.getUnlockedLockable((ServerLevel) world, pos, blockEntity);
                     if (unlocked.isPresent()) {
                         unlocked.get().setLock(lock.get());
                         return true;
@@ -79,24 +78,24 @@ public class PlayerEventListener {
     }
 
     @SuppressWarnings({"ConstantConditions", "SameReturnValue"})
-    private static ActionResult onPlace(PlayerEntity playerEntity, ItemPlacementContext context) {
+    private static InteractionResult onPlace(Player playerEntity, BlockPlaceContext context) {
         try {
-            BlockPos pos = context.getBlockPos();
-            World world = context.getWorld();
+            BlockPos pos = context.getClickedPos();
+            Level world = context.getLevel();
             BlockState state = world.getBlockState(pos);
 
-            if (world.isClient() || !state.hasBlockEntity()) {
-                return ActionResult.PASS;
+            if (world.isClientSide() || !state.hasBlockEntity()) {
+                return InteractionResult.PASS;
             }
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
                 if (HTMConfig.get().isAutoLocking(state)) {
-                    if (InteractionManager.getLock((ServerWorld) world, pos, blockEntity).isPresent()) {
-                        return ActionResult.PASS;
+                    if (InteractionManager.getLock((ServerLevel) world, pos, blockEntity).isPresent()) {
+                        return InteractionResult.PASS;
                     }
 
-                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayerEntity) playerEntity));
+                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayer) playerEntity));
                     Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_SET.apply(PrivateLock.INSTANCE.displayName()));
                 }
             }
@@ -104,6 +103,6 @@ public class PlayerEventListener {
             HTM.LOGGER.warn("Something went wrong auto locking", e);
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 }

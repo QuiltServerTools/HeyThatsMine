@@ -4,15 +4,14 @@ import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.config.SingleBlockSelector;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet fallback, BlockFlagPredicate flagPredicate) {
     private static final Codec<Map<SingleBlockSelector, FlagSet>> OVERRIDES_CODEC = Codec.unboundedMap(SingleBlockSelector.CODEC, FlagSet.CONFIG_CODEC);
@@ -32,7 +31,7 @@ public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet 
     }
 
     public boolean get(FlagType flag, BlockState state) {
-        return flagPredicate.test(flag, Registries.BLOCK.getEntry(state.getBlock()));
+        return flagPredicate.test(flag, BuiltInRegistries.BLOCK.wrapAsHolder(state.getBlock()));
     }
 
     private static BlockFlagPredicate createFlagPredicate(Map<SingleBlockSelector, FlagSet> overrides, FlagSet fallback) {
@@ -44,8 +43,8 @@ public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet 
         return builder;
     }
 
-    private record BlockFlagPredicate(BiFunction<FlagType, RegistryEntry<Block>, Boolean> predicate,
-                                      BlockFlagPredicate fallback) implements BiPredicate<FlagType, RegistryEntry<Block>> {
+    private record BlockFlagPredicate(BiFunction<FlagType, Holder<Block>, Boolean> predicate,
+                                      BlockFlagPredicate fallback) implements BiPredicate<FlagType, Holder<Block>> {
 
         private BlockFlagPredicate(Map.Entry<SingleBlockSelector, FlagSet> entry, BlockFlagPredicate fallback) {
             this((flag, block) -> {
@@ -56,12 +55,12 @@ public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet 
             }, fallback);
         }
 
-        private BlockFlagPredicate(BiPredicate<FlagType, RegistryEntry<Block>> fallback) {
+        private BlockFlagPredicate(BiPredicate<FlagType, Holder<Block>> fallback) {
             this(fallback::test, null);
         }
 
         @Override
-        public boolean test(FlagType flag, RegistryEntry<Block> block) {
+        public boolean test(FlagType flag, Holder<Block> block) {
             Boolean override = predicate.apply(flag, block);
             if (override != null) {
                 return override;

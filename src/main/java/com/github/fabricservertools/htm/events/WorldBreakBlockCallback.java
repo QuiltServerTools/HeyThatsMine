@@ -2,25 +2,25 @@ package com.github.fabricservertools.htm.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public interface WorldBreakBlockCallback {
 	Event<WorldBreakBlockCallback> EVENT = EventFactory.createArrayBacked(WorldBreakBlockCallback.class,
 			(listeners) -> (world, pos, drop, breakingEntity) -> {
 				for (WorldBreakBlockCallback listener : listeners) {
-					ActionResult result = listener.blockBreak(world, pos, drop, breakingEntity);
+					InteractionResult result = listener.blockBreak(world, pos, drop, breakingEntity);
 
-					if (result != ActionResult.PASS) {
+					if (result != InteractionResult.PASS) {
 						return result;
 					}
 				}
 
-				return ActionResult.PASS;
+				return InteractionResult.PASS;
 			});
 
-	ActionResult blockBreak(World world, BlockPos pos, boolean drop, @Nullable Entity breakingEntity);
+	InteractionResult blockBreak(Level world, BlockPos pos, boolean drop, @Nullable Entity breakingEntity);
 }

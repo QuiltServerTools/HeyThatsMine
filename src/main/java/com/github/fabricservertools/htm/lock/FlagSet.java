@@ -5,14 +5,13 @@ import com.github.fabricservertools.htm.config.HTMConfig;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import net.minecraft.world.level.block.state.BlockState;
 
 public final class FlagSet {
     public static final FlagSet DEFAULT_FLAGS = new FlagSet(Arrays.stream(FlagType.values())

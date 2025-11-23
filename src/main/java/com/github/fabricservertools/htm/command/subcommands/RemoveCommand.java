@@ -8,14 +8,14 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.literal;
 
 public class RemoveCommand implements SubCommand {
 	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
+	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("remove")
 				.requires(Permissions.require("htm.command.remove", true))
 				.executes(this::remove)
@@ -23,11 +23,11 @@ public class RemoveCommand implements SubCommand {
 	}
 
 	@SuppressWarnings("SameReturnValue")
-	private int remove(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private int remove(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		ServerPlayer player = context.getSource().getPlayer();
 
 		InteractionManager.pendingActions.put(player, new RemoveAction());
-		context.getSource().sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
+		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
 		return 1;
 	}
 }

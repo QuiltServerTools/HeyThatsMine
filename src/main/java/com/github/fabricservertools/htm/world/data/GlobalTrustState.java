@@ -5,18 +5,17 @@ import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.Uuids;
-import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateType;
-
 import java.util.List;
 import java.util.UUID;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 
-public class GlobalTrustState extends PersistentState {
+public class GlobalTrustState extends SavedData {
 	private static final Codec<Pair<UUID, List<UUID>>> TRUSTER_CODEC = RecordCodecBuilder.create(instance ->
 			instance.group(
-					Uuids.INT_STREAM_CODEC.fieldOf("Truster").forGetter(Pair::getFirst),
-					Uuids.INT_STREAM_CODEC.listOf().fieldOf("Trusted").forGetter(Pair::getSecond)
+					UUIDUtil.CODEC.fieldOf("Truster").forGetter(Pair::getFirst),
+					UUIDUtil.CODEC.listOf().fieldOf("Trusted").forGetter(Pair::getSecond)
 			).apply(instance, Pair::of)
 	);
 
@@ -26,7 +25,7 @@ public class GlobalTrustState extends PersistentState {
 			).apply(instance, GlobalTrustState::new)
 	);
 
-	public static final PersistentStateType<GlobalTrustState> TYPE = new PersistentStateType<>("globalTrust", GlobalTrustState::new, CODEC, null);
+	public static final SavedDataType<GlobalTrustState> TYPE = new SavedDataType<>("globalTrust", GlobalTrustState::new, CODEC, null);
 
 	private final Multimap<UUID, UUID> globalTrust = HashMultimap.create();
 
@@ -43,12 +42,12 @@ public class GlobalTrustState extends PersistentState {
 	}
 
 	public boolean addTrust(UUID truster, UUID trusted) {
-		markDirty();
+		setDirty();
 		return globalTrust.put(truster, trusted);
 	}
 
 	public boolean removeTrust(UUID truster, UUID trusted) {
-		markDirty();
+		setDirty();
 		return globalTrust.remove(truster, trusted);
 	}
 

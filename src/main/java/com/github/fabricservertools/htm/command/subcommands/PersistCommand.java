@@ -7,14 +7,14 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.literal;
 
 public class PersistCommand implements SubCommand {
 	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
+	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("persist")
 				.requires(Permissions.require("htm.command.persist", true))
 				.executes(this::persist)
@@ -22,14 +22,14 @@ public class PersistCommand implements SubCommand {
 	}
 
 	@SuppressWarnings("SameReturnValue")
-	private int persist(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+	private int persist(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		ServerPlayer player = context.getSource().getPlayerOrException();
 
 		InteractionManager.togglePersist(player);
-		if (InteractionManager.persisting.contains(player.getUuid())) {
-			context.getSource().sendFeedback(() -> HTMTexts.TOGGLE_PERSIST_ON, false);
+		if (InteractionManager.persisting.contains(player.getUUID())) {
+			context.getSource().sendSuccess(() -> HTMTexts.TOGGLE_PERSIST_ON, false);
 		} else {
-			context.getSource().sendFeedback(() -> HTMTexts.TOGGLE_PERSIST_OFF, false);
+			context.getSource().sendSuccess(() -> HTMTexts.TOGGLE_PERSIST_OFF, false);
 		}
 		return 1;
 	}

@@ -6,14 +6,13 @@ import com.github.fabricservertools.htm.HTMTexts;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
-import net.minecraft.block.BlockState;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.level.block.state.BlockState;
 import java.util.Optional;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -23,7 +22,7 @@ public class FlagAction implements LockInteraction {
 	 * Optional flag type and value to set it to.
 	 * If empty, get flag info instead
 	 */
-	private final Optional<Pair<FlagType, Boolean>> flagSet;
+	private final Optional<Tuple<FlagType, Boolean>> flagSet;
 
 	/**
 	 * Creates a flag action
@@ -31,32 +30,32 @@ public class FlagAction implements LockInteraction {
 	 * @param flagSet Optional flag type and value to set it to.
 	 *                If empty, get flag info instead
 	 */
-	public FlagAction(Optional<Pair<FlagType, Boolean>> flagSet) {
+	public FlagAction(Optional<Tuple<FlagType, Boolean>> flagSet) {
 		this.flagSet = flagSet;
 	}
 
 	@Override
-	public void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
+	public void execute(MinecraftServer server, ServerPlayer player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
-			player.sendMessage(HTMTexts.NOT_OWNER, false);
+			player.displayClientMessage(HTMTexts.NOT_OWNER, false);
 			return;
 		}
 
-        BlockState state = player.getEntityWorld().getBlockState(pos);
+        BlockState state = player.level().getBlockState(pos);
 		if (flagSet.isEmpty()) {
 			//flag info
-			player.sendMessage(HTMTexts.DIVIDER, false);
+			player.displayClientMessage(HTMTexts.DIVIDER, false);
             lock.flags().forEach(state, (flag, value) -> {
-                player.sendMessage(HTMTexts.CONTAINER_FLAG.apply(
+                player.displayClientMessage(HTMTexts.CONTAINER_FLAG.apply(
                                 flag.displayName(),
-                                Text.literal(value.toString().toUpperCase()).formatted(value ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
+                                Component.literal(value.toString().toUpperCase()).withStyle(value ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD)),
                         false);
             });
-			player.sendMessage(HTMTexts.DIVIDER, false);
+			player.displayClientMessage(HTMTexts.DIVIDER, false);
 		} else {
 			//flag set
-			FlagType flagType = flagSet.get().getLeft();
-			Boolean value = flagSet.get().getRight();
+			FlagType flagType = flagSet.get().getA();
+			Boolean value = flagSet.get().getB();
 
             HTMTexts.TranslatableTextBuilder feedback;
             boolean feedbackValue;
@@ -69,9 +68,9 @@ public class FlagAction implements LockInteraction {
                 feedback = HTMTexts.CONTAINER_FLAG_SET;
                 feedbackValue = value;
             }
-            player.sendMessage(feedback.apply(
+            player.displayClientMessage(feedback.apply(
                             flagType.displayName(),
-                            Text.literal(String.valueOf(feedbackValue).toUpperCase()).formatted(feedbackValue ? Formatting.GREEN : Formatting.RED, Formatting.BOLD)),
+                            Component.literal(String.valueOf(feedbackValue).toUpperCase()).withStyle(feedbackValue ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD)),
                     false);
         }
 	}
