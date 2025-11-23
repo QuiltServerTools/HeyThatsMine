@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.lock;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.Lock;
@@ -39,35 +39,35 @@ public record HTMContainerLock(Lock lockData, UUID owner, Set<UUID> trusted, Fla
 	}
 
 	public boolean canOpen(ServerPlayer player) {
-		if (lockData.canOpen(player, this)) return true;
+		if (isOwner(player) || lockData.canOpen(player, this)) {
+            return true;
+        }
 
-		if (isOwner(player)) return true;
-
-		player.displayClientMessage(HTMTexts.CONTAINER_LOCKED, true);
+		player.displayClientMessage(HTMComponents.CONTAINER_LOCKED, true);
 		player.playNotifySound(SoundEvents.CHEST_LOCKED, SoundSource.BLOCKS, 1.0F, 1.0F);
 		return false;
 	}
 
-	public HTMContainerLock withType(Lock type) {
-		return new HTMContainerLock(type, owner, trusted, flags);
+	public HTMContainerLock withData(Lock newData) {
+		return new HTMContainerLock(newData, owner, trusted, flags);
 	}
 
-	public HTMContainerLock transfer(UUID id) {
-		return new HTMContainerLock(lockData, id, trusted, flags);
+	public HTMContainerLock transfer(UUID newOwner) {
+		return new HTMContainerLock(lockData, newOwner, trusted, flags);
 	}
 
-	public Optional<HTMContainerLock> withTrusted(UUID id) {
+	public Optional<HTMContainerLock> withTrusted(UUID trustedPlayer) {
 		Set<UUID> newTrusted = new HashSet<>(trusted);
-		boolean added = newTrusted.add(id);
+		boolean added = newTrusted.add(trustedPlayer);
 		if (added) {
 			return Optional.of(new HTMContainerLock(lockData, owner, Set.copyOf(newTrusted), flags));
 		}
 		return Optional.empty();
 	}
 
-	public Optional<HTMContainerLock> withoutTrusted(UUID id) {
+	public Optional<HTMContainerLock> withoutTrusted(UUID trustedPlayer) {
 		Set<UUID> newTrusted = new HashSet<>(trusted);
-		boolean removed = newTrusted.remove(id);
+		boolean removed = newTrusted.remove(trustedPlayer);
 		if (removed) {
 			return Optional.of(new HTMContainerLock(lockData, owner, Set.copyOf(newTrusted), flags));
 		}
@@ -85,13 +85,11 @@ public record HTMContainerLock(Lock lockData, UUID owner, Set<UUID> trusted, Fla
 	public boolean isOwner(ServerPlayer player) {
 		if (!owner.equals(player.getUUID())) {
 			if (Permissions.check(player, "htm.admin", 2)) {
-				Utility.sendMessage(player, HTMTexts.CONTAINER_OVERRIDE.apply(Utility.getFormattedNameFromUUID(owner, player.level().getServer())));
+				Utility.sendMessage(player, HTMComponents.CONTAINER_OVERRIDE.apply(Utility.getFormattedNameFromUUID(owner, player.level().getServer())));
 				return true;
 			}
-
 			return false;
 		}
-
 		return true;
 	}
 

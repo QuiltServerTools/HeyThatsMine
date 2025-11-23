@@ -18,16 +18,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ChiseledBookShelfBlock.class)
-public abstract class ChiseledBookshelfBlockMixin extends BaseEntityBlock {
+public abstract class ChiseledBookShelfBlockMixin extends BaseEntityBlock {
 
-    protected ChiseledBookshelfBlockMixin(Properties settings) {
+    protected ChiseledBookShelfBlockMixin(Properties settings) {
         super(settings);
     }
 
     @Inject(method = "useItemOn",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/ChiseledBookShelfBlock;addBook(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/entity/ChiseledBookShelfBlockEntity;Lnet/minecraft/world/item/ItemStack;I)V"),
             cancellable = true)
-    public void checkLock(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    public void checkLock(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(InteractionResult.FAIL);
         }
@@ -36,7 +36,7 @@ public abstract class ChiseledBookshelfBlockMixin extends BaseEntityBlock {
     @Inject(method = "useWithoutItem",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/ChiseledBookShelfBlock;removeBook(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/entity/ChiseledBookShelfBlockEntity;I)V"),
             cancellable = true)
-    public void checkLock(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    public void checkLock(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(InteractionResult.FAIL);
         }

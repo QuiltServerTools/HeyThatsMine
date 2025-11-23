@@ -5,7 +5,7 @@ import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.listeners.PlayerEventListener;
-import com.github.fabricservertools.htm.listeners.WorldEventListener;
+import com.github.fabricservertools.htm.listeners.LevelEventListener;
 import com.mojang.brigadier.CommandDispatcher;
 import eu.pb4.common.protection.api.CommonProtection;
 import net.fabricmc.api.ModInitializer;
@@ -26,7 +26,7 @@ public class HTM implements ModInitializer {
 		CommonProtection.register(ResourceLocation.fromNamespaceAndPath("htm", "containers"), new InteractionManager());
 
 		PlayerEventListener.init();
-		WorldEventListener.init();
+		LevelEventListener.init();
 	}
 
 	private void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {

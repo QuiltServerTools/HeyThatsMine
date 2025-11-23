@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InfoAction;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -24,10 +24,10 @@ public class InfoCommand implements SubCommand {
 	}
 
 	private int info(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-		ServerPlayer player = context.getSource().getPlayer();
+		ServerPlayer player = context.getSource().getPlayerOrException();
 
 		InteractionManager.pendingActions.put(player, new InfoAction());
-		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
+		context.getSource().sendSuccess(() -> HTMComponents.CLICK_TO_SELECT, false);
 		return 1;
 	}
 }

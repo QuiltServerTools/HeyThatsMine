@@ -12,8 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin extends Item {
-	public BlockItemMixin(Properties settings) {
-		super(settings);
+
+	public BlockItemMixin(Properties properties) {
+		super(properties);
 	}
 
 	/**
@@ -27,13 +28,14 @@ public abstract class BlockItemMixin extends Item {
 			method = "place(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;",
 			cancellable = true
 	)
-	public void HTMPlaceEventTrigger(BlockPlaceContext context, CallbackInfoReturnable<InteractionResult> info) {
-		if (context.getPlayer() == null) return;
+	public void HTMPlaceEventTrigger(BlockPlaceContext context, CallbackInfoReturnable<InteractionResult> cir) {
+		if (context.getPlayer() == null) {
+            return;
+        }
 
 		InteractionResult result = PlayerPlaceBlockCallback.EVENT.invoker().place(context.getPlayer(), context);
-
 		if (result != InteractionResult.PASS) {
-			info.setReturnValue(InteractionResult.FAIL);
+			cir.setReturnValue(InteractionResult.FAIL);
 		}
 	}
 }

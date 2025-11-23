@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.mojang.authlib.GameProfile;
@@ -95,11 +95,11 @@ public class InteractionManager implements ProtectionProvider {
             if (action.requiresLock()) {
                 containerLock.ifPresentOrElse(
                         lock -> action.execute(server, player, pos, object, lock),
-                        () -> player.displayClientMessage(HTMTexts.NOT_LOCKED, false));
+                        () -> player.displayClientMessage(HTMComponents.NOT_LOCKED, false));
             } else {
                 action.execute(server, player, pos, object, containerLock.orElse(null));
             }
-        }, () -> player.displayClientMessage(HTMTexts.NOT_LOCKABLE, false));
+        }, () -> player.displayClientMessage(HTMComponents.NOT_LOCKABLE, false));
 
         if (!persisting.contains(player.getUUID())) {
             pendingActions.remove(player);

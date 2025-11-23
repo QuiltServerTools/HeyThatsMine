@@ -8,10 +8,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public interface WorldBreakBlockCallback {
-	Event<WorldBreakBlockCallback> EVENT = EventFactory.createArrayBacked(WorldBreakBlockCallback.class,
+public interface LevelBreakBlockCallback {
+	Event<LevelBreakBlockCallback> EVENT = EventFactory.createArrayBacked(LevelBreakBlockCallback.class,
 			(listeners) -> (world, pos, drop, breakingEntity) -> {
-				for (WorldBreakBlockCallback listener : listeners) {
+				for (LevelBreakBlockCallback listener : listeners) {
 					InteractionResult result = listener.blockBreak(world, pos, drop, breakingEntity);
 
 					if (result != InteractionResult.PASS) {
@@ -22,5 +22,5 @@ public interface WorldBreakBlockCallback {
 				return InteractionResult.PASS;
 			});
 
-	InteractionResult blockBreak(Level world, BlockPos pos, boolean drop, @Nullable Entity breakingEntity);
+	InteractionResult blockBreak(Level level, BlockPos pos, boolean drop, @Nullable Entity breakingEntity);
 }

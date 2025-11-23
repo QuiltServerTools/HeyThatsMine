@@ -27,7 +27,7 @@ public abstract class JukeboxBlockMixin extends BaseEntityBlock {
     @Inject(method = "useItemOn",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"),
             cancellable = true)
-    public void checkLock(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    public void checkLock(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(InteractionResult.FAIL);
         }
@@ -36,7 +36,7 @@ public abstract class JukeboxBlockMixin extends BaseEntityBlock {
     @Inject(method = "useWithoutItem",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/entity/JukeboxBlockEntity;popOutTheItem()V"),
             cancellable = true)
-    public void checkLock(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    public void checkLock(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(InteractionResult.FAIL);
         }

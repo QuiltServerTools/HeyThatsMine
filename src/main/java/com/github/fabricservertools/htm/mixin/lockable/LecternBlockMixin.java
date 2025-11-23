@@ -27,7 +27,7 @@ public abstract class LecternBlockMixin extends BaseEntityBlock {
     @Inject(method = "tryPlaceBook",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/LecternBlock;placeBook(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/ItemStack;)V"),
             cancellable = true)
-    private static void checkLock(LivingEntity user, Level world, BlockPos pos, BlockState state, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    private static void checkLock(LivingEntity user, Level level, BlockPos pos, BlockState state, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (user instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(false);
         }
@@ -36,7 +36,7 @@ public abstract class LecternBlockMixin extends BaseEntityBlock {
     @Inject(method = "useWithoutItem",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/LecternBlock;openScreen(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)V"),
             cancellable = true)
-    public void checkLock(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    public void checkLock(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(InteractionResult.FAIL);
         }

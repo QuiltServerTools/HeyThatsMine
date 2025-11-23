@@ -32,13 +32,13 @@ public abstract class DecoratedPotBlockEntityMixin extends BlockEntity implement
     }
 
     @Inject(method = "loadAdditional", at = @At("TAIL"))
-    public void readLockData(ValueInput view, CallbackInfo ci) {
-        readLock(view, lock -> this.lock = lock);
+    public void readLockData(ValueInput input, CallbackInfo ci) {
+        readLock(input, lock -> this.lock = lock);
     }
 
     @Inject(method = "saveAdditional", at = @At("TAIL"))
-    public void writeLockData(ValueOutput view, CallbackInfo ci) {
-        writeLock(view);
+    public void writeLockData(ValueOutput output, CallbackInfo ci) {
+        writeLock(output);
     }
 
     @Override

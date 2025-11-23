@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
 import net.minecraft.ChatFormatting;
@@ -24,27 +24,27 @@ public class TrustAction implements LockInteraction {
 	@Override
 	public void execute(MinecraftServer server, ServerPlayer player, BlockPos pos, LockableObject object, HTMContainerLock lock) {
 		if (!lock.isOwner(player)) {
-			player.displayClientMessage(HTMTexts.NOT_OWNER, false);
+			player.displayClientMessage(HTMComponents.NOT_OWNER, false);
 			return;
 		}
 
 		for (NameAndId trustPlayer : trustPlayers) {
 			if (lock.owner().equals(trustPlayer.id())) {
-				player.displayClientMessage(HTMTexts.CANNOT_TRUST_SELF, false);
+				player.displayClientMessage(HTMComponents.CANNOT_TRUST_SELF, false);
 				continue;
 			}
 
             Component playerName = Component.literal(trustPlayer.name()).withStyle(ChatFormatting.WHITE);
 			if (untrust) {
 				lock.withoutTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
-					player.displayClientMessage(HTMTexts.UNTRUST.apply(playerName), false);
+					player.displayClientMessage(HTMComponents.UNTRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.displayClientMessage(HTMTexts.PLAYER_NOT_TRUSTED.apply(playerName), false));
+				}, () -> player.displayClientMessage(HTMComponents.PLAYER_NOT_TRUSTED.apply(playerName), false));
 			} else {
 				lock.withTrusted(trustPlayer.id()).ifPresentOrElse(newLock -> {
-					player.displayClientMessage(HTMTexts.TRUST.apply(playerName), false);
+					player.displayClientMessage(HTMComponents.TRUST.apply(playerName), false);
 					object.setLock(newLock);
-				}, () -> player.displayClientMessage(HTMTexts.ALREADY_TRUSTED.apply(playerName), false));
+				}, () -> player.displayClientMessage(HTMComponents.ALREADY_TRUSTED.apply(playerName), false));
 			}
 		}
 	}

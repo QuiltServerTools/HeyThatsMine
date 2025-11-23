@@ -3,7 +3,7 @@ package com.github.fabricservertools.htm.listeners;
 import com.github.fabricservertools.htm.HTM;
 import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.github.fabricservertools.htm.events.PlayerPlaceBlockCallback;
@@ -32,12 +32,12 @@ public class PlayerEventListener {
         AttackBlockCallback.EVENT.register(PlayerEventListener::onAttackBlock);
     }
 
-    private static InteractionResult onAttackBlock(Player player, Level world, InteractionHand hand, BlockPos pos, Direction direction) {
+    private static InteractionResult onAttackBlock(Player player, Level level, InteractionHand hand, BlockPos pos, Direction direction) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (InteractionManager.pendingActions.containsKey(serverPlayer)) {
                 InteractionManager.execute(serverPlayer.level().getServer(), serverPlayer, pos);
 
-                world.updateNeighborsAt(pos, world.getBlockState(pos).getBlock(), null);
+                level.updateNeighborsAt(pos, level.getBlockState(pos).getBlock(), null);
                 return InteractionResult.SUCCESS;
             }
         }
@@ -45,8 +45,8 @@ public class PlayerEventListener {
         return InteractionResult.PASS;
     }
 
-    private static boolean onBeforeBreak(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        if (world.isClientSide()) {
+    private static boolean onBeforeBreak(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        if (level.isClientSide()) {
             return true;
         }
 
@@ -59,18 +59,18 @@ public class PlayerEventListener {
 
             if (lock.get().isOwner(playerEntity) || (HTMConfig.get().canTrustedPlayersBreakChests() && lock.get().canOpen(playerEntity))) {
                 if (state.getBlock() instanceof ChestBlock) {
-                    Optional<LockableObject> unlocked = InteractionManager.getUnlockedLockable((ServerLevel) world, pos, blockEntity);
+                    Optional<LockableObject> unlocked = InteractionManager.getUnlockedLockable((ServerLevel) level, pos, blockEntity);
                     if (unlocked.isPresent()) {
                         unlocked.get().setLock(lock.get());
                         return true;
                     }
                 }
 
-                Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_UNLOCKED);
+                Utility.sendMessage(playerEntity, HTMComponents.CONTAINER_UNLOCKED);
                 return true;
             }
 
-            Utility.sendMessage(playerEntity, HTMTexts.NOT_OWNER);
+            Utility.sendMessage(playerEntity, HTMComponents.NOT_OWNER);
             return false;
         }
 
@@ -78,7 +78,7 @@ public class PlayerEventListener {
     }
 
     @SuppressWarnings({"ConstantConditions", "SameReturnValue"})
-    private static InteractionResult onPlace(Player playerEntity, BlockPlaceContext context) {
+    private static InteractionResult onPlace(Player player, BlockPlaceContext context) {
         try {
             BlockPos pos = context.getClickedPos();
             Level world = context.getLevel();
@@ -95,8 +95,8 @@ public class PlayerEventListener {
                         return InteractionResult.PASS;
                     }
 
-                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayer) playerEntity));
-                    Utility.sendMessage(playerEntity, HTMTexts.CONTAINER_SET.apply(PrivateLock.INSTANCE.displayName()));
+                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayer) player));
+                    Utility.sendMessage(player, HTMComponents.CONTAINER_SET.apply(PrivateLock.INSTANCE.displayName()));
                 }
             }
         } catch (Exception e) {

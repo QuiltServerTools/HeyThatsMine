@@ -22,23 +22,23 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 @Mixin(ChiseledBookShelfBlockEntity.class)
-public abstract class ChiseledBookshelfBlockEntityMixin extends BlockEntity implements Container, LockableObject {
+public abstract class ChiseledBookShelfBlockEntityMixin extends BlockEntity implements Container, LockableObject {
 
     @Unique
     private HTMContainerLock lock = null;
 
-    public ChiseledBookshelfBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public ChiseledBookShelfBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Inject(method = "loadAdditional", at = @At("TAIL"))
-    public void readLockData(ValueInput view, CallbackInfo ci) {
-        readLock(view, lock -> this.lock = lock);
+    public void readLockData(ValueInput input, CallbackInfo ci) {
+        readLock(input, lock -> this.lock = lock);
     }
 
     @Inject(method = "saveAdditional", at = @At("TAIL"))
-    public void writeLockData(ValueOutput view, CallbackInfo ci) {
-        writeLock(view);
+    public void writeLockData(ValueOutput output, CallbackInfo ci) {
+        writeLock(output);
     }
 
     @Inject(method = "stillValid", at = @At("HEAD"), cancellable = true)

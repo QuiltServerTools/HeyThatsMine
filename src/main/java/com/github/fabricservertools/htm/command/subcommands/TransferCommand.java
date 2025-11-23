@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TransferAction;
@@ -31,7 +31,7 @@ public class TransferCommand implements SubCommand {
 
 	@SuppressWarnings("SameReturnValue")
 	private int transfer(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-		ServerPlayer player = context.getSource().getPlayer();
+		ServerPlayer player = context.getSource().getPlayerOrException();
         Collection<NameAndId> targets = GameProfileArgument.getGameProfiles(context, "target");
 
         if (targets.size() > 1) {
@@ -39,7 +39,7 @@ public class TransferCommand implements SubCommand {
         }
 
 		InteractionManager.pendingActions.put(player, new TransferAction(targets.iterator().next()));
-		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
-		return 1;
+		context.getSource().sendSuccess(() -> HTMComponents.CLICK_TO_SELECT, false);
+		return 0;
 	}
 }

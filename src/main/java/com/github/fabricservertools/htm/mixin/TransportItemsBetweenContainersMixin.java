@@ -18,17 +18,17 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
 @Mixin(TransportItemsBetweenContainers.class)
-public abstract class MoveItemsTaskMixin extends Behavior<PathfinderMob> {
+public abstract class TransportItemsBetweenContainersMixin extends Behavior<PathfinderMob> {
 
-    public MoveItemsTaskMixin(Map<MemoryModuleType<?>, MemoryStatus> requiredMemoryState) {
-        super(requiredMemoryState);
+    public TransportItemsBetweenContainersMixin(Map<MemoryModuleType<?>, MemoryStatus> map) {
+        super(map);
     }
 
     @Inject(method = "isContainerLocked", at = @At("RETURN"), cancellable = true)
-    private void checkLockedContainerFlags(TransportItemsBetweenContainers.TransportItemTarget storage, CallbackInfoReturnable<Boolean> cir) {
-        if (!cir.getReturnValueZ() && storage.blockEntity().getLevel() instanceof ServerLevel world) {
-            Optional<HTMContainerLock> lock = InteractionManager.getLock(world, storage.pos(), storage.blockEntity());
-            cir.setReturnValue(lock.isPresent() && !lock.get().flag(FlagType.COPPER_GOLEMS, storage.state()));
+    private void checkLockedContainerFlags(TransportItemsBetweenContainers.TransportItemTarget target, CallbackInfoReturnable<Boolean> cir) {
+        if (!cir.getReturnValueZ() && target.blockEntity().getLevel() instanceof ServerLevel world) {
+            Optional<HTMContainerLock> lock = InteractionManager.getLock(world, target.pos(), target.blockEntity());
+            cir.setReturnValue(lock.isPresent() && !lock.get().flag(FlagType.COPPER_GOLEMS, target.state()));
         }
     }
 }

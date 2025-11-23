@@ -22,5 +22,5 @@ public interface BlockExplodeCallback {
 				return InteractionResult.PASS;
 			});
 
-	InteractionResult explode(ExplosionDamageCalculator explosionBehavior, Explosion explosion, BlockPos pos, BlockState state);
+	InteractionResult explode(ExplosionDamageCalculator damageCalculator, Explosion explosion, BlockPos pos, BlockState state);
 }

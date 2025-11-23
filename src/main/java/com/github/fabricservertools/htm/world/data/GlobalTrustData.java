@@ -11,7 +11,7 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
-public class GlobalTrustState extends SavedData {
+public class GlobalTrustData extends SavedData {
 	private static final Codec<Pair<UUID, List<UUID>>> TRUSTER_CODEC = RecordCodecBuilder.create(instance ->
 			instance.group(
 					UUIDUtil.CODEC.fieldOf("Truster").forGetter(Pair::getFirst),
@@ -19,19 +19,19 @@ public class GlobalTrustState extends SavedData {
 			).apply(instance, Pair::of)
 	);
 
-	public static final Codec<GlobalTrustState> CODEC = RecordCodecBuilder.create(instance ->
+	public static final Codec<GlobalTrustData> CODEC = RecordCodecBuilder.create(instance ->
 			instance.group(
-					TRUSTER_CODEC.listOf().fieldOf("GlobalTrusts").forGetter(GlobalTrustState::globalTrusts)
-			).apply(instance, GlobalTrustState::new)
+					TRUSTER_CODEC.listOf().fieldOf("GlobalTrusts").forGetter(GlobalTrustData::globalTrusts)
+			).apply(instance, GlobalTrustData::new)
 	);
 
-	public static final SavedDataType<GlobalTrustState> TYPE = new SavedDataType<>("globalTrust", GlobalTrustState::new, CODEC, null);
+	public static final SavedDataType<GlobalTrustData> TYPE = new SavedDataType<>("globalTrust", GlobalTrustData::new, CODEC, null);
 
 	private final Multimap<UUID, UUID> globalTrust = HashMultimap.create();
 
-	private GlobalTrustState() {}
+	private GlobalTrustData() {}
 
-	private GlobalTrustState(List<Pair<UUID, List<UUID>>> globalTrusts) {
+	private GlobalTrustData(List<Pair<UUID, List<UUID>>> globalTrusts) {
 		for (Pair<UUID, List<UUID>> truster : globalTrusts) {
 			globalTrust.putAll(truster.getFirst(), truster.getSecond());
 		}

@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.mojang.brigadier.context.CommandContext;
@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import static net.minecraft.commands.Commands.literal;
 
 public class QuietCommand implements SubCommand {
+
 	@Override
 	public LiteralCommandNode<CommandSourceStack> build() {
 		return literal("quiet")
@@ -22,14 +23,15 @@ public class QuietCommand implements SubCommand {
 	}
 
 	private int quiet(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-		ServerPlayer player = context.getSource().getPlayer();
+		ServerPlayer player = context.getSource().getPlayerOrException();
 
 		InteractionManager.toggleNoMessage(player);
 		if (InteractionManager.noMessage.contains(player.getUUID())) {
-			context.getSource().sendSuccess(() -> HTMTexts.TOGGLE_NO_MSG_ON, false);
+			context.getSource().sendSuccess(() -> HTMComponents.TOGGLE_NO_MSG_ON, false);
+            return 1;
 		} else {
-			context.getSource().sendSuccess(() -> HTMTexts.TOGGLE_NO_MSG_OFF, false);
+			context.getSource().sendSuccess(() -> HTMComponents.TOGGLE_NO_MSG_OFF, false);
+            return 0;
 		}
-		return 1;
 	}
 }

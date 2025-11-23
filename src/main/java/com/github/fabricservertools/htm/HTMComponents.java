@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 
-public final class HTMTexts {
+public final class HTMComponents {
     private static final String PREFIX = "text.htm.";
 
     public static final Component NOT_LOCKABLE = error("error.unlockable");
@@ -17,29 +17,29 @@ public final class HTMTexts {
     public static final Component INVALID_LOCK_TYPE = error("error.lock_type");
     public static final Component INVALID_FLAG_TYPE = error("error.flag_type");
     public static final Component CANNOT_TRUST_SELF = error("error.trust_self");
-    public static final TranslatableTextBuilder ALREADY_TRUSTED = errorBuilder("error.already_trusted");
-    public static final TranslatableTextBuilder PLAYER_NOT_TRUSTED = errorBuilder("error.not_trusted");
+    public static final TranslatableComponentBuilder ALREADY_TRUSTED = errorBuilder("error.already_trusted");
+    public static final TranslatableComponentBuilder PLAYER_NOT_TRUSTED = errorBuilder("error.not_trusted");
     public static final Component CONTAINER_LOCKED = error("locked");
     public static final Component OVERRIDING = error("overriding");
 
     public static final Component CLICK_TO_SELECT = info("select");
     public static final Component DIVIDER = info("divider");
-    public static final TranslatableTextBuilder CONTAINER_LOCK_TYPE = infoBuilder("type");
-    public static final TranslatableTextBuilder CONTAINER_OWNER = infoBuilder("owner");
-    public static final TranslatableTextBuilder CONTAINER_TRUSTED = infoBuilder("trusted");
-    public static final TranslatableTextBuilder TRUSTED_GLOBALLY = infoBuilder("trusted.global");
-    public static final TranslatableTextBuilder TRUST = infoBuilder("trust");
-    public static final TranslatableTextBuilder UNTRUST = infoBuilder("untrust");
+    public static final TranslatableComponentBuilder CONTAINER_LOCK_TYPE = infoBuilder("type");
+    public static final TranslatableComponentBuilder CONTAINER_OWNER = infoBuilder("owner");
+    public static final TranslatableComponentBuilder CONTAINER_TRUSTED = infoBuilder("trusted");
+    public static final TranslatableComponentBuilder TRUSTED_GLOBALLY = infoBuilder("trusted.global");
+    public static final TranslatableComponentBuilder TRUST = infoBuilder("trust");
+    public static final TranslatableComponentBuilder UNTRUST = infoBuilder("untrust");
     public static final Component GLOBAL = info("global").withStyle(ChatFormatting.BOLD);
-    public static final TranslatableTextBuilder CONTAINER_TRANSFER = infoBuilder("transfer");
+    public static final TranslatableComponentBuilder CONTAINER_TRANSFER = infoBuilder("transfer");
     public static final Component CONTAINER_UNLOCKED = info("unlocked");
-    public static final TranslatableTextBuilder CONTAINER_KEY = infoBuilder("key");
-    public static final TranslatableTextBuilder CONTAINER_SET = infoBuilder("set");
-    public static final TranslatableTextBuilder CONTAINER_KEY_SET = infoBuilder("key_set");
-    public static final TranslatableTextBuilder CONTAINER_OVERRIDE = infoBuilder("override").andThen(text -> text.append(CommonComponents.space()).append(OVERRIDING));
-    public static final TranslatableTextBuilder CONTAINER_FLAG_SET = infoBuilder("set_flag");
-    public static final TranslatableTextBuilder CONTAINER_FLAG_RESET = infoBuilder("reset_flag");
-    public static final TranslatableTextBuilder CONTAINER_FLAG = infoBuilder("flag");
+    public static final TranslatableComponentBuilder CONTAINER_KEY = infoBuilder("key");
+    public static final TranslatableComponentBuilder CONTAINER_SET = infoBuilder("set");
+    public static final TranslatableComponentBuilder CONTAINER_KEY_SET = infoBuilder("key_set");
+    public static final TranslatableComponentBuilder CONTAINER_OVERRIDE = infoBuilder("override").andThen(text -> text.append(CommonComponents.space()).append(OVERRIDING));
+    public static final TranslatableComponentBuilder CONTAINER_FLAG_SET = infoBuilder("set_flag");
+    public static final TranslatableComponentBuilder CONTAINER_FLAG_RESET = infoBuilder("reset_flag");
+    public static final TranslatableComponentBuilder CONTAINER_FLAG = infoBuilder("flag");
     public static final Component ON = translatable("on")
             .withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD);
     public static final Component OFF = translatable("off")
@@ -53,7 +53,7 @@ public final class HTMTexts {
         return errorBuilder(key).apply();
     }
 
-    private static TranslatableTextBuilder errorBuilder(String key) {
+    private static TranslatableComponentBuilder errorBuilder(String key) {
         return builder(key, style -> style.withColor(ChatFormatting.RED));
     }
     
@@ -61,11 +61,11 @@ public final class HTMTexts {
         return infoBuilder(key).apply();
     }
 
-    private static TranslatableTextBuilder infoBuilder(String key) {
+    private static TranslatableComponentBuilder infoBuilder(String key) {
         return builder(key, style -> style.withColor(ChatFormatting.AQUA));
     }
 
-    private static TranslatableTextBuilder builder(String key, UnaryOperator<Style> style) {
+    private static TranslatableComponentBuilder builder(String key, UnaryOperator<Style> style) {
         return args -> translatable(key, args).withStyle(style);
     }
 
@@ -74,14 +74,14 @@ public final class HTMTexts {
     }
 
     @FunctionalInterface
-    public interface TranslatableTextBuilder {
+    public interface TranslatableComponentBuilder {
 
         MutableComponent apply(Object... arg);
 
-        default TranslatableTextBuilder andThen(UnaryOperator<MutableComponent> operator) {
+        default TranslatableComponentBuilder andThen(UnaryOperator<MutableComponent> operator) {
             return args -> operator.apply(apply(args));
         }
     }
 
-    private HTMTexts() {}
+    private HTMComponents() {}
 }

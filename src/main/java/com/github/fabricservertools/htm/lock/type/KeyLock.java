@@ -1,6 +1,6 @@
 package com.github.fabricservertools.htm.lock.type;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
@@ -37,7 +37,7 @@ public record KeyLock(ItemStack key) implements Lock {
 
 	@Override
 	public boolean canOpen(ServerPlayer player, HTMContainerLock lock) {
-		if (Utility.getGlobalTrustState(player.level().getServer()).isTrusted(lock.owner(), player.getUUID())
+		if (Utility.getGlobalTrustData(player.level().getServer()).isTrusted(lock.owner(), player.getUUID())
                 || lock.isTrusted(player.getUUID())) {
             return true;
         }
@@ -48,7 +48,7 @@ public record KeyLock(ItemStack key) implements Lock {
 
 	@Override
 	public void onInfo(ServerPlayer player, HTMContainerLock lock) {
-		player.displayClientMessage(HTMTexts.CONTAINER_KEY.apply(key.getDisplayName()), false);
+		player.displayClientMessage(HTMComponents.CONTAINER_KEY.apply(key.getDisplayName()), false);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public record KeyLock(ItemStack key) implements Lock {
 
 	public static KeyLock fromMainHandItem(ServerPlayer player) {
 		ItemStack key = player.getMainHandItem().copy();
-		player.displayClientMessage(HTMTexts.CONTAINER_KEY_SET.apply(key.getDisplayName()), false);
+		player.displayClientMessage(HTMComponents.CONTAINER_KEY_SET.apply(key.getDisplayName()), false);
 		return new KeyLock(key);
 	}
 }

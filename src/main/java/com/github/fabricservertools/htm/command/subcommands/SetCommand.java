@@ -1,9 +1,9 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.command.SubCommand;
-import com.github.fabricservertools.htm.command.suggestors.LockTypeSuggestionProvider;
+import com.github.fabricservertools.htm.command.suggestion.LockTypeSuggestionProvider;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.SetAction;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -32,12 +32,12 @@ public class SetCommand implements SubCommand {
 	private int set(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 		Lock.Type type = Lock.Type.fromUiName(StringArgumentType.getString(context, "type"));
 		if (type == null) {
-			throw new SimpleCommandExceptionType(HTMTexts.INVALID_LOCK_TYPE).create();
+			throw new SimpleCommandExceptionType(HTMComponents.INVALID_LOCK_TYPE).create();
 		}
 
-        ServerPlayer player = context.getSource().getPlayer();
+        ServerPlayer player = context.getSource().getPlayerOrException();
 		InteractionManager.pendingActions.put(player, new SetAction(type.create(player)));
-		context.getSource().sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
-		return 1;
+		context.getSource().sendSuccess(() -> HTMComponents.CLICK_TO_SELECT, false);
+		return 0;
 	}
 }

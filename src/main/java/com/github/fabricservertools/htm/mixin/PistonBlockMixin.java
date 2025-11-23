@@ -23,13 +23,13 @@ public abstract class PistonBlockMixin {
 			method = "moveBlocks",
 			at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"),
 			cancellable = true)
-	private void HTMPistonMoveCheck(Level world, BlockPos pos, Direction dir, boolean extend, CallbackInfoReturnable<Boolean> cir, @Local BlockState state, @Local(ordinal = 2) BlockPos blockPos) {
-		if (world.isClientSide()) {
+	private void HTMPistonMoveCheck(Level level, BlockPos pos, Direction direction, boolean extend, CallbackInfoReturnable<Boolean> cir, @Local BlockState state, @Local(ordinal = 2) BlockPos blockPos) {
+		if (level.isClientSide()) {
             return;
         }
 
 		if (state.hasBlockEntity()) {
-			Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) world, blockPos);
+			Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) level, blockPos);
 			if (lock.isPresent()) {
 				cir.setReturnValue(false);
 			}
@@ -40,14 +40,14 @@ public abstract class PistonBlockMixin {
 			method = "moveBlocks",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;hasBlockEntity()Z"),
 			cancellable = true)
-	private void HTMPistonDestroyCheck(Level world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir,
-									   @Local BlockState state, @Local(ordinal = 2) BlockPos blockPos) {
-		if (world.isClientSide()) {
+	private void HTMPistonDestroyCheck(Level level, BlockPos pos, Direction direction, boolean retract, CallbackInfoReturnable<Boolean> cir,
+                                       @Local BlockState state, @Local(ordinal = 2) BlockPos blockPos) {
+		if (level.isClientSide()) {
             return;
         }
 
 		if (state.hasBlockEntity()) {
-			Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) world, blockPos);
+			Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) level, blockPos);
 			if (lock.isPresent()) {
 				cir.setReturnValue(false);
 			}

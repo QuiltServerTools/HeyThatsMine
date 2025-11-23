@@ -20,5 +20,5 @@ public interface EnderDragonBreakBlockCallback {
 				return InteractionResult.PASS;
 			});
 
-	InteractionResult blockBreak(ServerLevel world, BlockPos pos, boolean move);
+	InteractionResult blockBreak(ServerLevel level, BlockPos pos, boolean move);
 }

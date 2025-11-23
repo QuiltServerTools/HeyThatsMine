@@ -14,8 +14,11 @@ public class PrivateLock implements Lock {
 
 	@Override
 	public boolean canOpen(ServerPlayer player, HTMContainerLock lock) {
-		if (lock.isTrusted(player.getUUID())) return true;
-		return Utility.getGlobalTrustState(player.level().getServer()).isTrusted(lock.owner(), player.getUUID());
+		if (lock.isTrusted(player.getUUID())) {
+            return true;
+        }
+
+		return Utility.getGlobalTrustData(player.level().getServer()).isTrusted(lock.owner(), player.getUUID());
 	}
 
 	@Override

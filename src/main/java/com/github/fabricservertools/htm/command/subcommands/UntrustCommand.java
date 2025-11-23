@@ -1,11 +1,11 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
-import com.github.fabricservertools.htm.world.data.GlobalTrustState;
+import com.github.fabricservertools.htm.world.data.GlobalTrustData;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -41,24 +41,25 @@ public class UntrustCommand implements SubCommand {
 				.build();
 	}
 
-	@SuppressWarnings("SameReturnValue")
 	private int untrust(CommandSourceStack source, Collection<NameAndId> players, boolean global) throws CommandSyntaxException {
 		ServerPlayer player = source.getPlayerOrException();
 
 		if (global) {
 			for (NameAndId target : players) {
-				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
-				if (globalTrustState.removeTrust(player.getUUID(), target.id())) {
-                    source.sendSuccess(() -> HTMTexts.UNTRUST.apply(target.name()).append(CommonComponents.SPACE).append(HTMTexts.GLOBAL), false);
+				GlobalTrustData globalTrustData = Utility.getGlobalTrustData(source.getServer());
+				if (globalTrustData.removeTrust(player.getUUID(), target.id())) {
+                    source.sendSuccess(() -> HTMComponents.UNTRUST.apply(target.name()).append(CommonComponents.SPACE).append(HTMComponents.GLOBAL), false);
+                    return 2;
 				} else {
-                    source.sendSuccess(() -> HTMTexts.PLAYER_NOT_TRUSTED.apply(target.name()).append(CommonComponents.SPACE).append(HTMTexts.GLOBAL), false);
+                    source.sendSuccess(() -> HTMComponents.PLAYER_NOT_TRUSTED.apply(target.name()).append(CommonComponents.SPACE).append(HTMComponents.GLOBAL), false);
+                    return 3;
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(players, true));
-			source.sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
+			source.sendSuccess(() -> HTMComponents.CLICK_TO_SELECT, false);
 		}
 
-		return 1;
+		return 0;
 	}
 }

@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.interactions.InteractionManager;
-import com.github.fabricservertools.htm.world.data.GlobalTrustState;
+import com.github.fabricservertools.htm.world.data.GlobalTrustData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -21,8 +21,8 @@ public class Utility {
         return Component.literal(getNameFromUUID(uuid, server)).withStyle(ChatFormatting.WHITE);
 	}
 
-	public static GlobalTrustState getGlobalTrustState(MinecraftServer server) {
-		return server.overworld().getDataStorage().computeIfAbsent(GlobalTrustState.TYPE);
+	public static GlobalTrustData getGlobalTrustData(MinecraftServer server) {
+		return server.overworld().getDataStorage().computeIfAbsent(GlobalTrustData.TYPE);
 	}
 
 	public static void sendMessage(Player player, Component message) {

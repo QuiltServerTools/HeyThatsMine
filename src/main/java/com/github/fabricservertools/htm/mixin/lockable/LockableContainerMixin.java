@@ -29,15 +29,15 @@ public abstract class LockableContainerMixin extends BlockEntity implements Lock
 		super(type, pos, state);
 	}
 
-	@Inject(method = "saveAdditional", at = @At("HEAD"))
-	private void toTag(ValueOutput view, CallbackInfo ci) {
-		writeLock(view);
+	@Inject(method = "loadAdditional", at = @At("HEAD"))
+	private void fromTag(ValueInput input, CallbackInfo ci) {
+		readLock(input, lock -> htmContainerLock = lock);
 	}
 
-	@Inject(method = "loadAdditional", at = @At("HEAD"))
-	private void fromTag(ValueInput view, CallbackInfo ci) {
-		readLock(view, lock -> htmContainerLock = lock);
-	}
+    @Inject(method = "saveAdditional", at = @At("HEAD"))
+    private void toTag(ValueOutput output, CallbackInfo ci) {
+        writeLock(output);
+    }
 
 	@Inject(method = "canOpen(Lnet/minecraft/world/entity/player/Player;)Z", at = @At("HEAD"), cancellable = true)
 	private void checkUnlocked(Player player, CallbackInfoReturnable<Boolean> cir) {

@@ -1,4 +1,4 @@
-package com.github.fabricservertools.htm.command.suggestors;
+package com.github.fabricservertools.htm.command.suggestion;
 
 import com.github.fabricservertools.htm.api.Lock;
 import com.mojang.brigadier.context.CommandContext;

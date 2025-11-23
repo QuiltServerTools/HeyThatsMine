@@ -1,11 +1,11 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
-import com.github.fabricservertools.htm.world.data.GlobalTrustState;
+import com.github.fabricservertools.htm.world.data.GlobalTrustData;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -43,16 +43,16 @@ public class TrustCommand implements SubCommand {
 	@SuppressWarnings("SameReturnValue")
 	private int trustList(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 		ServerPlayer player = context.getSource().getPlayerOrException();
-		GlobalTrustState globalTrustState = Utility.getGlobalTrustState(context.getSource().getServer());
+		GlobalTrustData globalTrustData = Utility.getGlobalTrustData(context.getSource().getServer());
 
-		String trustedList = globalTrustState.getTrusted().get(player.getUUID())
+		String trustedList = globalTrustData.getTrusted().get(player.getUUID())
 				.stream()
 				.map(uuid -> Utility.getNameFromUUID(uuid, context.getSource().getServer()))
 				.collect(Collectors.joining(", "));
 
-		player.displayClientMessage(HTMTexts.TRUSTED_GLOBALLY.apply(Component.literal(trustedList).withStyle(ChatFormatting.WHITE)), false);
+		player.displayClientMessage(HTMComponents.TRUSTED_GLOBALLY.apply(Component.literal(trustedList).withStyle(ChatFormatting.WHITE)), false);
 
-		return 1;
+		return 0;
 	}
 
 	private static int trust(CommandSourceStack source, Collection<NameAndId> players, boolean global) throws CommandSyntaxException {
@@ -60,25 +60,26 @@ public class TrustCommand implements SubCommand {
 
 		if (global) {
 			for (NameAndId target : players) {
-				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
+				GlobalTrustData globalTrustData = Utility.getGlobalTrustData(source.getServer());
 				if (player.getUUID().equals(target.id())) {
-                    source.sendFailure(HTMTexts.CANNOT_TRUST_SELF);
-					return -1;
+                    source.sendFailure(HTMComponents.CANNOT_TRUST_SELF);
+					return 1;
 				}
 
                 Component playerName = Component.literal(target.name()).withStyle(ChatFormatting.WHITE);
-				if (globalTrustState.addTrust(player.getUUID(), target.id())) {
-                    source.sendSuccess(() -> HTMTexts.TRUST.apply(playerName).append(CommonComponents.SPACE).append(HTMTexts.GLOBAL), false);
+				if (globalTrustData.addTrust(player.getUUID(), target.id())) {
+                    source.sendSuccess(() -> HTMComponents.TRUST.apply(playerName).append(CommonComponents.SPACE).append(HTMComponents.GLOBAL), false);
+                    return 2;
 				} else {
-					source.sendSuccess(() -> HTMTexts.ALREADY_TRUSTED.apply(playerName), false);
+					source.sendSuccess(() -> HTMComponents.ALREADY_TRUSTED.apply(playerName), false);
+                    return 3;
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(players, false));
-			source.sendSuccess(() -> HTMTexts.CLICK_TO_SELECT, false);
+			source.sendSuccess(() -> HTMComponents.CLICK_TO_SELECT, false);
 		}
 
-
-		return 1;
+		return 4;
 	}
 }

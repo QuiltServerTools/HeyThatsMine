@@ -28,7 +28,7 @@ public abstract class DecoratedPotBlockMixin extends BaseEntityBlock implements 
     @Inject(method = "useItemOn",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/entity/DecoratedPotBlockEntity;getTheItem()Lnet/minecraft/world/item/ItemStack;"),
             cancellable = true)
-    public void checkLock(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    public void checkLock(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof ServerPlayer serverPlayer && !InteractionManager.canOpen(serverPlayer, pos)) {
             cir.setReturnValue(InteractionResult.FAIL);
         }

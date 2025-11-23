@@ -21,28 +21,30 @@ import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin {
+
 	@Inject(method = "suckInItems(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/entity/Hopper;)Z", at = @At(value = "FIELD", target = "Lnet/minecraft/core/Direction;DOWN:Lnet/minecraft/core/Direction;", shift = At.Shift.AFTER), cancellable = true)
-    private static void extractHTMCheck(Level world, Hopper hopper, CallbackInfoReturnable<Boolean> cir) {
+    private static void extractHTMCheck(Level level, Hopper hopper, CallbackInfoReturnable<Boolean> cir) {
         // only checks extraction, so only needs to check block above hopper
-        if (!isBlockContainerHopperable(world, BlockPos.containing(hopper.getLevelX(), hopper.getLevelY(), hopper.getLevelZ()).relative(Direction.UP)))
+        if (!isBlockContainerHopperable(level, BlockPos.containing(hopper.getLevelX(), hopper.getLevelY(), hopper.getLevelZ()).relative(Direction.UP))) {
             cir.setReturnValue(true); // if block is not hopperable, cancel the extract method call
+        }
         // otherwise continue the extract method as normal
     }
 
 	//TODO optimize better
     @Unique
-    private static boolean isBlockContainerHopperable(Level world, BlockPos pos) {
-        if (world.isClientSide()) {
+    private static boolean isBlockContainerHopperable(Level level, BlockPos pos) {
+        if (level.isClientSide()) {
             return true;
         }
 
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity == null) { // no block entity above
             return true;
         }
 
-        BlockState state = world.getBlockState(pos);
-        Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) world, pos, blockEntity);
-        return lock.map(l -> l.flag(FlagType.HOPPERS, state)).orElse(true);
+        BlockState state = level.getBlockState(pos);
+        Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) level, pos, blockEntity);
+        return lock.map(present -> present.flag(FlagType.HOPPERS, state)).orElse(true);
     }
 }

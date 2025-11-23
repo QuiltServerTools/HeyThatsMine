@@ -3,7 +3,7 @@ package com.github.fabricservertools.htm.listeners;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.events.BlockExplodeCallback;
 import com.github.fabricservertools.htm.events.EnderDragonBreakBlockCallback;
-import com.github.fabricservertools.htm.events.WorldBreakBlockCallback;
+import com.github.fabricservertools.htm.events.LevelBreakBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,28 +18,28 @@ import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class WorldEventListener {
+public class LevelEventListener {
 	public static void init() {
-		BlockExplodeCallback.EVENT.register(WorldEventListener::onBlockExplode);
-		WorldBreakBlockCallback.EVENT.register(WorldEventListener::onBlockBreak);
-		EnderDragonBreakBlockCallback.EVENT.register(WorldEventListener::enderDragonBreakBlock);
+		BlockExplodeCallback.EVENT.register(LevelEventListener::onBlockExplode);
+		LevelBreakBlockCallback.EVENT.register(LevelEventListener::onBlockBreak);
+		EnderDragonBreakBlockCallback.EVENT.register(LevelEventListener::enderDragonBreakBlock);
 	}
 
-	private static InteractionResult enderDragonBreakBlock(ServerLevel world, BlockPos pos, boolean b) {
-		BlockState state = world.getBlockState(pos);
+	private static InteractionResult enderDragonBreakBlock(ServerLevel level, BlockPos pos, boolean b) {
+		BlockState state = level.getBlockState(pos);
 		if (!state.hasBlockEntity()) return InteractionResult.PASS;
 
-		if (InteractionManager.getLock(world, pos).isPresent()) return InteractionResult.FAIL;
+		if (InteractionManager.getLock(level, pos).isPresent()) return InteractionResult.FAIL;
 
 		return InteractionResult.PASS;
 	}
 
-	private static InteractionResult onBlockBreak(Level world, BlockPos pos, boolean drop, @Nullable Entity entity) {
-		if (world.isClientSide()) {
+	private static InteractionResult onBlockBreak(Level level, BlockPos pos, boolean drop, @Nullable Entity entity) {
+		if (level.isClientSide()) {
             return InteractionResult.PASS;
         }
 
-		Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) world, pos);
+		Optional<HTMContainerLock> lock = InteractionManager.getLock((ServerLevel) level, pos);
 		if (lock.isEmpty()) {
             return InteractionResult.PASS;
         }
@@ -53,7 +53,7 @@ public class WorldEventListener {
 		return InteractionResult.FAIL;
 	}
 
-	private static InteractionResult onBlockExplode(ExplosionDamageCalculator explosionBehavior, Explosion explosion, BlockPos pos, BlockState state) {
+	private static InteractionResult onBlockExplode(ExplosionDamageCalculator damageCalculator, Explosion explosion, BlockPos pos, BlockState state) {
 		if (!state.hasBlockEntity()) return InteractionResult.PASS;
 
 		if (InteractionManager.getLock(explosion.level(), pos).isPresent()) return InteractionResult.FAIL;
