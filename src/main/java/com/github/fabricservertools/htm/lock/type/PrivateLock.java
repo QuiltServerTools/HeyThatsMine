@@ -4,11 +4,12 @@ import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PrivateLock implements Lock {
 	public static final PrivateLock INSTANCE = new PrivateLock();
-	public static final Codec<PrivateLock> CODEC = Codec.unit(INSTANCE);
+	public static final Codec<PrivateLock> CODEC = MapCodec.unitCodec(INSTANCE);
 
 	private PrivateLock() {}
 

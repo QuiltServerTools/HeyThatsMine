@@ -11,7 +11,7 @@ import eu.pb4.common.protection.api.CommonProtection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +23,7 @@ public class HTM implements ModInitializer {
         HTMConfig.load();
 
 		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));
-		CommonProtection.register(ResourceLocation.fromNamespaceAndPath("htm", "containers"), new InteractionManager());
+		CommonProtection.register(Identifier.fromNamespaceAndPath("htm", "containers"), new InteractionManager());
 
 		PlayerEventListener.init();
 		LevelEventListener.init();
