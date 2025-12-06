@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.Nullable;
 
 public enum FlagType implements StringRepresentable {
     HOPPERS("hoppers", true),
@@ -32,7 +33,7 @@ public enum FlagType implements StringRepresentable {
         return Component.literal(id.toUpperCase()).withStyle(ChatFormatting.WHITE);
     }
 
-    public static FlagType fromString(String flag) {
+    public static @Nullable FlagType fromString(String flag) {
         for (FlagType type : values()) {
             if (type.id.equals(flag.toLowerCase())) {
                 return type;

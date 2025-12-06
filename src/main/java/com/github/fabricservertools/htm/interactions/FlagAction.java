@@ -13,6 +13,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Optional;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -22,7 +24,7 @@ public class FlagAction implements LockInteraction {
 	 * Optional flag type and value to set it to.
 	 * If empty, get flag info instead
 	 */
-	private final Optional<Pair<FlagType, Boolean>> flagSet;
+	private final Optional<Pair<FlagType, @Nullable Boolean>> flagSet;
 
 	/**
 	 * Creates a flag action
@@ -30,7 +32,7 @@ public class FlagAction implements LockInteraction {
 	 * @param flagSet Optional flag type and value to set it to.
 	 *                If empty, get flag info instead
 	 */
-	public FlagAction(Optional<Pair<FlagType, Boolean>> flagSet) {
+	public FlagAction(Optional<Pair<FlagType, @Nullable Boolean>> flagSet) {
 		this.flagSet = flagSet;
 	}
 

@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 public interface LockableObject {
 
@@ -14,7 +15,7 @@ public interface LockableObject {
 		getLock().ifPresent(lock -> output.store("container_lock", HTMContainerLock.CODEC, lock));
 	}
 
-	default void readLock(ValueInput input, Consumer<HTMContainerLock> consumer) {
+	default void readLock(ValueInput input, Consumer<@Nullable HTMContainerLock> consumer) {
 		input.getString("Type").ifPresentOrElse(
 				legacy -> {
 					// Legacy, lock data was stored in the root NBT object before 1.21.5
@@ -42,5 +43,5 @@ public interface LockableObject {
 
 	Optional<HTMContainerLock> getLock();
 
-	void setLock(HTMContainerLock lock);
+	void setLock(@Nullable HTMContainerLock lock);
 }

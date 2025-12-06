@@ -2,6 +2,7 @@ package com.github.fabricservertools.htm.mixin.lockable;
 
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockableObject;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +26,7 @@ import net.minecraft.world.ticks.ContainerSingleItem;
 public abstract class DecoratedPotBlockEntityMixin extends BlockEntity implements RandomizableContainer, ContainerSingleItem.BlockContainerSingleItem, LockableObject {
 
     @Unique
-    private HTMContainerLock lock = null;
+    private @Nullable HTMContainerLock lock = null;
 
     public DecoratedPotBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -55,7 +56,7 @@ public abstract class DecoratedPotBlockEntityMixin extends BlockEntity implement
     }
 
     @Override
-    public void setLock(HTMContainerLock lock) {
+    public void setLock(@Nullable HTMContainerLock lock) {
         this.lock = lock;
         setChanged();
     }

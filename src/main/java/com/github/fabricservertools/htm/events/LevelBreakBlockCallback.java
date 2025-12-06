@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface LevelBreakBlockCallback {
 	Event<LevelBreakBlockCallback> EVENT = EventFactory.createArrayBacked(LevelBreakBlockCallback.class,

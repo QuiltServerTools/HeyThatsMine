@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.Nullable;
 
 public interface Lock {
     // A codec that dispatches a lock type (Type) from the "Type" key, and then uses the lock type's codec to create a map codec that has a "TypeData" key as field
@@ -60,7 +61,7 @@ public interface Lock {
             return factory.apply(player);
         }
 
-        public static Type fromUiName(String name) {
+        public static @Nullable Type fromUiName(String name) {
             String lowercase = name.toLowerCase(Locale.ROOT);
             for (Type type : values()) {
                 if (type.name.equals(lowercase)) {

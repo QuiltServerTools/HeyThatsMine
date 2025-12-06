@@ -5,7 +5,6 @@ import com.github.fabricservertools.htm.events.BlockExplodeCallback;
 import com.github.fabricservertools.htm.events.EnderDragonBreakBlockCallback;
 import com.github.fabricservertools.htm.events.LevelBreakBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -17,6 +16,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
 
 public class LevelEventListener {
 	public static void init() {

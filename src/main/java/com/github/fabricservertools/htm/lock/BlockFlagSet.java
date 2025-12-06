@@ -6,12 +6,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
 
 public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet fallback, BlockFlagPredicate flagPredicate) {
     private static final Codec<Map<SingleBlockSelector, FlagSet>> OVERRIDES_CODEC = Codec.unboundedMap(SingleBlockSelector.CODEC, FlagSet.CONFIG_CODEC);
@@ -43,8 +45,8 @@ public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet 
         return builder;
     }
 
-    private record BlockFlagPredicate(BiFunction<FlagType, Holder<Block>, Boolean> predicate,
-                                      BlockFlagPredicate fallback) implements BiPredicate<FlagType, Holder<Block>> {
+    private record BlockFlagPredicate(BiFunction<FlagType, Holder<Block>, @Nullable Boolean> predicate,
+                                      @Nullable BlockFlagPredicate fallback) implements BiPredicate<FlagType, Holder<Block>> {
 
         private BlockFlagPredicate(Map.Entry<SingleBlockSelector, FlagSet> entry, BlockFlagPredicate fallback) {
             this((flag, block) -> {
@@ -65,7 +67,7 @@ public record BlockFlagSet(Map<SingleBlockSelector, FlagSet> overrides, FlagSet 
             if (override != null) {
                 return override;
             }
-            return fallback.test(flag, block);
+            return Objects.requireNonNull(fallback, "fallback of BlockFlagPredicate may not be null when the predicate itself returns null").test(flag, block);
         }
     }
 }

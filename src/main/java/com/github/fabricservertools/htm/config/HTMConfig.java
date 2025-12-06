@@ -12,6 +12,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,7 +52,7 @@ public record HTMConfig(boolean canTrustedPlayersBreakChests, BlockFlagSet defau
             new SingleBlockSelector(BlockTags.COPPER_CHESTS));
     private static final HTMConfig DEFAULT_CONFIG = new HTMConfig(false, BlockFlagSet.DEFAULT, DEFAULT_AUTO_LOCKING_CONTAINERS);
 
-    private static HTMConfig loaded = null;
+    private static @Nullable HTMConfig loaded = null;
 
     public boolean isAutoLocking(BlockState block) {
         for (SingleBlockSelector container : autoLockingContainers) {

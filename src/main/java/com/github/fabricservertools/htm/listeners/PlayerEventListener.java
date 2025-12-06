@@ -23,6 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Optional;
 
 public class PlayerEventListener {
@@ -45,7 +47,7 @@ public class PlayerEventListener {
         return InteractionResult.PASS;
     }
 
-    private static boolean onBeforeBreak(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+    private static boolean onBeforeBreak(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         if (level.isClientSide()) {
             return true;
         }

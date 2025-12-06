@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -32,8 +32,9 @@ public class InteractionManager implements ProtectionProvider {
     public static final ObjectSet<UUID> noMessage = new ObjectOpenHashSet<>();
 
     private static final DoubleBlockCombiner.Combiner<BlockEntity, LockableObject> LOCKABLE_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
+
         @Override
-        public LockableObject acceptDouble(BlockEntity first, BlockEntity second) {
+        public @Nullable LockableObject acceptDouble(BlockEntity first, BlockEntity second) {
             if (first instanceof LockableObject lockable) {
                 if (lockable.getLock().isPresent()) {
                   return lockable;
@@ -46,7 +47,7 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject acceptSingle(BlockEntity single) {
+        public @Nullable LockableObject acceptSingle(BlockEntity single) {
             if (single instanceof LockableObject lockable) {
                 return lockable;
             }
@@ -54,14 +55,14 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject acceptNone() {
+        public @Nullable LockableObject acceptNone() {
             return null;
         }
     };
 
     private static final DoubleBlockCombiner.Combiner<BlockEntity, LockableObject> UNLOCKED_LOCKABLE_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
         @Override
-        public LockableObject acceptDouble(BlockEntity first, BlockEntity second) {
+        public @Nullable LockableObject acceptDouble(BlockEntity first, BlockEntity second) {
             if (first instanceof LockableObject lockable) {
                 if (lockable.getLock().isEmpty()) {
                     return lockable;
@@ -73,7 +74,7 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject acceptSingle(BlockEntity single) {
+        public @Nullable LockableObject acceptSingle(BlockEntity single) {
             if (single instanceof LockableObject lockable && lockable.getLock().isEmpty()) {
                 return lockable;
             }
@@ -81,7 +82,7 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject acceptNone() {
+        public @Nullable LockableObject acceptNone() {
             return null;
         }
     };
@@ -97,6 +98,7 @@ public class InteractionManager implements ProtectionProvider {
                         lock -> action.execute(server, player, pos, object, lock),
                         () -> player.displayClientMessage(HTMComponents.NOT_LOCKED, false));
             } else {
+                //noinspection DataFlowIssue - if requiresLock is false then action should be able to accept null lock
                 action.execute(server, player, pos, object, containerLock.orElse(null));
             }
         }, () -> player.displayClientMessage(HTMComponents.NOT_LOCKABLE, false));
@@ -139,6 +141,7 @@ public class InteractionManager implements ProtectionProvider {
         if (blockEntity instanceof ChestBlockEntity chest) {
             DoubleBlockCombiner.NeighborCombineResult<? extends BlockEntity> propertySource = DoubleBlockCombiner.combineWithNeigbour(chest.getType(), ChestBlock::getBlockType,
                     ChestBlock::getConnectedDirection, ChestBlock.FACING, world.getBlockState(pos), world, pos, (access, blockPos) -> false);
+            //noinspection OptionalOfNullableMisuse - LOCKABLE_RETRIEVER may return null
             return Optional.ofNullable(propertySource.apply(LOCKABLE_RETRIEVER));
         } else if (blockEntity instanceof LockableObject lockable) {
             return Optional.of(lockable);
@@ -150,6 +153,7 @@ public class InteractionManager implements ProtectionProvider {
         if (blockEntity instanceof ChestBlockEntity chest) {
             DoubleBlockCombiner.NeighborCombineResult<? extends BlockEntity> propertySource = DoubleBlockCombiner.combineWithNeigbour(chest.getType(), ChestBlock::getBlockType,
                     ChestBlock::getConnectedDirection, ChestBlock.FACING, world.getBlockState(pos), world, pos, (access, blockPos) -> false);
+            //noinspection OptionalOfNullableMisuse - UNLOCKED_LOCKABLE_RETRIEVER may return null
             return Optional.ofNullable(propertySource.apply(UNLOCKED_LOCKABLE_RETRIEVER));
         } else if (blockEntity instanceof LockableObject lockable && lockable.getLock().isEmpty()) {
             return Optional.of(lockable);
