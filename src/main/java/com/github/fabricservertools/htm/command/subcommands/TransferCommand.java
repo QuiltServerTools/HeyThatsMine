@@ -4,9 +4,9 @@ import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TransferAction;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -20,16 +20,16 @@ import static net.minecraft.commands.Commands.literal;
 
 public class TransferCommand implements SubCommand {
 
-	@Override
-	public LiteralCommandNode<CommandSourceStack> build() {
-		return literal("transfer")
-				.requires(Permissions.require("htm.command.transfer", true))
-				.then(argument("target", GameProfileArgument.gameProfile())
-						.executes(this::transfer))
-				.build();
-	}
+    @Override
+    public void register(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(literal("transfer")
+                .requires(Permissions.require("htm.command.transfer", true))
+                .then(argument("target", GameProfileArgument.gameProfile())
+                        .executes(this::transfer))
+        );
+    }
 
-	@SuppressWarnings("SameReturnValue")
+    @SuppressWarnings("SameReturnValue")
 	private int transfer(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 		ServerPlayer player = context.getSource().getPlayerOrException();
         Collection<NameAndId> targets = GameProfileArgument.getGameProfiles(context, "target");

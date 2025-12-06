@@ -6,8 +6,8 @@ import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
 import com.github.fabricservertools.htm.world.data.GlobalTrustData;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.GameProfileArgument;
@@ -21,27 +21,28 @@ import static net.minecraft.commands.Commands.literal;
 
 public class UntrustCommand implements SubCommand {
 
-	@Override
-	public LiteralCommandNode<CommandSourceStack> build() {
-		return literal("untrust")
-				.requires(Permissions.require("htm.command.trust", true))
-				.then(argument("target", GameProfileArgument.gameProfile())
-						.executes(ctx -> untrust(
-								ctx.getSource(),
-								GameProfileArgument.getGameProfiles(ctx, "target"),
-								false
-						))
-						.then(literal("global")
-								.executes(ctx -> untrust(
-										ctx.getSource(),
-										GameProfileArgument.getGameProfiles(ctx, "target"),
-										true
-								))
-						))
-				.build();
-	}
+    @Override
+    public void register(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(literal("untrust")
+                .requires(Permissions.require("htm.command.trust", true))
+                .then(argument("target", GameProfileArgument.gameProfile())
+                        .executes(ctx -> untrust(
+                                ctx.getSource(),
+                                GameProfileArgument.getGameProfiles(ctx, "target"),
+                                false
+                        ))
+                        .then(literal("global")
+                                .executes(ctx -> untrust(
+                                        ctx.getSource(),
+                                        GameProfileArgument.getGameProfiles(ctx, "target"),
+                                        true
+                                ))
+                        )
+                )
+        );
+    }
 
-	private int untrust(CommandSourceStack source, Collection<NameAndId> players, boolean global) throws CommandSyntaxException {
+    private int untrust(CommandSourceStack source, Collection<NameAndId> players, boolean global) throws CommandSyntaxException {
 		ServerPlayer player = source.getPlayerOrException();
 
 		if (global) {

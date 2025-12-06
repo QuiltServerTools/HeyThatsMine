@@ -6,9 +6,9 @@ import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
 import com.github.fabricservertools.htm.world.data.GlobalTrustData;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -25,22 +25,21 @@ import static net.minecraft.commands.Commands.literal;
 
 public class TrustCommand implements SubCommand {
 
-	@Override
-	public LiteralCommandNode<CommandSourceStack> build() {
-		return literal("trust")
-				.requires(Permissions.require("htm.command.trust", true))
-				.executes(this::trustList)
-				.then(argument("target", GameProfileArgument.gameProfile())
-						.executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), false))
-						.then(literal("global")
-								.executes(ctx -> trust(
-										ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), true)
-								)
-						))
-				.build();
-	}
+    @Override
+    public void register(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(literal("trust")
+                .requires(Permissions.require("htm.command.trust", true))
+                .executes(this::trustList)
+                .then(argument("target", GameProfileArgument.gameProfile())
+                        .executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), false))
+                        .then(literal("global")
+                                .executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), true))
+                        )
+                )
+        );
+    }
 
-	@SuppressWarnings("SameReturnValue")
+    @SuppressWarnings("SameReturnValue")
 	private int trustList(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 		ServerPlayer player = context.getSource().getPlayerOrException();
 		GlobalTrustData globalTrustData = Utility.getGlobalTrustData(context.getSource().getServer());

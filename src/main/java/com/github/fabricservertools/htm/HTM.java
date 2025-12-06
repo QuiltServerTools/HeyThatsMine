@@ -30,15 +30,15 @@ public class HTM implements ModInitializer {
 	}
 
 	private void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
-		HTMCommand.register(dispatcher);
-		HTMCommand.registerSubCommand(new SetCommand().build());
-		HTMCommand.registerSubCommand(new RemoveCommand().build());
-		HTMCommand.registerSubCommand(new TrustCommand().build());
-		HTMCommand.registerSubCommand(new UntrustCommand().build());
-		HTMCommand.registerSubCommand(new InfoCommand().build());
-		HTMCommand.registerSubCommand(new TransferCommand().build());
-		HTMCommand.registerSubCommand(new FlagCommand().build());
-		HTMCommand.registerSubCommand(new PersistCommand().build());
-		HTMCommand.registerSubCommand(new QuietCommand().build());
-	}
+		HTMCommand.registerSubCommand(new SetCommand());
+        HTMCommand.registerSubCommand(new RemoveCommand());
+        HTMCommand.registerSubCommand(new TrustCommand());
+        HTMCommand.registerSubCommand(new UntrustCommand());
+        HTMCommand.registerSubCommand(new InfoCommand());
+        HTMCommand.registerSubCommand(new TransferCommand());
+        HTMCommand.registerSubCommand(new FlagCommand());
+        HTMCommand.registerSubCommand(new PersistCommand());
+        HTMCommand.registerSubCommand(new QuietCommand());
+        HTMCommand.register(dispatcher);
+    }
 }
