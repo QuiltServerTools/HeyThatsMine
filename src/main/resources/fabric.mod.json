@@ -23,8 +23,8 @@
     "htm.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.17.2",
-    "fabric": "*",
-    "minecraft": ">=1.21.9"
+    "fabricloader": ">=0.18.2",
+    "fabric-api": "*",
+    "minecraft": ">=1.21.11"
   }
 }
