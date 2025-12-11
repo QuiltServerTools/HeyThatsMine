@@ -1,5 +1,6 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.command.HTMCommand;
 import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
@@ -20,6 +21,9 @@ public class HTM implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+        // For some reason, the Lock class has to be loaded before the HTMConfig class for the codecs to be initialised properly
+        // Calling a method of the class loads it. Removing the line below results in an NPE when launching Minecraft
+        Lock.bootstrap();
         HTMConfig.load();
 
 		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));

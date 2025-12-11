@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.listeners;
 
 import com.github.fabricservertools.htm.HTM;
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.HTMComponents;
@@ -8,7 +9,6 @@ import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.github.fabricservertools.htm.events.PlayerPlaceBlockCallback;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
-import com.github.fabricservertools.htm.lock.type.PrivateLock;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
@@ -86,19 +86,20 @@ public class PlayerEventListener {
             Level world = context.getLevel();
             BlockState state = world.getBlockState(pos);
 
-            if (world.isClientSide() || !state.hasBlockEntity()) {
+            if (!(player instanceof ServerPlayer serverPlayer) || !state.hasBlockEntity()) {
                 return InteractionResult.PASS;
             }
 
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LockableObject) {
-                if (HTMConfig.get().isAutoLocking(state)) {
+                Optional<Lock.Type> autoLockingType = HTMConfig.get().getAutoLockingType(state);
+                if (autoLockingType.isPresent()) {
                     if (InteractionManager.getLock((ServerLevel) world, pos, blockEntity).isPresent()) {
                         return InteractionResult.PASS;
                     }
 
-                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(PrivateLock.INSTANCE, (ServerPlayer) player));
-                    Utility.sendMessage(player, HTMComponents.CONTAINER_SET.apply(PrivateLock.INSTANCE.displayName()));
+                    ((LockableObject) blockEntity).setLock(new HTMContainerLock(autoLockingType.get().create(serverPlayer), serverPlayer));
+                    Utility.sendMessage(player, HTMComponents.CONTAINER_SET.apply(autoLockingType.get().displayName()));
                 }
             }
         } catch (Exception e) {

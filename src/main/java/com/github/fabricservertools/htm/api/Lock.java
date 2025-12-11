@@ -28,6 +28,10 @@ public interface Lock {
 
 	Type type();
 
+    static void bootstrap() {
+        // noop
+    }
+
     enum Type implements StringRepresentable {
         PRIVATE("private", PrivateLock.CODEC, PrivateLock.INSTANCE),
         PUBLIC("public", PublicLock.CODEC, PublicLock.INSTANCE),

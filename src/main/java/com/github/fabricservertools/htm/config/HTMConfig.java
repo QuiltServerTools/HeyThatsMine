@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.config;
 
 import com.github.fabricservertools.htm.HTM;
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.lock.BlockFlagSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,49 +19,59 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public record HTMConfig(boolean canTrustedPlayersBreakChests, BlockFlagSet defaultFlags, List<SingleBlockSelector> autoLockingContainers) {
+public record HTMConfig(boolean canTrustedPlayersBreakChests, BlockFlagSet defaultFlags, Map<SingleBlockSelector, Lock.Type> autoLockingContainers) {
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .create();
     private static final Path CONFIG_PATH = Path.of("htm_config.json");
 
+    private static final Codec<Map<SingleBlockSelector, Lock.Type>> AUTO_LOCKING_CONTAINERS_LEGACY_CODEC = SingleBlockSelector.CODEC.listOf()
+            .xmap(list -> list.stream().collect(Collectors.toMap(Function.identity(), selector -> Lock.Type.PRIVATE)),
+                    map -> List.copyOf(map.keySet()));
+    private static final Codec<Map<SingleBlockSelector, Lock.Type>> AUTO_LOCKING_CONTAINERS_MODERN_CODEC = Codec.unboundedMap(SingleBlockSelector.CODEC, Lock.Type.CODEC);
+    private static final Codec<Map<SingleBlockSelector, Lock.Type>> AUTO_LOCKING_CONTAINERS_CODEC = Codec.withAlternative(AUTO_LOCKING_CONTAINERS_MODERN_CODEC, AUTO_LOCKING_CONTAINERS_LEGACY_CODEC);
+
     public static final Codec<HTMConfig> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.BOOL.fieldOf("can_trusted_players_break_chests").forGetter(HTMConfig::canTrustedPlayersBreakChests),
                     BlockFlagSet.SAFE_CODEC.fieldOf("default_flags").forGetter(HTMConfig::defaultFlags),
-                    SingleBlockSelector.CODEC.listOf().fieldOf("auto_locking_containers").forGetter(HTMConfig::autoLockingContainers)
+                    AUTO_LOCKING_CONTAINERS_CODEC.fieldOf("auto_locking_containers").forGetter(HTMConfig::autoLockingContainers)
             ).apply(instance, HTMConfig::new)
     );
     public static final Codec<HTMConfig> LEGACY_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.BOOL.fieldOf("canTrustedPlayersBreakChests").forGetter(HTMConfig::canTrustedPlayersBreakChests),
                     BlockFlagSet.SAFE_CODEC.fieldOf("defaultFlags").forGetter(HTMConfig::defaultFlags),
-                    SingleBlockSelector.CODEC.listOf().fieldOf("autolockingContainers").forGetter(HTMConfig::autoLockingContainers)
+                    AUTO_LOCKING_CONTAINERS_CODEC.fieldOf("autolockingContainers").forGetter(HTMConfig::autoLockingContainers)
             ).apply(instance, HTMConfig::new)
     );
     public static final Codec<HTMConfig> SAFE_CODEC = Codec.withAlternative(CODEC, LEGACY_CODEC);
 
-    private static final List<SingleBlockSelector> DEFAULT_AUTO_LOCKING_CONTAINERS = List.of(
-            new SingleBlockSelector(Blocks.CHEST),
-            new SingleBlockSelector(Blocks.TRAPPED_CHEST),
-            new SingleBlockSelector(Blocks.BARREL),
-            new SingleBlockSelector(Blocks.FURNACE),
-            new SingleBlockSelector(Blocks.BLAST_FURNACE),
-            new SingleBlockSelector(Blocks.SMOKER),
-            new SingleBlockSelector(BlockTags.SHULKER_BOXES),
-            new SingleBlockSelector(BlockTags.COPPER_CHESTS));
+    private static final Map<SingleBlockSelector, Lock.Type> DEFAULT_AUTO_LOCKING_CONTAINERS = Map.of(
+            new SingleBlockSelector(Blocks.CHEST), Lock.Type.PRIVATE,
+            new SingleBlockSelector(Blocks.TRAPPED_CHEST), Lock.Type.PRIVATE,
+            new SingleBlockSelector(Blocks.BARREL), Lock.Type.PRIVATE,
+            new SingleBlockSelector(Blocks.FURNACE), Lock.Type.PRIVATE,
+            new SingleBlockSelector(Blocks.BLAST_FURNACE), Lock.Type.PRIVATE,
+            new SingleBlockSelector(Blocks.SMOKER), Lock.Type.PRIVATE,
+            new SingleBlockSelector(BlockTags.SHULKER_BOXES), Lock.Type.PRIVATE,
+            new SingleBlockSelector(BlockTags.COPPER_CHESTS), Lock.Type.PRIVATE);
     private static final HTMConfig DEFAULT_CONFIG = new HTMConfig(false, BlockFlagSet.DEFAULT, DEFAULT_AUTO_LOCKING_CONTAINERS);
 
     private static @Nullable HTMConfig loaded = null;
 
-    public boolean isAutoLocking(BlockState block) {
-        for (SingleBlockSelector container : autoLockingContainers) {
-            if (container.is(block)) {
-                return true;
+    public Optional<Lock.Type> getAutoLockingType(BlockState block) {
+        for (Map.Entry<SingleBlockSelector, Lock.Type> container : autoLockingContainers.entrySet()) {
+            if (container.getKey().is(block)) {
+                return Optional.of(container.getValue());
             }
         }
-        return false;
+        return Optional.empty();
     }
 
     private void save() {
