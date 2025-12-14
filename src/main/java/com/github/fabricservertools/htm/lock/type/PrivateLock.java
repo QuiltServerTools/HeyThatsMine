@@ -4,18 +4,22 @@ import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.mojang.serialization.Codec;
-import net.minecraft.server.network.ServerPlayerEntity;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.server.level.ServerPlayer;
 
 public class PrivateLock implements Lock {
 	public static final PrivateLock INSTANCE = new PrivateLock();
-	public static final Codec<PrivateLock> CODEC = Codec.unit(INSTANCE);
+	public static final Codec<PrivateLock> CODEC = MapCodec.unitCodec(INSTANCE);
 
 	private PrivateLock() {}
 
 	@Override
-	public boolean canOpen(ServerPlayerEntity player, HTMContainerLock lock) {
-		if (lock.isTrusted(player.getUuid())) return true;
-		return Utility.getGlobalTrustState(player.getEntityWorld().getServer()).isTrusted(lock.owner(), player.getUuid());
+	public boolean canOpen(ServerPlayer player, HTMContainerLock lock) {
+		if (lock.isTrusted(player.getUUID())) {
+            return true;
+        }
+
+		return Utility.getGlobalTrustData(player.level().getServer()).isTrusted(lock.owner(), player.getUUID());
 	}
 
 	@Override

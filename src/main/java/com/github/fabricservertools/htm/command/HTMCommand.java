@@ -1,26 +1,32 @@
 package com.github.fabricservertools.htm.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.commands.CommandSourceStack;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.minecraft.commands.Commands.literal;
 
 public class HTMCommand {
-	private static LiteralCommandNode<ServerCommandSource> rootNode;
+    private static final List<SubCommand> SUB_COMMANDS = new ArrayList<>();
+    private static boolean registeredCommand = false;
 
-	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-		LiteralCommandNode<ServerCommandSource> htmNode =
-				literal("htm")
-						.requires(Permissions.require("htm.command.root", true))
-						.build();
+	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+		LiteralArgumentBuilder<CommandSourceStack> htmNode = literal("htm")
+                .requires(Permissions.require("htm.command.root", true));
+        SUB_COMMANDS.forEach(command -> command.register(htmNode));
+        dispatcher.register(htmNode);
 
-		dispatcher.getRoot().addChild(htmNode);
-		rootNode = htmNode;
+        registeredCommand = true;
 	}
 
-	public static void registerSubCommand(LiteralCommandNode<ServerCommandSource> subCommand) {
-		rootNode.addChild(subCommand);
+	public static void registerSubCommand(SubCommand subCommand) {
+        if (registeredCommand) {
+            throw new IllegalStateException("Tried to register a sub-command after /htm was registered!");
+        }
+        SUB_COMMANDS.add(subCommand);
 	}
 }

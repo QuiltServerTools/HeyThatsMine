@@ -1,85 +1,84 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.TrustAction;
-import com.github.fabricservertools.htm.world.data.GlobalTrustState;
+import com.github.fabricservertools.htm.world.data.GlobalTrustData;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.command.argument.GameProfileArgumentType;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.server.PlayerConfigEntry;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.GameProfileArgument;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.NameAndId;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class TrustCommand implements SubCommand {
 
-	@Override
-	public LiteralCommandNode<ServerCommandSource> build() {
-		return literal("trust")
-				.requires(Permissions.require("htm.command.trust", true))
-				.executes(this::trustList)
-				.then(argument("target", GameProfileArgumentType.gameProfile())
-						.executes(ctx -> trust(ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target"), false))
-						.then(literal("global")
-								.executes(ctx -> trust(
-										ctx.getSource(), GameProfileArgumentType.getProfileArgument(ctx, "target"), true)
-								)
-						))
-				.build();
-	}
+    @Override
+    public void register(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(literal("trust")
+                .requires(Permissions.require("htm.command.trust", true))
+                .executes(this::trustList)
+                .then(argument("target", GameProfileArgument.gameProfile())
+                        .executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), false))
+                        .then(literal("global")
+                                .executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), true))
+                        )
+                )
+        );
+    }
 
-	@SuppressWarnings("SameReturnValue")
-	private int trustList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-		GlobalTrustState globalTrustState = Utility.getGlobalTrustState(context.getSource().getServer());
+    @SuppressWarnings("SameReturnValue")
+	private int trustList(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+		ServerPlayer player = context.getSource().getPlayerOrException();
+		GlobalTrustData globalTrustData = Utility.getGlobalTrustData(context.getSource().getServer());
 
-		String trustedList = globalTrustState.getTrusted().get(player.getUuid())
+		String trustedList = globalTrustData.getTrusted().get(player.getUUID())
 				.stream()
 				.map(uuid -> Utility.getNameFromUUID(uuid, context.getSource().getServer()))
 				.collect(Collectors.joining(", "));
 
-		player.sendMessage(HTMTexts.TRUSTED_GLOBALLY.apply(Text.literal(trustedList).formatted(Formatting.WHITE)), false);
+		player.displayClientMessage(HTMComponents.TRUSTED_GLOBALLY.apply(Component.literal(trustedList).withStyle(ChatFormatting.WHITE)), false);
 
-		return 1;
+		return 0;
 	}
 
-	private static int trust(ServerCommandSource source, Collection<PlayerConfigEntry> players, boolean global) throws CommandSyntaxException {
-		ServerPlayerEntity player = source.getPlayerOrThrow();
+	private static int trust(CommandSourceStack source, Collection<NameAndId> players, boolean global) throws CommandSyntaxException {
+		ServerPlayer player = source.getPlayerOrException();
 
 		if (global) {
-			for (PlayerConfigEntry target : players) {
-				GlobalTrustState globalTrustState = Utility.getGlobalTrustState(source.getServer());
-				if (player.getUuid().equals(target.id())) {
-                    source.sendError(HTMTexts.CANNOT_TRUST_SELF);
-					return -1;
+			for (NameAndId target : players) {
+				GlobalTrustData globalTrustData = Utility.getGlobalTrustData(source.getServer());
+				if (player.getUUID().equals(target.id())) {
+                    source.sendFailure(HTMComponents.CANNOT_TRUST_SELF);
+					return 1;
 				}
 
-                Text playerName = Text.literal(target.name()).formatted(Formatting.WHITE);
-				if (globalTrustState.addTrust(player.getUuid(), target.id())) {
-                    source.sendFeedback(() -> HTMTexts.TRUST.apply(playerName).append(ScreenTexts.SPACE).append(HTMTexts.GLOBAL), false);
+                Component playerName = Component.literal(target.name()).withStyle(ChatFormatting.WHITE);
+				if (globalTrustData.addTrust(player.getUUID(), target.id())) {
+                    source.sendSuccess(() -> HTMComponents.TRUST.apply(playerName).append(CommonComponents.SPACE).append(HTMComponents.GLOBAL), false);
+                    return 2;
 				} else {
-					source.sendFeedback(() -> HTMTexts.ALREADY_TRUSTED.apply(playerName), false);
+					source.sendSuccess(() -> HTMComponents.ALREADY_TRUSTED.apply(playerName), false);
+                    return 3;
 				}
 			}
 		} else {
 			InteractionManager.pendingActions.put(player, new TrustAction(players, false));
-			source.sendFeedback(() -> HTMTexts.CLICK_TO_SELECT, false);
+			source.sendSuccess(() -> HTMComponents.CLICK_TO_SELECT, false);
 		}
 
-
-		return 1;
+		return 4;
 	}
 }

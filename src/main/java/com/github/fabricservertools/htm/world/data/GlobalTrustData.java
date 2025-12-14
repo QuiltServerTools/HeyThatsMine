@@ -5,34 +5,33 @@ import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.Uuids;
-import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateType;
-
 import java.util.List;
 import java.util.UUID;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 
-public class GlobalTrustState extends PersistentState {
+public class GlobalTrustData extends SavedData {
 	private static final Codec<Pair<UUID, List<UUID>>> TRUSTER_CODEC = RecordCodecBuilder.create(instance ->
 			instance.group(
-					Uuids.INT_STREAM_CODEC.fieldOf("Truster").forGetter(Pair::getFirst),
-					Uuids.INT_STREAM_CODEC.listOf().fieldOf("Trusted").forGetter(Pair::getSecond)
+					UUIDUtil.CODEC.fieldOf("Truster").forGetter(Pair::getFirst),
+					UUIDUtil.CODEC.listOf().fieldOf("Trusted").forGetter(Pair::getSecond)
 			).apply(instance, Pair::of)
 	);
 
-	public static final Codec<GlobalTrustState> CODEC = RecordCodecBuilder.create(instance ->
+	public static final Codec<GlobalTrustData> CODEC = RecordCodecBuilder.create(instance ->
 			instance.group(
-					TRUSTER_CODEC.listOf().fieldOf("GlobalTrusts").forGetter(GlobalTrustState::globalTrusts)
-			).apply(instance, GlobalTrustState::new)
+					TRUSTER_CODEC.listOf().fieldOf("GlobalTrusts").forGetter(GlobalTrustData::globalTrusts)
+			).apply(instance, GlobalTrustData::new)
 	);
 
-	public static final PersistentStateType<GlobalTrustState> TYPE = new PersistentStateType<>("globalTrust", GlobalTrustState::new, CODEC, null);
+	public static final SavedDataType<GlobalTrustData> TYPE = new SavedDataType<>("globalTrust", GlobalTrustData::new, CODEC, null);
 
 	private final Multimap<UUID, UUID> globalTrust = HashMultimap.create();
 
-	private GlobalTrustState() {}
+	private GlobalTrustData() {}
 
-	private GlobalTrustState(List<Pair<UUID, List<UUID>>> globalTrusts) {
+	private GlobalTrustData(List<Pair<UUID, List<UUID>>> globalTrusts) {
 		for (Pair<UUID, List<UUID>> truster : globalTrusts) {
 			globalTrust.putAll(truster.getFirst(), truster.getSecond());
 		}
@@ -43,12 +42,12 @@ public class GlobalTrustState extends PersistentState {
 	}
 
 	public boolean addTrust(UUID truster, UUID trusted) {
-		markDirty();
+		setDirty();
 		return globalTrust.put(truster, trusted);
 	}
 
 	public boolean removeTrust(UUID truster, UUID trusted) {
-		markDirty();
+		setDirty();
 		return globalTrust.remove(truster, trusted);
 	}
 

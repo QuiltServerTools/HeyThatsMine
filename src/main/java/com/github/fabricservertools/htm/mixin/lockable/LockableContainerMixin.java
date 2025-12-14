@@ -2,15 +2,7 @@ package com.github.fabricservertools.htm.mixin.lockable;
 
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
 import com.github.fabricservertools.htm.api.LockableObject;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,29 +11,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-@Mixin(LockableContainerBlockEntity.class)
+@Mixin(BaseContainerBlockEntity.class)
 public abstract class LockableContainerMixin extends BlockEntity implements LockableObject {
 	@Unique
-	private HTMContainerLock htmContainerLock = null;
+	private @Nullable HTMContainerLock htmContainerLock = null;
 
 	public LockableContainerMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
-	@Inject(method = "writeData", at = @At("HEAD"))
-	private void toTag(WriteView view, CallbackInfo ci) {
-		writeLock(view);
+	@Inject(method = "loadAdditional", at = @At("HEAD"))
+	private void fromTag(ValueInput input, CallbackInfo ci) {
+		readLock(input, lock -> htmContainerLock = lock);
 	}
 
-	@Inject(method = "readData", at = @At("HEAD"))
-	private void fromTag(ReadView view, CallbackInfo ci) {
-		readLock(view, lock -> htmContainerLock = lock);
-	}
+    @Inject(method = "saveAdditional", at = @At("HEAD"))
+    private void toTag(ValueOutput output, CallbackInfo ci) {
+        writeLock(output);
+    }
 
-	@Inject(method = "checkUnlocked(Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("HEAD"), cancellable = true)
-	private void checkUnlocked(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-		if (player instanceof ServerPlayerEntity serverPlayer) {
+	@Inject(method = "canOpen(Lnet/minecraft/world/entity/player/Player;)Z", at = @At("HEAD"), cancellable = true)
+	private void checkUnlocked(Player player, CallbackInfoReturnable<Boolean> cir) {
+		if (player instanceof ServerPlayer serverPlayer) {
 			canOpen(serverPlayer).ifPresent(cir::setReturnValue);
 		}
 	}
@@ -52,8 +53,8 @@ public abstract class LockableContainerMixin extends BlockEntity implements Lock
 	}
 
 	@Override
-	public void setLock(HTMContainerLock lock) {
+	public void setLock(@Nullable HTMContainerLock lock) {
 		htmContainerLock = lock;
-		markDirty();
+		setChanged();
 	}
 }

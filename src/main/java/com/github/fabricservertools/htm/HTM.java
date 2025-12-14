@@ -1,17 +1,18 @@
 package com.github.fabricservertools.htm;
 
+import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.command.HTMCommand;
 import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.listeners.PlayerEventListener;
-import com.github.fabricservertools.htm.listeners.WorldEventListener;
+import com.github.fabricservertools.htm.listeners.LevelEventListener;
 import com.mojang.brigadier.CommandDispatcher;
 import eu.pb4.common.protection.api.CommonProtection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.util.Identifier;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,25 +21,28 @@ public class HTM implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+        // For some reason, the Lock class has to be loaded before the HTMConfig class for the codecs to be initialised properly
+        // Calling a method of the class loads it. Removing the line below results in an NPE when launching Minecraft
+        Lock.bootstrap();
         HTMConfig.load();
 
 		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));
-		CommonProtection.register(Identifier.of("htm", "containers"), new InteractionManager());
+		CommonProtection.register(Identifier.fromNamespaceAndPath("htm", "containers"), new InteractionManager());
 
 		PlayerEventListener.init();
-		WorldEventListener.init();
+		LevelEventListener.init();
 	}
 
-	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-		HTMCommand.register(dispatcher);
-		HTMCommand.registerSubCommand(new SetCommand().build());
-		HTMCommand.registerSubCommand(new RemoveCommand().build());
-		HTMCommand.registerSubCommand(new TrustCommand().build());
-		HTMCommand.registerSubCommand(new UntrustCommand().build());
-		HTMCommand.registerSubCommand(new InfoCommand().build());
-		HTMCommand.registerSubCommand(new TransferCommand().build());
-		HTMCommand.registerSubCommand(new FlagCommand().build());
-		HTMCommand.registerSubCommand(new PersistCommand().build());
-		HTMCommand.registerSubCommand(new QuietCommand().build());
-	}
+	private void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
+		HTMCommand.registerSubCommand(new SetCommand());
+        HTMCommand.registerSubCommand(new RemoveCommand());
+        HTMCommand.registerSubCommand(new TrustCommand());
+        HTMCommand.registerSubCommand(new UntrustCommand());
+        HTMCommand.registerSubCommand(new InfoCommand());
+        HTMCommand.registerSubCommand(new TransferCommand());
+        HTMCommand.registerSubCommand(new FlagCommand());
+        HTMCommand.registerSubCommand(new PersistCommand());
+        HTMCommand.registerSubCommand(new QuietCommand());
+        HTMCommand.register(dispatcher);
+    }
 }

@@ -1,7 +1,7 @@
 package com.github.fabricservertools.htm.interactions;
 
 import com.github.fabricservertools.htm.lock.HTMContainerLock;
-import com.github.fabricservertools.htm.HTMTexts;
+import com.github.fabricservertools.htm.HTMComponents;
 import com.github.fabricservertools.htm.api.LockInteraction;
 import com.github.fabricservertools.htm.api.LockableObject;
 import com.mojang.authlib.GameProfile;
@@ -10,30 +10,31 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.DoubleBlockProperties;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.phys.AABB;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public class InteractionManager implements ProtectionProvider {
-    public static final Object2ObjectMap<ServerPlayerEntity, LockInteraction> pendingActions = new Object2ObjectOpenHashMap<>();
+    public static final Object2ObjectMap<ServerPlayer, LockInteraction> pendingActions = new Object2ObjectOpenHashMap<>();
     public static final ObjectSet<UUID> persisting = new ObjectOpenHashSet<>();
     public static final ObjectSet<UUID> noMessage = new ObjectOpenHashSet<>();
 
-    private static final DoubleBlockProperties.PropertyRetriever<BlockEntity, LockableObject> LOCKABLE_RETRIEVER = new DoubleBlockProperties.PropertyRetriever<>() {
+    private static final DoubleBlockCombiner.Combiner<BlockEntity, LockableObject> LOCKABLE_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
+
         @Override
-        public LockableObject getFromBoth(BlockEntity first, BlockEntity second) {
+        public @Nullable LockableObject acceptDouble(BlockEntity first, BlockEntity second) {
             if (first instanceof LockableObject lockable) {
                 if (lockable.getLock().isPresent()) {
                   return lockable;
@@ -46,7 +47,7 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject getFrom(BlockEntity single) {
+        public @Nullable LockableObject acceptSingle(BlockEntity single) {
             if (single instanceof LockableObject lockable) {
                 return lockable;
             }
@@ -54,14 +55,14 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject getFallback() {
+        public @Nullable LockableObject acceptNone() {
             return null;
         }
     };
 
-    private static final DoubleBlockProperties.PropertyRetriever<BlockEntity, LockableObject> UNLOCKED_LOCKABLE_RETRIEVER = new DoubleBlockProperties.PropertyRetriever<>() {
+    private static final DoubleBlockCombiner.Combiner<BlockEntity, LockableObject> UNLOCKED_LOCKABLE_RETRIEVER = new DoubleBlockCombiner.Combiner<>() {
         @Override
-        public LockableObject getFromBoth(BlockEntity first, BlockEntity second) {
+        public @Nullable LockableObject acceptDouble(BlockEntity first, BlockEntity second) {
             if (first instanceof LockableObject lockable) {
                 if (lockable.getLock().isEmpty()) {
                     return lockable;
@@ -73,7 +74,7 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject getFrom(BlockEntity single) {
+        public @Nullable LockableObject acceptSingle(BlockEntity single) {
             if (single instanceof LockableObject lockable && lockable.getLock().isEmpty()) {
                 return lockable;
             }
@@ -81,12 +82,12 @@ public class InteractionManager implements ProtectionProvider {
         }
 
         @Override
-        public LockableObject getFallback() {
+        public @Nullable LockableObject acceptNone() {
             return null;
         }
     };
 
-    public static void execute(MinecraftServer server, ServerPlayerEntity player, BlockPos pos) {
+    public static void execute(MinecraftServer server, ServerPlayer player, BlockPos pos) {
         LockInteraction action = pendingActions.get(player);
 
         Optional<LockableObject> lockableObject = getLockable(player, pos);
@@ -95,34 +96,35 @@ public class InteractionManager implements ProtectionProvider {
             if (action.requiresLock()) {
                 containerLock.ifPresentOrElse(
                         lock -> action.execute(server, player, pos, object, lock),
-                        () -> player.sendMessage(HTMTexts.NOT_LOCKED, false));
+                        () -> player.displayClientMessage(HTMComponents.NOT_LOCKED, false));
             } else {
+                //noinspection DataFlowIssue - if requiresLock is false then action should be able to accept null lock
                 action.execute(server, player, pos, object, containerLock.orElse(null));
             }
-        }, () -> player.sendMessage(HTMTexts.NOT_LOCKABLE, false));
+        }, () -> player.displayClientMessage(HTMComponents.NOT_LOCKABLE, false));
 
-        if (!persisting.contains(player.getUuid())) {
+        if (!persisting.contains(player.getUUID())) {
             pendingActions.remove(player);
         }
     }
 
-    public static boolean canOpen(ServerPlayerEntity player, BlockPos pos) {
+    public static boolean canOpen(ServerPlayer player, BlockPos pos) {
         return getLock(player, pos).map(lock -> lock.canOpen(player)).orElse(true);
     }
 
-    public static Optional<HTMContainerLock> getLock(ServerPlayerEntity player, BlockPos pos) {
+    public static Optional<HTMContainerLock> getLock(ServerPlayer player, BlockPos pos) {
         return getLockable(player, pos).flatMap(LockableObject::getLock);
     }
 
-    public static Optional<LockableObject> getLockable(ServerPlayerEntity player, BlockPos pos) {
-        return getLockable(player.getEntityWorld(), pos);
+    public static Optional<LockableObject> getLockable(ServerPlayer player, BlockPos pos) {
+        return getLockable(player.level(), pos);
     }
 
-    public static Optional<HTMContainerLock> getLock(ServerWorld world, BlockPos pos) {
+    public static Optional<HTMContainerLock> getLock(ServerLevel world, BlockPos pos) {
         return getLockable(world, pos).flatMap(LockableObject::getLock);
     }
 
-    public static Optional<LockableObject> getLockable(ServerWorld world, BlockPos pos) {
+    public static Optional<LockableObject> getLockable(ServerLevel world, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity == null) {
             return Optional.empty();
@@ -131,14 +133,15 @@ public class InteractionManager implements ProtectionProvider {
         return getLockable(world, pos, blockEntity);
     }
 
-    public static Optional<HTMContainerLock> getLock(ServerWorld world, BlockPos pos, BlockEntity blockEntity) {
+    public static Optional<HTMContainerLock> getLock(ServerLevel world, BlockPos pos, BlockEntity blockEntity) {
         return getLockable(world, pos, blockEntity).flatMap(LockableObject::getLock);
     }
 
-    public static Optional<LockableObject> getLockable(ServerWorld world, BlockPos pos, BlockEntity blockEntity) {
+    public static Optional<LockableObject> getLockable(ServerLevel world, BlockPos pos, BlockEntity blockEntity) {
         if (blockEntity instanceof ChestBlockEntity chest) {
-            DoubleBlockProperties.PropertySource<? extends BlockEntity> propertySource = DoubleBlockProperties.toPropertySource(chest.getType(), ChestBlock::getDoubleBlockType,
-                    ChestBlock::getFacing, ChestBlock.FACING, world.getBlockState(pos), world, pos, (access, blockPos) -> false);
+            DoubleBlockCombiner.NeighborCombineResult<? extends BlockEntity> propertySource = DoubleBlockCombiner.combineWithNeigbour(chest.getType(), ChestBlock::getBlockType,
+                    ChestBlock::getConnectedDirection, ChestBlock.FACING, world.getBlockState(pos), world, pos, (access, blockPos) -> false);
+            //noinspection OptionalOfNullableMisuse - LOCKABLE_RETRIEVER may return null
             return Optional.ofNullable(propertySource.apply(LOCKABLE_RETRIEVER));
         } else if (blockEntity instanceof LockableObject lockable) {
             return Optional.of(lockable);
@@ -146,10 +149,11 @@ public class InteractionManager implements ProtectionProvider {
         return Optional.empty();
     }
 
-    public static Optional<LockableObject> getUnlockedLockable(ServerWorld world, BlockPos pos, BlockEntity blockEntity) {
+    public static Optional<LockableObject> getUnlockedLockable(ServerLevel world, BlockPos pos, BlockEntity blockEntity) {
         if (blockEntity instanceof ChestBlockEntity chest) {
-            DoubleBlockProperties.PropertySource<? extends BlockEntity> propertySource = DoubleBlockProperties.toPropertySource(chest.getType(), ChestBlock::getDoubleBlockType,
-                    ChestBlock::getFacing, ChestBlock.FACING, world.getBlockState(pos), world, pos, (access, blockPos) -> false);
+            DoubleBlockCombiner.NeighborCombineResult<? extends BlockEntity> propertySource = DoubleBlockCombiner.combineWithNeigbour(chest.getType(), ChestBlock::getBlockType,
+                    ChestBlock::getConnectedDirection, ChestBlock.FACING, world.getBlockState(pos), world, pos, (access, blockPos) -> false);
+            //noinspection OptionalOfNullableMisuse - UNLOCKED_LOCKABLE_RETRIEVER may return null
             return Optional.ofNullable(propertySource.apply(UNLOCKED_LOCKABLE_RETRIEVER));
         } else if (blockEntity instanceof LockableObject lockable && lockable.getLock().isEmpty()) {
             return Optional.of(lockable);
@@ -157,36 +161,36 @@ public class InteractionManager implements ProtectionProvider {
         return Optional.empty();
     }
 
-    public static void togglePersist(ServerPlayerEntity player) {
-        if (persisting.contains(player.getUuid())) {
-            persisting.remove(player.getUuid());
+    public static void togglePersist(ServerPlayer player) {
+        if (persisting.contains(player.getUUID())) {
+            persisting.remove(player.getUUID());
         } else {
-            persisting.add(player.getUuid());
+            persisting.add(player.getUUID());
         }
     }
 
-    public static void toggleNoMessage(ServerPlayerEntity player) {
-        if (noMessage.contains(player.getUuid())) {
-            noMessage.remove(player.getUuid());
+    public static void toggleNoMessage(ServerPlayer player) {
+        if (noMessage.contains(player.getUUID())) {
+            noMessage.remove(player.getUUID());
         } else {
-            noMessage.add(player.getUuid());
+            noMessage.add(player.getUUID());
         }
     }
 
     @Override
-    public boolean isProtected(World world, BlockPos pos) {
-        var lock = InteractionManager.getLockable((ServerWorld) world, pos);
+    public boolean isProtected(Level world, BlockPos pos) {
+        var lock = InteractionManager.getLockable((ServerLevel) world, pos);
         return lock.isPresent();
     }
 
     @Override
-    public boolean canBreakBlock(World world, BlockPos pos, GameProfile profile, @Nullable PlayerEntity player) {
-        var lockable = InteractionManager.getLockable((ServerWorld) world, pos);
+    public boolean canBreakBlock(Level world, BlockPos pos, GameProfile profile, @Nullable Player player) {
+        var lockable = InteractionManager.getLockable((ServerLevel) world, pos);
         return lockable.flatMap(LockableObject::getLock).map(lock -> lock.owner().equals(profile.id())).orElse(true);
     }
 
     @Override
-    public boolean isAreaProtected(World world, Box area) {
+    public boolean isAreaProtected(Level world, AABB area) {
         return false;
     }
 }
