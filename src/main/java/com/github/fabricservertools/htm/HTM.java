@@ -2,16 +2,13 @@ package com.github.fabricservertools.htm;
 
 import com.github.fabricservertools.htm.api.Lock;
 import com.github.fabricservertools.htm.command.HTMCommand;
-import com.github.fabricservertools.htm.command.subcommands.*;
 import com.github.fabricservertools.htm.config.HTMConfig;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.listeners.PlayerEventListener;
 import com.github.fabricservertools.htm.listeners.LevelEventListener;
-import com.mojang.brigadier.CommandDispatcher;
 import eu.pb4.common.protection.api.CommonProtection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,23 +23,11 @@ public class HTM implements ModInitializer {
         Lock.bootstrap();
         HTMConfig.load();
 
-		CommandRegistrationCallback.EVENT.register(((dispatcher, environment, registryAccess) -> registerCommands(dispatcher)));
+        HTMCommand.bootstrap();
+        CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, selection) -> HTMCommand.register(dispatcher)));
 		CommonProtection.register(Identifier.fromNamespaceAndPath("htm", "containers"), new InteractionManager());
 
 		PlayerEventListener.init();
 		LevelEventListener.init();
 	}
-
-	private void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
-		HTMCommand.registerSubCommand(new SetCommand());
-        HTMCommand.registerSubCommand(new RemoveCommand());
-        HTMCommand.registerSubCommand(new TrustCommand());
-        HTMCommand.registerSubCommand(new UntrustCommand());
-        HTMCommand.registerSubCommand(new InfoCommand());
-        HTMCommand.registerSubCommand(new TransferCommand());
-        HTMCommand.registerSubCommand(new FlagCommand());
-        HTMCommand.registerSubCommand(new PersistCommand());
-        HTMCommand.registerSubCommand(new QuietCommand());
-        HTMCommand.register(dispatcher);
-    }
 }

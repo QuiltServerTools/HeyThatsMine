@@ -101,9 +101,9 @@ The config file can be found in `<server>/config/htm_config.json`.
 
              (is set to true by default, meaning copper golems can take items from or put items into locked containers)
 
-`auto_locking_containers`: List of containers which will be set to PRIVATE by default
+`auto_locking_containers`: Map of containers which will be automatically locked
 
-    (add or remove blocks to the list to lock them by default, or not, block tags can also be used).
+    (add or remove blocks to the map to lock them by default, or not, block tags can also be used).
 
 An example config file, with custom flag overrides for copper golems:
 
@@ -124,16 +124,16 @@ An example config file, with custom flag overrides for copper golems:
       "copper_golems": false
     }
   },
-  "auto_locking_containers": [
-    "minecraft:chest",
-    "minecraft:trapped_chest",
-    "minecraft:barrel",
-    "minecraft:furnace",
-    "minecraft:blast_furnace",
-    "minecraft:smoker",
-    "#minecraft:shulker_boxes",
-    "#minecraft:copper_chests"
-  ]
+  "auto_locking_containers": {
+    "minecraft:chest": "private",
+    "minecraft:trapped_chest": "private",
+    "minecraft:blast_furnace": "private",
+    "minecraft:barrel": "private",
+    "minecraft:smoker": "private",
+    "minecraft:furnace": "private",
+    "#minecraft:copper_chests": "public",
+    "#minecraft:shulker_boxes": "public"
+  }
 }
 ```
 
