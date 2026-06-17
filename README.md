@@ -4,7 +4,7 @@
 [![discord](https://img.shields.io/discord/764543203772334100?label=Fabric%20Server%20Tools%20Discord)](https://discord.gg/jydqZzkyEa)
 [![discord](https://img.shields.io/discord/776126068024410135?label=Potatos%20Place)](https://discord.gg/ByaVuebAPb)
 
-HTM is a fabric mod for protecting your containers and trusting people with access to them
+HTM is a Fabric mod for protecting your containers and trusting people with access to them.
 
 [Requires Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 
@@ -12,11 +12,11 @@ HTM is a fabric mod for protecting your containers and trusting people with acce
 
 HTM requires no additional setup apart from placing it in your mods folder. All new containers will automatically be set to private.
 
-HTM also supports the LuckPerms API, which allows you to manage permissions. Permission nodes are listed in the relevant section. All nodes except admin are enabled for all users by default
+HTM also supports the LuckPerms API, which allows you to manage permissions. Permission nodes are listed in the relevant section. All nodes except `htm.admin` are enabled for all users by default.
 
 ## Using HTM
 
-The mod has multiple commands which you can use on your containers
+The mod has multiple commands which you can use on your containers.
 
 ### Flag
 
@@ -49,6 +49,12 @@ Permission node: `htm.command.trust`
 `/htm untrust <player> [global]`: Revokes a player's access to the container
 
 Permission node: `htm.command.trust`
+
+### Info
+
+`/htm info`: Shows information about protections of a container, such as its lock type, its owner, and who is trusted to access it
+
+Permission node: `htm.command.info`
 
 ### Remove
 

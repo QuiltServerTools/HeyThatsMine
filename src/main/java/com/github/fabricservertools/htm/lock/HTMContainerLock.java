@@ -1,16 +1,15 @@
 package com.github.fabricservertools.htm.lock;
 
 import com.github.fabricservertools.htm.HTMComponents;
+import com.github.fabricservertools.htm.HTMPermissions;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.api.FlagType;
 import com.github.fabricservertools.htm.api.Lock;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.state.BlockState;
@@ -85,7 +84,7 @@ public record HTMContainerLock(Lock lockData, UUID owner, Set<UUID> trusted, Fla
 
 	public boolean isOwner(ServerPlayer player) {
 		if (!owner.equals(player.getUUID())) {
-			if (Permissions.check(player, "htm.admin", PermissionLevel.GAMEMASTERS)) {
+			if (HTMPermissions.isHTMAdmin(player)) {
 				player.sendSystemMessage(HTMComponents.CONTAINER_OVERRIDE.apply(Utility.getFormattedNameFromUUID(owner, player.level().getServer())));
 				return true;
 			}

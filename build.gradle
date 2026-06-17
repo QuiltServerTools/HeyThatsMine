@@ -1,5 +1,5 @@
 plugins {
-    id "net.fabricmc.fabric-loom" version "1.15-SNAPSHOT"
+    id "net.fabricmc.fabric-loom" version "1.17-SNAPSHOT"
 }
 
 version = project.mod_version
@@ -30,7 +30,6 @@ dependencies {
     implementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
 
     implementation(include("xyz.nucleoid:server-translations-api:${project.translation_version}"))
-    implementation(include("me.lucko:fabric-permissions-api:${project.permissions_api_version}"))
     implementation(include("eu.pb4:common-protection-api:${project.protection_api_version}"))
 
     implementation(include("xyz.eclipseisoffline:filefixutils-fabric:${project.file_fix_utils_version}"))

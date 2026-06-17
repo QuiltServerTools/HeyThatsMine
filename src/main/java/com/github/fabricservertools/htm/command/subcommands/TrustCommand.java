@@ -1,6 +1,7 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
 import com.github.fabricservertools.htm.HTMComponents;
+import com.github.fabricservertools.htm.HTMPermissions;
 import com.github.fabricservertools.htm.Utility;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
@@ -9,7 +10,7 @@ import com.github.fabricservertools.htm.world.data.GlobalTrustData;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.fabricmc.fabric.api.permission.v1.PermissionPredicates;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.GameProfileArgument;
@@ -28,7 +29,7 @@ public class TrustCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> root) {
         root.then(literal("trust")
-                .requires(Permissions.require("htm.command.trust", true))
+                .requires(PermissionPredicates.require(HTMPermissions.COMMAND_TRUST, true))
                 .executes(this::trustList)
                 .then(argument("target", GameProfileArgument.gameProfile())
                         .executes(ctx -> trust(ctx.getSource(), GameProfileArgument.getGameProfiles(ctx, "target"), false))

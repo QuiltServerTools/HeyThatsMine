@@ -1,13 +1,14 @@
 package com.github.fabricservertools.htm.command.subcommands;
 
 import com.github.fabricservertools.htm.HTMComponents;
+import com.github.fabricservertools.htm.HTMPermissions;
 import com.github.fabricservertools.htm.command.SubCommand;
 import com.github.fabricservertools.htm.interactions.InteractionManager;
 import com.github.fabricservertools.htm.interactions.RemoveAction;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.fabricmc.fabric.api.permission.v1.PermissionPredicates;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -18,7 +19,7 @@ public class RemoveCommand implements SubCommand {
     @Override
     public void register(LiteralArgumentBuilder<CommandSourceStack> root) {
         root.then(literal("remove")
-                .requires(Permissions.require("htm.command.remove", true))
+                .requires(PermissionPredicates.require(HTMPermissions.COMMAND_REMOVE, true))
                 .executes(this::remove)
         );
     }
