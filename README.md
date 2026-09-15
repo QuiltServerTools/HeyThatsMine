@@ -14,6 +14,23 @@ HTM requires no additional setup apart from placing it in your mods folder. All 
 
 HTM also supports the LuckPerms API, which allows you to manage permissions. Permission nodes are listed in the relevant section. All nodes except `htm.admin` are enabled for all users by default.
 
+## Lockable blocks
+
+The following blocks can be locked with HTM:
+
+- All generic container blocks, including, but not limited to:
+  - Furnaces, blast furnaces, smokers.
+  - Barrels.
+  - Brewing stands.
+  - Chests, double chests, trapped chests, and their respective copper variants.
+  - Crafters, dispensers, hoppers and droppers.
+  - Shulker boxes.
+- Chiseled bookshelves.
+- Decorated pots.
+- Jukeboxes.
+- Lecterns.
+- Signs.
+
 ## Using HTM
 
 The mod has multiple commands which you can use on your containers.

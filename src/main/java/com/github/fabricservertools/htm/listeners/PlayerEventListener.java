@@ -12,6 +12,11 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -39,6 +44,12 @@ public class PlayerEventListener {
                 InteractionManager.execute(serverPlayer.level().getServer(), serverPlayer, pos);
 
                 level.updateNeighborsAt(pos, level.getBlockState(pos).getBlock(), null);
+
+                BlockEntity entity = level.getBlockEntity(pos);
+                if (entity != null) {
+                    scheduleDelayedBlockEntityUpdate(serverPlayer, entity);
+                }
+
                 return InteractionResult.SUCCESS;
             }
         }
@@ -72,6 +83,7 @@ public class PlayerEventListener {
             }
 
             playerEntity.sendSystemMessage(HTMComponents.NOT_OWNER);
+            scheduleDelayedBlockEntityUpdate(playerEntity, blockEntity);
             return false;
         }
 
@@ -106,5 +118,20 @@ public class PlayerEventListener {
         }
 
         return InteractionResult.PASS;
+    }
+
+    /// Sends the {@link ServerPlayer} a block entity update packet, if the entity has one, after a tick (approximately).
+    ///
+    /// The delay is necessary when the respective {@link ClientboundBlockUpdatePacket} has just been sent, else the
+    /// block entity update packet may be handled on the client before the block entity has been constructed clientside,
+    /// leading to client side data loss.
+    ///
+    /// This problem is especially visible on signs, without the delay the sign's text may just disappear.
+    private static void scheduleDelayedBlockEntityUpdate(ServerPlayer player, BlockEntity entity) {
+        Packet<ClientGamePacketListener> updatePacket = entity.getUpdatePacket();
+        if (updatePacket != null) {
+            MinecraftServer server = player.level().getServer();
+            server.schedule(new TickTask(server.getTickCount() + 1, () -> player.connection.send(updatePacket)));
+        }
     }
 }
