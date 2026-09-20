@@ -5,12 +5,12 @@
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "HopperBlockEntityMixin",
-    "TransportItemsBetweenContainersMixin",
     "PistonBlockMixin",
+    "TransportItemsBetweenContainersMixin",
     "events.BlockItemMixin",
     "events.EnderDragonMixin",
-    "events.ServerExplosionMixin",
     "events.LevelMixin",
+    "events.ServerExplosionMixin",
     "lockable.ChiseledBookShelfBlockEntityMixin",
     "lockable.ChiseledBookShelfBlockMixin",
     "lockable.DecoratedPotBlockEntityMixin",
@@ -19,7 +19,9 @@
     "lockable.JukeboxBlockMixin",
     "lockable.LecternBlockEntityMixin",
     "lockable.LecternBlockMixin",
-    "lockable.LockableContainerMixin"
+    "lockable.LockableContainerMixin",
+    "lockable.SignBlockEntityMixin",
+    "lockable.SignBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
